@@ -1,8 +1,9 @@
 extends CharacterBody2D
+@onready var char = $AnimatedSprite2D
 
 
 const SPEED = 500.0
-const JUMP_VELOCITY = -1000.0
+const JUMP_VELOCITY = -600.0
 
 
 func _physics_process(delta: float) -> void:
@@ -21,5 +22,19 @@ func _physics_process(delta: float) -> void:
 		velocity.x = direction * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
+		
+	# Flip direction based on movement keys
+	if velocity.x > 0:
+		char.flip_h = false
+	elif velocity.x < 0:
+		char.flip_h = true
+		
+	if direction != 0:
+		char.play("run")
+		velocity.x = direction * SPEED
+	else:
+		char.play("iddle")
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+
 
 	move_and_slide()
