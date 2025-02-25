@@ -31,25 +31,15 @@ func _physics_process(delta: float) -> void:
 	
 	# --- Flip Visuals Based on Mouse Position ---
 	var facing_left = mouse_pos.x < global_position.x
-
 	if facing_left:
 		visuals.scale.x = -1
 	else:
 		visuals.scale.x = 1
 
-	# Set base angle depending on which way we're facing.
-	var base_angle = 0.0
-	if facing_left:
-		base_angle = PI
-	else:
-		base_angle = 0.0
-
-	# --- Weapon Aiming ---
-	var aim_vector = mouse_pos - global_position
-	var aim_angle = aim_vector.angle()
-	
-	var relative_angle = wrapf(aim_angle - base_angle, -PI, PI)
-	relative_angle = clamp(relative_angle, deg_to_rad(-60), deg_to_rad(60))
-	wep.rotation = base_angle + relative_angle
+	# --- Weapon Aiming in Visuals' Local Space ---
+	var local_mouse = visuals.to_local(mouse_pos)
+	var aim_angle = local_mouse.angle()
+	aim_angle = clamp(aim_angle, deg_to_rad(-50), deg_to_rad(50))
+	wep.rotation = aim_angle
 
 	move_and_slide()

@@ -237,7 +237,7 @@ script = ExtResource("1_i8rfg")
 [node name="Node2D" type="Node2D" parent="."]
 
 [node name="WeaponSprite2D" type="AnimatedSprite2D" parent="Node2D"]
-position = Vector2(19, -46)
+position = Vector2(20, -46)
 sprite_frames = SubResource("SpriteFrames_kn5lq")
 animation = &"Staff"
 offset = Vector2(25, -23)
