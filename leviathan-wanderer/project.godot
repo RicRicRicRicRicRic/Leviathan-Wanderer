@@ -16,6 +16,14 @@ config/features=PackedStringArray("4.3", "Forward Plus")
 boot_splash/use_filter=false
 config/icon="res://icon.svg"
 
+[debug]
+
+settings/stdout/print_fps=true
+
+[display]
+
+window/vsync/vsync_mode=0
+
 [input]
 
 left={
