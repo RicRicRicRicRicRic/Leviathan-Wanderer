@@ -1,3 +1,4 @@
+#player.gd
 extends CharacterBody2D 
 
 @onready var visuals = $Node2D

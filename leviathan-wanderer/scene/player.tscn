@@ -14,7 +14,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_e3cdw")
 }],
 "loop": true,
-"name": &"Staff",
+"name": &"Luminous staff",
 "speed": 5.0
 }]
 
@@ -240,8 +240,11 @@ script = ExtResource("1_i8rfg")
 [node name="WeaponSprite2D" type="AnimatedSprite2D" parent="Node2D"]
 position = Vector2(20, -46)
 sprite_frames = SubResource("SpriteFrames_kn5lq")
-animation = &"Staff"
+animation = &"Luminous staff"
 offset = Vector2(25, -23)
+
+[node name="Marker2D" type="Marker2D" parent="Node2D/WeaponSprite2D"]
+position = Vector2(63, -66)
 
 [node name="CharacterSprite2D" type="AnimatedSprite2D" parent="Node2D"]
 z_index = 1
