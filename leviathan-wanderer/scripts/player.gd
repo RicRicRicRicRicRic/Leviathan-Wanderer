@@ -1,13 +1,15 @@
-#player.gd
 extends CharacterBody2D 
 
 @onready var visuals = $Node2D
-@onready var char = visuals.get_node("CharacterSprite2D")
+@onready var main = visuals.get_node("CharacterSprite2D")
 @onready var wep = visuals.get_node("WeaponSprite2D")
+@onready var marker = visuals.get_node("WeaponSprite2D/Marker2D")
 
 const SPEED = 500.0
 const JUMP_VELOCITY = -600.0
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+
+@export var projectile_scene: PackedScene = preload("res://scene/projectile.tscn")
 
 func _physics_process(delta: float) -> void:
 	var mouse_pos = get_global_mouse_position()
@@ -26,21 +28,25 @@ func _physics_process(delta: float) -> void:
 	
 	# --- Animation ---
 	if direction != 0:
-		char.play("run")
+		main.play("run")
 	else:
-		char.play("iddle")
+		main.play("iddle")
 	
 	# --- Flip Visuals Based on Mouse Position ---
-	var facing_left = mouse_pos.x < global_position.x
-	if facing_left:
+	if mouse_pos.x < global_position.x:
 		visuals.scale.x = -1
 	else:
 		visuals.scale.x = 1
 
-	# --- Weapon Aiming in Visuals' Local Space ---
+	# --- Weapon Aiming ---
 	var local_mouse = visuals.to_local(mouse_pos)
 	var aim_angle = local_mouse.angle()
 	aim_angle = clamp(aim_angle, deg_to_rad(-50), deg_to_rad(50))
 	wep.rotation = aim_angle
+
+	# --- Shooting ---
+	if Input.is_action_pressed("Shoot"):
+		# Instead of handling a fire timer here, we let projectile.gd decide.
+		Projectile.shoot(marker.global_position, mouse_pos, projectile_scene, self)
 
 	move_and_slide()
