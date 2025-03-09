@@ -1,7 +1,7 @@
 [gd_scene load_steps=35 format=3 uid="uid://rou3hvjvk4pe"]
 
 [ext_resource type="Texture2D" uid="uid://cge20l2aafkuh" path="res://assets/sprites/MainChar.svg" id="1_h0ky5"]
-[ext_resource type="Script" path="res://scripts/player.gd" id="1_i8rfg"]
+[ext_resource type="Script" path="res://scripts/Player/player.gd" id="1_i8rfg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e3cdw"]
 atlas = ExtResource("1_h0ky5")
@@ -236,8 +236,11 @@ physics_interpolation_mode = 1
 script = ExtResource("1_i8rfg")
 
 [node name="Node2D" type="Node2D" parent="."]
+physics_interpolation_mode = 2
 
 [node name="WeaponSprite2D" type="AnimatedSprite2D" parent="Node2D"]
+physics_interpolation_mode = 2
+texture_filter = 6
 position = Vector2(20, -46)
 sprite_frames = SubResource("SpriteFrames_kn5lq")
 animation = &"Luminous staff"
@@ -247,8 +250,9 @@ offset = Vector2(25, -23)
 position = Vector2(63, -66)
 
 [node name="CharacterSprite2D" type="AnimatedSprite2D" parent="Node2D"]
+physics_interpolation_mode = 2
 z_index = 1
-texture_filter = 2
+texture_filter = 6
 position = Vector2(0, -68)
 sprite_frames = SubResource("SpriteFrames_x305y")
 animation = &"iddle"

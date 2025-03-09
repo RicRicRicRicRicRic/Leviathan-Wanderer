@@ -1,4 +1,5 @@
-extends CharacterBody2D 
+#player.gd
+extends "res://scripts/Interpolation/Interpolate.gd"
 
 @onready var visuals = $Node2D
 @onready var main = visuals.get_node("CharacterSprite2D")
@@ -11,7 +12,14 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 @export var projectile_scene: PackedScene = preload("res://scene/projectile.tscn")
 
-func _physics_process(delta: float) -> void:
+# Shooting cooldown variables
+var can_shoot: bool = true
+const shoot_cooldown = 0.1
+
+func _ready() -> void:
+	interp_visuals = visuals
+
+func _physics_tick(delta: float) -> void:
 	var mouse_pos = get_global_mouse_position()
 
 	# --- Movement Setup ---
@@ -21,7 +29,7 @@ func _physics_process(delta: float) -> void:
 		velocity.y = JUMP_VELOCITY
 
 	var direction = Input.get_axis("left", "right")
-	if direction:
+	if direction != 0:
 		velocity.x = direction * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
@@ -45,8 +53,8 @@ func _physics_process(delta: float) -> void:
 	wep.rotation = aim_angle
 
 	# --- Shooting ---
-	if Input.is_action_pressed("Shoot"):
-		# Instead of handling a fire timer here, we let projectile.gd decide.
+	if Input.is_action_pressed("Shoot") and can_shoot:
+		can_shoot = false
 		Projectile.shoot(marker.global_position, mouse_pos, projectile_scene, self)
-
-	move_and_slide()
+		await get_tree().create_timer(shoot_cooldown).timeout
+		can_shoot = true
