@@ -1,28 +1,35 @@
 #projectile.gd
-extends "res://scripts/Interpolation/Interpolate.gd"
+extends CharacterBody2D
 class_name Projectile
 
-@export var SPEED = 900
-@export var fire_rate: float = 0.1  
+static var SPEED: float = 1500.0
+static var FIRE_RATE: float = 0.15
 var dir: float = 0.0
-var spawnPos: Vector2
-var spawnRot: float
+var spawnPos: Vector2 = Vector2.ZERO
+var spawnRot: float = 0.0
+var last_shot_time: float = -FIRE_RATE
 
 static func shoot(start_pos: Vector2, target: Vector2, projectile_scene: PackedScene, shooter: Node) -> void:
-	var proj = projectile_scene.instantiate()
-	var angle = (target - start_pos).angle()
+	var time_now: float = Time.get_ticks_msec() / 1000.0
+	if time_now - shooter.get_meta("last_shot_time", -Projectile.FIRE_RATE) < Projectile.FIRE_RATE:
+		return
+
+	shooter.set_meta("last_shot_time", time_now)
+	
+	var proj: Projectile = projectile_scene.instantiate() as Projectile
+	var angle: float = (target - start_pos).angle()
 	proj.spawnPos = start_pos
 	proj.dir = angle
 	proj.spawnRot = angle
 	proj.rotation = angle
 
 	if target.x < start_pos.x and proj.has_node("AnimatedSprite2D"):
-		proj.get_node("AnimatedSprite2D").flip_v = true
+		var sprite: AnimatedSprite2D = proj.get_node("AnimatedSprite2D") as AnimatedSprite2D
+		sprite.flip_v = true
 
 	proj.add_collision_exception_with(shooter)
-	var scene = shooter.get_tree().current_scene
+	var scene: Node = shooter.get_tree().current_scene
 	scene.add_child(proj)
-
 
 func _ready() -> void:
 	global_position = spawnPos

@@ -1,5 +1,8 @@
 #player.gd
 extends "res://scripts/Interpolation/Interpolate.gd"
+func _ready() -> void:
+	interp_visuals = visuals
+	previous_position = global_position
 
 @onready var visuals = $Node2D
 @onready var main = visuals.get_node("CharacterSprite2D")
@@ -12,14 +15,11 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 @export var projectile_scene: PackedScene = preload("res://scene/projectile.tscn")
 
-# Shooting cooldown variables
-var can_shoot: bool = true
-const shoot_cooldown = 0.1
 
-func _ready() -> void:
-	interp_visuals = visuals
-
-func _physics_tick(delta: float) -> void:
+func _physics_process(delta: float) -> void:
+	# Update previous_position for interpolation.
+	previous_position = global_position
+	
 	var mouse_pos = get_global_mouse_position()
 
 	# --- Movement Setup ---
@@ -53,8 +53,7 @@ func _physics_tick(delta: float) -> void:
 	wep.rotation = aim_angle
 
 	# --- Shooting ---
-	if Input.is_action_pressed("Shoot") and can_shoot:
-		can_shoot = false
+	if Input.is_action_pressed("Shoot"):
 		Projectile.shoot(marker.global_position, mouse_pos, projectile_scene, self)
-		await get_tree().create_timer(shoot_cooldown).timeout
-		can_shoot = true
+	
+	move_and_slide()
