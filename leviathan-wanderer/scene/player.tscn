@@ -263,3 +263,11 @@ frame_progress = 0.266767
 z_index = 2
 position = Vector2(0, -65)
 shape = SubResource("CapsuleShape2D_eorov")
+
+[node name="CayoteTimer" type="Timer" parent="."]
+wait_time = 0.15
+one_shot = true
+
+[node name="JumpBufferTImer" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true

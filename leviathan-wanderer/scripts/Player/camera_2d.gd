@@ -1,6 +1,6 @@
 extends Camera2D
 
-@export var smoothing: float = 0.5
+@export var smoothing: float = 0.05
 
 func _ready() -> void:
 	set_process(false)

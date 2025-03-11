@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://1smoe1vf8d2c"]
 
-[ext_resource type="Script" path="res://scripts/Player/projectile.gd" id="1_arsow"]
+[ext_resource type="Script" path="res://scripts/Abilities/projectile.gd" id="1_arsow"]
 [ext_resource type="Texture2D" uid="uid://c17lu264e832b" path="res://icon.svg" id="2_30aqd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jdrf7"]
