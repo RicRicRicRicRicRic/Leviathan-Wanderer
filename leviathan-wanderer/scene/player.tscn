@@ -268,6 +268,10 @@ shape = SubResource("CapsuleShape2D_eorov")
 wait_time = 0.15
 one_shot = true
 
-[node name="JumpBufferTImer" type="Timer" parent="."]
-wait_time = 0.3
+[node name="JumpBufferTimer" type="Timer" parent="."]
+wait_time = 0.25
+one_shot = true
+
+[node name="JumpHangTimer" type="Timer" parent="."]
+wait_time = 0.275
 one_shot = true

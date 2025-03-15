@@ -1,34 +1,49 @@
 # player.gd
 extends "res://scripts/Optimization/Interpolate.gd"
-
 func _ready() -> void:
 	interp_visuals = visuals
 	previous_position = global_position
+	
+var jump_active: bool = false
+var was_on_floor: bool = true
+var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity") as float
 
-# --- onready visuals ---
+const JUMP_VELOCITY: float = -875.0
+const TOP_SPEED: float = 500.0
+const ACCELERATION: float = 2900.0
+const DECELERATION: float = 2100.0
+@export var rising_gravity_multiplier: float = 2.2
+@export var falling_gravity_multiplier: float = 2.2
+
+@export var projectile_scene: PackedScene = preload("res://scene/projectile.tscn")
+
 @onready var visuals: Node2D = $Node2D
 @onready var main: AnimatedSprite2D = visuals.get_node("CharacterSprite2D") as AnimatedSprite2D
 @onready var wep: Node2D = visuals.get_node("WeaponSprite2D") as Node2D
-@onready var marker: Marker2D = visuals.get_node("WeaponSprite2D/Marker2D") as Marker2D
+@onready var proj_marker: Marker2D = visuals.get_node("WeaponSprite2D/Marker2D") as Marker2D
 
-# --- Movement mechanics ---
 @onready var cayote_timer: Timer = $CayoteTimer
-@onready var jumpbuffer_timer: Timer = $JumpBufferTImer
-var was_on_floor: bool = true
+@onready var jumpbuffer_timer: Timer = $JumpBufferTimer
+@onready var JumpHang_Timer: Timer = $JumpHangTimer
 
-const SPEED: float = 500.0
-const JUMP_VELOCITY: float = -600.0
-var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity") as float
-
-@export var projectile_scene: PackedScene = preload("res://scene/projectile.tscn")
 
 func _physics_process(delta: float) -> void:
 	previous_position = global_position
 	var mouse_pos: Vector2 = get_global_mouse_position()
 
-	# --- Gravity ---
+	# --- Gravity & Jump Hang Time ---
 	if not is_on_floor():
-		velocity.y += gravity * delta
+		if velocity.y < 0.0:
+			velocity.y += gravity * (rising_gravity_multiplier if not JumpHang_Timer.is_stopped() else 1.0) * delta
+		else:
+			velocity.y += gravity * falling_gravity_multiplier * delta
+	else:
+		if not JumpHang_Timer.is_stopped():
+			JumpHang_Timer.stop()
+
+	# --- Reset jump flag when rising stops ---
+	if jump_active and velocity.y >= 0.0:
+		jump_active = false
 
 	# --- Coyote Time ---
 	if is_on_floor():
@@ -40,40 +55,35 @@ func _physics_process(delta: float) -> void:
 			cayote_timer.start()
 			was_on_floor = false
 
-	# --- Jumping (Normal, Coyote, and Jump Buffer) ---
+	# --- Jumping & Buffering ---
 	if Input.is_action_just_pressed("jump"):
-		if is_on_floor() or (not cayote_timer.is_stopped()):
+		if (is_on_floor() or (not cayote_timer.is_stopped())) and not jump_active:
 			velocity.y = JUMP_VELOCITY
+			JumpHang_Timer.start()
 			cayote_timer.stop()
-			# If a jump is performed immediately, clear any buffered jump.
 			jumpbuffer_timer.stop()
-		else:
-			# Buffer the jump input if jump isn't immediately allowed.
-			if jumpbuffer_timer.is_stopped():
-				jumpbuffer_timer.start()
+			jump_active = true
+		elif jumpbuffer_timer.is_stopped():
+			jumpbuffer_timer.start()
 
-	# If the player lands and a jump was buffered, perform the jump.
-	if is_on_floor() and not jumpbuffer_timer.is_stopped():
+	if is_on_floor() and (not jumpbuffer_timer.is_stopped()) and (not jump_active):
 		velocity.y = JUMP_VELOCITY
+		JumpHang_Timer.start()
 		jumpbuffer_timer.stop()
+		jump_active = true
 
 	# --- Horizontal Movement ---
 	var direction: float = Input.get_axis("left", "right")
-	velocity.x = direction * SPEED if direction != 0.0 else move_toward(velocity.x, 0.0, SPEED)
+	velocity.x = move_toward(velocity.x, direction * TOP_SPEED, (ACCELERATION if direction != 0.0 else DECELERATION) * delta)
 
-	# --- Animation ---
+	# --- Animation & Visuals ---
 	main.play("run" if direction != 0.0 else "iddle")
-
-	# --- Flip Visuals Based on Mouse Position ---
 	visuals.scale.x = -1.0 if mouse_pos.x < global_position.x else 1.0
-
-	# --- Weapon Aiming ---
 	var local_mouse: Vector2 = visuals.to_local(mouse_pos)
-	var aim_angle: float = clamp(local_mouse.angle(), deg_to_rad(-50.0), deg_to_rad(50.0))
-	wep.rotation = aim_angle
+	wep.rotation = clamp(local_mouse.angle(), deg_to_rad(-50.0), deg_to_rad(50.0))
 
 	# --- Shooting ---
 	if Input.is_action_pressed("Shoot"):
-		Projectile.shoot(marker.global_position, mouse_pos, projectile_scene, self)
+		Projectile.shoot(proj_marker.global_position, mouse_pos, projectile_scene, self)
 
 	move_and_slide()
