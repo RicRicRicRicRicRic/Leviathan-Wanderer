@@ -1,0 +1,63 @@
+[gd_scene load_steps=7 format=3 uid="uid://bmkmj0t35mxxw"]
+
+[ext_resource type="Texture2D" uid="uid://cm7h526ig8swg" path="res://assets/sprites/enemy-sprites/Slug-enemy.svg" id="1_4yip8"]
+[ext_resource type="Script" path="res://scripts/enemy-scripts/slime.gd" id="1_mnw3t"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_56h7e"]
+radius = 13.3337
+height = 91.4405
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y3rsb"]
+radius = 13.5126
+height = 83.8719
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_alc3d"]
+atlas = ExtResource("1_4yip8")
+region = Rect2(0, 0, 161, 161)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tk01l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_alc3d")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Slime" type="CharacterBody2D"]
+physics_interpolation_mode = 1
+texture_filter = 4
+scale = Vector2(1.2, 1.2)
+script = ExtResource("1_mnw3t")
+
+[node name="CollisionShape2D_body" type="CollisionShape2D" parent="."]
+z_index = 1
+position = Vector2(1.66667, 55)
+rotation = -1.57115
+scale = Vector2(1, 1.00248)
+shape = SubResource("CapsuleShape2D_56h7e")
+
+[node name="CollisionShape2D_head" type="CollisionShape2D" parent="."]
+z_index = 1
+position = Vector2(-28.333, 25.833)
+rotation = 2.82903
+scale = Vector2(1.00248, 1.00248)
+shape = SubResource("CapsuleShape2D_y3rsb")
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(-0.333333, 12.6667)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Node2D"]
+physics_interpolation_mode = 1
+sprite_frames = SubResource("SpriteFrames_tk01l")
+metadata/_edit_lock_ = true
+
+[node name="RayCast2D_height" type="RayCast2D" parent="Node2D"]
+position = Vector2(-64.6667, -12.6667)
+target_position = Vector2(0, 120)
+
+[node name="RayCast2D_wall" type="RayCast2D" parent="Node2D"]
+position = Vector2(-57.1667, -12.6667)
+target_position = Vector2(-60, 0)

@@ -1,3 +1,4 @@
+#Interpolate.gd
 extends CharacterBody2D
 
 @export var enable_interpolation: bool = true  

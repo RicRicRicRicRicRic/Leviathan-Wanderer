@@ -8,10 +8,10 @@ var jump_active: bool = false
 var was_on_floor: bool = true
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity") as float
 
-const JUMP_VELOCITY: float = -875.0
-const TOP_SPEED: float = 500.0
-const ACCELERATION: float = 2900.0
-const DECELERATION: float = 2100.0
+const JUMP_VELOCITY: float = -975.0
+const TOP_SPEED: float = 600.0
+const ACCELERATION: float = 3000.0
+const DECELERATION: float = 3000.0
 @export var rising_gravity_multiplier: float = 2.2
 @export var falling_gravity_multiplier: float = 2.2
 

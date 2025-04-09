@@ -233,14 +233,12 @@ height = 130.0
 
 [node name="Player" type="CharacterBody2D"]
 physics_interpolation_mode = 1
+texture_filter = 4
 script = ExtResource("1_i8rfg")
 
 [node name="Node2D" type="Node2D" parent="."]
-physics_interpolation_mode = 2
 
 [node name="WeaponSprite2D" type="AnimatedSprite2D" parent="Node2D"]
-physics_interpolation_mode = 2
-texture_filter = 6
 position = Vector2(20, -46)
 sprite_frames = SubResource("SpriteFrames_kn5lq")
 animation = &"Luminous staff"
@@ -250,9 +248,7 @@ offset = Vector2(25, -23)
 position = Vector2(63, -66)
 
 [node name="CharacterSprite2D" type="AnimatedSprite2D" parent="Node2D"]
-physics_interpolation_mode = 2
 z_index = 1
-texture_filter = 6
 position = Vector2(0, -68)
 sprite_frames = SubResource("SpriteFrames_x305y")
 animation = &"iddle"
@@ -273,5 +269,5 @@ wait_time = 0.25
 one_shot = true
 
 [node name="JumpHangTimer" type="Timer" parent="."]
-wait_time = 0.275
+wait_time = 0.45
 one_shot = true
