@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://btcvab1s88w3u"]
+
+[ext_resource type="Script" path="res://scripts/Optimization/fps_counter.gd" id="1_ka32h"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_ka32h")
+
+[node name="FPS_meter" type="Label" parent="Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="HZ_meter" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = 77.0
+offset_right = 117.0
+offset_bottom = 23.0

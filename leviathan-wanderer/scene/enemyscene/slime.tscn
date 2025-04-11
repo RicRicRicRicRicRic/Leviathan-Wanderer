@@ -3,14 +3,6 @@
 [ext_resource type="Texture2D" uid="uid://cm7h526ig8swg" path="res://assets/sprites/enemy-sprites/Slug-enemy.svg" id="1_4yip8"]
 [ext_resource type="Script" path="res://scripts/enemy-scripts/slime.gd" id="1_mnw3t"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_56h7e"]
-radius = 13.3337
-height = 91.4405
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y3rsb"]
-radius = 13.5126
-height = 83.8719
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_alc3d"]
 atlas = ExtResource("1_4yip8")
 region = Rect2(0, 0, 161, 161)
@@ -26,18 +18,41 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y3rsb"]
+radius = 13.5126
+height = 83.8719
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_56h7e"]
+radius = 16.6667
+height = 98.0906
+
 [node name="Slime" type="CharacterBody2D"]
 physics_interpolation_mode = 1
 texture_filter = 4
-scale = Vector2(1.2, 1.2)
 script = ExtResource("1_mnw3t")
 
-[node name="CollisionShape2D_body" type="CollisionShape2D" parent="."]
-z_index = 1
-position = Vector2(1.66667, 55)
-rotation = -1.57115
-scale = Vector2(1, 1.00248)
-shape = SubResource("CapsuleShape2D_56h7e")
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(-0.333333, 12.6667)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Node2D"]
+physics_interpolation_mode = 1
+position = Vector2(0, 5.83333)
+sprite_frames = SubResource("SpriteFrames_tk01l")
+
+[node name="RayCast2D_height" type="RayCast2D" parent="Node2D"]
+position = Vector2(-65.5, 28.1666)
+target_position = Vector2(0, 60)
+
+[node name="RayCast2D_wall" type="RayCast2D" parent="Node2D"]
+position = Vector2(-65.5, 28.1666)
+target_position = Vector2(-30, 0)
+
+[node name="DamageArea" type="Area2D" parent="."]
+position = Vector2(0, 6.66667)
+
+[node name="CollisionPolygon2D_Hitbox" type="CollisionPolygon2D" parent="DamageArea"]
+position = Vector2(0.833333, 65)
+polygon = PackedVector2Array(-10.8333, 10.8333, -47.5, 11.6667, -48.3333, -52.5, -57.5, -52.5, -60.8333, -79.1667, -50, -89.1667, -34.1667, -90, -22.5, -74.1667, -24.1667, -67.5, -4.16667, -25.8333, 29.1667, -23.3333, 53.3333, -11.6667, 60, 10.8333)
 
 [node name="CollisionShape2D_head" type="CollisionShape2D" parent="."]
 z_index = 1
@@ -46,18 +61,13 @@ rotation = 2.82903
 scale = Vector2(1.00248, 1.00248)
 shape = SubResource("CapsuleShape2D_y3rsb")
 
-[node name="Node2D" type="Node2D" parent="."]
-position = Vector2(-0.333333, 12.6667)
+[node name="CollisionShape2D_body" type="CollisionShape2D" parent="."]
+z_index = 1
+position = Vector2(5.83333, 59.1667)
+rotation = -1.57115
+scale = Vector2(1, 1.00248)
+shape = SubResource("CapsuleShape2D_56h7e")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Node2D"]
-physics_interpolation_mode = 1
-sprite_frames = SubResource("SpriteFrames_tk01l")
-metadata/_edit_lock_ = true
-
-[node name="RayCast2D_height" type="RayCast2D" parent="Node2D"]
-position = Vector2(-64.6667, -12.6667)
-target_position = Vector2(0, 120)
-
-[node name="RayCast2D_wall" type="RayCast2D" parent="Node2D"]
-position = Vector2(-57.1667, -12.6667)
-target_position = Vector2(-60, 0)
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true

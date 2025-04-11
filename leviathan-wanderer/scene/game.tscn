@@ -1,11 +1,12 @@
-[gd_scene load_steps=10 format=4 uid="uid://dcj28xdm2bjh5"]
+[gd_scene load_steps=11 format=4 uid="uid://dcj28xdm2bjh5"]
 
 [ext_resource type="PackedScene" uid="uid://rou3hvjvk4pe" path="res://scene/player.tscn" id="1_j7gx8"]
 [ext_resource type="Texture2D" uid="uid://cts5lf6x30syo" path="res://assets/sprites/world_tileset.png" id="2_1et6v"]
 [ext_resource type="Texture2D" uid="uid://cvm1xsprhoww8" path="res://assets/sprites/prototype graphics.svg" id="2_q3eqi"]
 [ext_resource type="Script" path="res://scripts/Player/camera_2d.gd" id="3_wx7jf"]
-[ext_resource type="PackedScene" uid="uid://btcvab1s88w3u" path="res://scene/fps_counter.tscn" id="4_04w04"]
+[ext_resource type="PackedScene" uid="uid://btcvab1s88w3u" path="res://scene/UI_scenes/fps_counter.tscn" id="4_04w04"]
 [ext_resource type="PackedScene" uid="uid://bmkmj0t35mxxw" path="res://scene/enemyscene/slime.tscn" id="6_eqmec"]
+[ext_resource type="PackedScene" uid="uid://ctkkqy5ievm0g" path="res://scene/UI_scenes/Player_healthbar.tscn" id="7_s4vhm"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_n48tu"]
 texture = ExtResource("2_1et6v")
@@ -182,7 +183,8 @@ texture_region_size = Vector2i(17, 17)
 1:0/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_j1i1r"]
-physics_layer_0/collision_layer = 1
+physics_layer_0/collision_layer = 3
+physics_layer_0/collision_mask = 2
 sources/0 = SubResource("TileSetAtlasSource_n48tu")
 sources/1 = SubResource("TileSetAtlasSource_b6c4x")
 
@@ -209,5 +211,19 @@ script = ExtResource("3_wx7jf")
 
 [node name="CanvasLayer" parent="." instance=ExtResource("4_04w04")]
 
-[node name="Slime" parent="." instance=ExtResource("6_eqmec")]
+[node name="Slime1" parent="." instance=ExtResource("6_eqmec")]
 position = Vector2(2240, -159)
+collision_layer = 3
+collision_mask = 2
+
+[node name="Slime2" parent="." instance=ExtResource("6_eqmec")]
+position = Vector2(2718, -151)
+collision_layer = 3
+collision_mask = 2
+
+[node name="CanvasLayer2-playerheatlhbar" parent="." instance=ExtResource("7_s4vhm")]
+
+[node name="Slime3" parent="." instance=ExtResource("6_eqmec")]
+position = Vector2(669, -126)
+collision_layer = 3
+collision_mask = 2

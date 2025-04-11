@@ -9,13 +9,17 @@ var spawnPos: Vector2 = Vector2.ZERO
 var spawnRot: float = 0.0
 var last_shot_time: float = -FIRE_RATE
 
+var hit_count: int = 0
+@export var max_hits: int = 3
+@export var damage: int = 25
+
 static func shoot(start_pos: Vector2, target: Vector2, projectile_scene: PackedScene, shooter: Node) -> void:
 	var time_now: float = Time.get_ticks_msec() / 1000.0
 	if time_now - shooter.get_meta("last_shot_time", -Projectile.FIRE_RATE) < Projectile.FIRE_RATE:
 		return
 
 	shooter.set_meta("last_shot_time", time_now)
-	
+
 	var proj: Projectile = projectile_scene.instantiate() as Projectile
 	var angle: float = (target - start_pos).angle()
 	proj.spawnPos = start_pos
@@ -32,6 +36,7 @@ static func shoot(start_pos: Vector2, target: Vector2, projectile_scene: PackedS
 	scene.add_child(proj)
 
 func _ready() -> void:
+	add_to_group("projectile")
 	global_position = spawnPos
 	global_rotation = spawnRot
 	add_to_group("projectiles")
@@ -42,5 +47,14 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	velocity = Vector2(SPEED, 0).rotated(dir)
 	move_and_slide()
-	if get_slide_collision_count() > 0:
+
+	for i in range(get_slide_collision_count()):
+		var collision := get_slide_collision(i)
+		var collider := collision.get_collider()
+
+		if collider and collider.is_in_group("enemy") and collider.has_method("take_damage"):
+			collider.take_damage(damage)
+			hit_count += 1
+
+	if hit_count >= max_hits or get_slide_collision_count() > 0:
 		queue_free()
