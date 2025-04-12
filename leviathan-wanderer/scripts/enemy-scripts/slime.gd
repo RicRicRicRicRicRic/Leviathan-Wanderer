@@ -4,6 +4,9 @@ extends "res://scripts/Optimization/Interpolate.gd"
 const SPEED: float = 280.0
 const GRAVITY: float = 980.0
 
+@export var max_health: int = 450
+var health: int = max_health
+
 @onready var visuals: Node2D = $Node2D
 @onready var slime_main: AnimatedSprite2D = visuals.get_node("AnimatedSprite2D") as AnimatedSprite2D
 @onready var raycast_wall: RayCast2D = visuals.get_node("RayCast2D_wall") as RayCast2D
@@ -16,12 +19,9 @@ const GRAVITY: float = 980.0
 var head_original_x: float
 var head_original_rot_deg: float
 var body_original_x: float
-
 var direction: int = -1
 var was_colliding: bool = false
 var should_flip: bool = false
-
-var health: int = 350
 
 func _ready() -> void:
 	add_to_group("enemy")
@@ -56,21 +56,29 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.y = 0.0
 
-	var is_colliding: bool = raycast_wall.is_colliding()
+	raycast_fall.force_raycast_update()
+	raycast_wall.force_raycast_update()
 
-	if is_colliding and not was_colliding and Time_before_turn.is_stopped():
+	var wall_detected: bool = raycast_wall.is_colliding()
+	var fall_detected: bool = not raycast_fall.is_colliding()
+	var should_turn: bool = (wall_detected or fall_detected)
+
+	if should_turn and not was_colliding and Time_before_turn.is_stopped():
 		Time_before_turn.start()
 		should_flip = true
 		velocity.x = 0.0 
-	elif not is_colliding:
+		slime_main.play("iddle")
+	elif not should_turn:
 		Time_before_turn.stop()
 		should_flip = false
 
 	if Time_before_turn.is_stopped():
 		velocity.x = SPEED * direction
 		visuals.scale.x = 1.0 if direction == -1 else -1.0
+		if not slime_main.is_playing() or slime_main.animation != "walk":
+			slime_main.play("walk")
 
-	was_colliding = is_colliding
+	was_colliding = should_turn
 
 	move_and_slide()
 	update_collision_shapes()

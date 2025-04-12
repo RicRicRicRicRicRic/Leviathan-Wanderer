@@ -14,6 +14,7 @@ extends "res://scripts/Optimization/Interpolate.gd"
 @onready var cayote_timer: Timer = $CayoteTimer
 @onready var jumpbuffer_timer: Timer = $JumpBufferTimer
 @onready var JumpHang_Timer: Timer = $JumpHangTimer
+@onready var NoDamage_Timer: Timer = $NoDamageTimer
 
 @onready var current_health: int = max_health
 
@@ -85,11 +86,14 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
+
 func take_damage(amount: int) -> void:
-	current_health = max(current_health - amount, 0)
-	update_health_bar()
-	if current_health <= 0:
-		die()
+	if NoDamage_Timer.is_stopped():
+		current_health = max(current_health - amount, 0)
+		update_health_bar()
+		NoDamage_Timer.start()
+		if current_health <= 0:
+			die()
 
 func die() -> void:
 	queue_free()

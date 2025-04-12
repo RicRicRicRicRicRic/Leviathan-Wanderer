@@ -251,9 +251,8 @@ position = Vector2(63, -66)
 z_index = 1
 position = Vector2(0, -68)
 sprite_frames = SubResource("SpriteFrames_x305y")
-animation = &"iddle"
+animation = &"run"
 autoplay = "iddle"
-frame_progress = 0.266767
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 2
@@ -270,4 +269,8 @@ one_shot = true
 
 [node name="JumpHangTimer" type="Timer" parent="."]
 wait_time = 0.45
+one_shot = true
+
+[node name="NoDamageTimer" type="Timer" parent="."]
+wait_time = 0.6
 one_shot = true

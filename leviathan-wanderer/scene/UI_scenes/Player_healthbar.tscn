@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://ctkkqy5ievm0g"]
+[gd_scene load_steps=6 format=3 uid="uid://cy5fmoflp5qlg"]
 
 [ext_resource type="Script" path="res://scripts/Optimization/playerHP.gd" id="1_3i8vi"]
 
