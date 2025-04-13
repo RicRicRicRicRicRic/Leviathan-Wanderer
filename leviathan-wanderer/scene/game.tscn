@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://cvm1xsprhoww8" path="res://assets/sprites/prototype graphics.svg" id="2_q3eqi"]
 [ext_resource type="Script" path="res://scripts/Player/camera_2d.gd" id="3_wx7jf"]
 [ext_resource type="PackedScene" uid="uid://btcvab1s88w3u" path="res://scene/fps_counter.tscn" id="4_04w04"]
-[ext_resource type="PackedScene" uid="uid://bmkmj0t35mxxw" path="res://scene/enemyscene/slime.tscn" id="6_eqmec"]
+[ext_resource type="PackedScene" uid="uid://bmkmj0t35mxxw" path="res://scene/enemyscene/slug.tscn" id="6_eqmec"]
 [ext_resource type="PackedScene" uid="uid://cy5fmoflp5qlg" path="res://scene/UI_scenes/Player_healthbar.tscn" id="7_s4vhm"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_n48tu"]
@@ -213,17 +213,12 @@ script = ExtResource("3_wx7jf")
 
 [node name="Slime1" parent="." instance=ExtResource("6_eqmec")]
 position = Vector2(2330, -133)
-collision_layer = 3
-collision_mask = 2
 
 [node name="Slime2" parent="." instance=ExtResource("6_eqmec")]
 position = Vector2(3143, -136)
-collision_layer = 3
-collision_mask = 2
+collision_mask = 3
 
 [node name="CanvasLayer2-playerheatlhbar" parent="." instance=ExtResource("7_s4vhm")]
 
 [node name="Slime3" parent="." instance=ExtResource("6_eqmec")]
 position = Vector2(695, -167)
-collision_layer = 3
-collision_mask = 2

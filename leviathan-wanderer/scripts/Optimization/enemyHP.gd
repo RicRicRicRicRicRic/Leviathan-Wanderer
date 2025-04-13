@@ -15,7 +15,7 @@ var damage_elapsed: float = 0.0
 func _ready() -> void:
 	update_timer.wait_time = 1.0   
 	update_timer.one_shot = true
-	update_timer.timeout.connect(_on_UpdateTimer_timeout)
+
 	if enemy == null:
 		enemy = get_parent()
 
@@ -40,8 +40,3 @@ func _process(delta: float) -> void:
 		if t >= 1.0:
 			depleting = false
 
-func _on_UpdateTimer_timeout() -> void:
-	damage_start_value = damage_bar.value
-	damage_target_value = health_bar.value
-	damage_elapsed = 0.0
-	depleting = true
