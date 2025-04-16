@@ -1,8 +1,10 @@
-[gd_scene load_steps=24 format=3 uid="uid://bmkmj0t35mxxw"]
+[gd_scene load_steps=28 format=3 uid="uid://bmkmj0t35mxxw"]
 
 [ext_resource type="Texture2D" uid="uid://cm7h526ig8swg" path="res://assets/sprites/enemy-sprites/Slug-enemy.svg" id="1_4yip8"]
-[ext_resource type="Script" path="res://scripts/enemy-scripts/slug.gd" id="1_mnw3t"]
+[ext_resource type="Script" path="res://scripts/enemy-scripts/slug/slug.gd" id="1_mnw3t"]
+[ext_resource type="Script" path="res://scripts/enemy-scripts/slug/trail_area.gd" id="3_4tjlb"]
 [ext_resource type="PackedScene" uid="uid://ga1kg4j0ek8b" path="res://scene/UI_scenes/Enemy_healthbar.tscn" id="3_bksd1"]
+[ext_resource type="Script" path="res://scripts/enemy-scripts/slug/slug_trail.gd" id="3_yt56m"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_alc3d"]
 atlas = ExtResource("1_4yip8")
@@ -136,28 +138,37 @@ animations = [{
 "speed": 32.0
 }]
 
+[sub_resource type="Curve" id="Curve_fahm1"]
+_data = [Vector2(0, 0.703297), 0.0, 0.0, 0, 0, Vector2(0.525581, 0.835165), 0.691503, 0.691503, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_dnv7u"]
+offsets = PackedFloat32Array(0, 0.205714, 1)
+colors = PackedColorArray(0.262745, 0.45098, 1, 0.419608, 0.262745, 0.45098, 1, 0.643137, 0.262745, 0.45098, 1, 0.858824)
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4g6j2"]
 radius = 12.012
-height = 60.54
+height = 68.1806
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_v1utt"]
-radius = 16.1905
-height = 93.2721
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f8adj"]
+radius = 15.2381
+height = 102.857
 
-[node name="Slime" type="CharacterBody2D"]
+[node name="Slug" type="CharacterBody2D"]
 physics_interpolation_mode = 1
 texture_filter = 4
+position = Vector2(0, -74)
 scale = Vector2(1.05, 1.05)
 collision_layer = 3
 collision_mask = 2
+safe_margin = 0.001
 script = ExtResource("1_mnw3t")
 
 [node name="Node2D" type="Node2D" parent="."]
-position = Vector2(-0.333333, 12.6667)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Node2D"]
 physics_interpolation_mode = 1
-position = Vector2(0, 5.83333)
+scale = Vector2(1.05, 1.05)
 sprite_frames = SubResource("SpriteFrames_tk01l")
 animation = &"iddle"
 speed_scale = 0.5
@@ -167,20 +178,54 @@ position = Vector2(-93.6667, 28.3333)
 target_position = Vector2(0, 60)
 
 [node name="RayCast2D_wall" type="RayCast2D" parent="Node2D"]
-position = Vector2(-73.9524, 58.7619)
+position = Vector2(-55, 55)
 target_position = Vector2(-120, 0)
+hit_from_inside = true
 
-[node name="DamageArea" type="Area2D" parent="."]
-position = Vector2(0, 6.66667)
+[node name="DamageArea" type="Area2D" parent="Node2D"]
 
-[node name="CollisionPolygon2D_Hitbox" type="CollisionPolygon2D" parent="DamageArea"]
-position = Vector2(0.833333, 65)
-polygon = PackedVector2Array(-18.9286, -90.7143, -1.78571, -34.5238, 57.2619, -23.0952, 69.6429, 14.0476, -52.2619, 12.1429, -52.2619, -24.0476, -62.7381, -85)
+[node name="CollisionPolygon2D_Hitbox" type="CollisionPolygon2D" parent="Node2D/DamageArea"]
+position = Vector2(0, 65)
+polygon = PackedVector2Array(-15.2381, -139.286, 0, -40.2381, 38.0952, -40.2381, 68.5714, -25, 83.8095, 5.47619, -68.5714, 5.47619, -68.5714, -25, -76.1905, -139.286)
+
+[node name="TrailArea" type="Area2D" parent="Node2D"]
+position = Vector2(-45.7143, 70.4762)
+script = ExtResource("3_4tjlb")
+
+[node name="Line2D" type="Line2D" parent="Node2D/TrailArea"]
+physics_interpolation_mode = 1
+top_level = true
+z_index = -1
+texture_filter = 4
+points = PackedVector2Array(72, 0, 13.3105, 0, -48, 0)
+width = 15.0
+width_curve = SubResource("Curve_fahm1")
+default_color = Color(0.262745, 0.45098, 1, 0.776471)
+gradient = SubResource("Gradient_dnv7u")
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+script = ExtResource("3_yt56m")
+
+[node name="CollisionPolygon2D_1" type="CollisionPolygon2D" parent="Node2D/TrailArea"]
+z_index = -3
+position = Vector2(-15.2381, -7.61905)
+polygon = PackedVector2Array(129.524, 7.61904, 129.524, -15.2381, 266.667, -15.2381, 266.667, 7.61905)
+
+[node name="CollisionPolygon2D_2" type="CollisionPolygon2D" parent="Node2D/TrailArea"]
+z_index = -3
+position = Vector2(121.905, -7.61905)
+polygon = PackedVector2Array(129.524, 7.61904, 129.524, -15.2381, 266.667, -15.2381, 266.667, 7.61905)
+
+[node name="CollisionPolygon2D_3" type="CollisionPolygon2D" parent="Node2D/TrailArea"]
+z_index = -3
+position = Vector2(259.048, -7.61905)
+polygon = PackedVector2Array(129.524, 7.61904, 129.524, -15.2381, 266.667, -15.2381, 266.667, 7.61905)
 
 [node name="CollisionShape2D_head" type="CollisionShape2D" parent="."]
 z_index = 1
-position = Vector2(-33.3333, 19.0476)
-rotation = 2.79114
+position = Vector2(-34, 5.00001)
+rotation = 2.91075
 scale = Vector2(1.00248, 1.00248)
 shape = SubResource("CapsuleShape2D_4g6j2")
 
@@ -190,16 +235,13 @@ one_shot = true
 
 [node name="Control" parent="." instance=ExtResource("3_bksd1")]
 offset_left = -49.524
-offset_top = -80.0
+offset_top = -90.0
 offset_right = 50.476
-offset_bottom = -75.0
+offset_bottom = -85.0
 pivot_offset = Vector2(50, 0)
 
-[node name="Damage_timer" type="Timer" parent="."]
-wait_time = 0.1
-one_shot = true
-
 [node name="CollisionShape2D_body" type="CollisionShape2D" parent="."]
-position = Vector2(5.71429, 62.8571)
+z_index = 2
+position = Vector2(9, 55)
 rotation = 1.5708
-shape = SubResource("CapsuleShape2D_v1utt")
+shape = SubResource("CapsuleShape2D_f8adj")

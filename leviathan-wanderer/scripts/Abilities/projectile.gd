@@ -2,8 +2,8 @@
 extends CharacterBody2D
 class_name Projectile
 
-static var SPEED: float = 1500.0
-static var FIRE_RATE: float = 0.15
+static var SPEED: float = 1600.0
+static var FIRE_RATE: float = 0.125
 var dir: float = 0.0
 var spawnPos: Vector2 = Vector2.ZERO
 var spawnRot: float = 0.0
@@ -11,7 +11,7 @@ var last_shot_time: float = -FIRE_RATE
 
 var hit_count: int = 0
 @export var max_hits: int = 3
-@export var damage: int = 25
+@export var damage: float = 22.5
 
 static func shoot(start_pos: Vector2, target: Vector2, projectile_scene: PackedScene, shooter: Node) -> void:
 	var time_now: float = Time.get_ticks_msec() / 1000.0

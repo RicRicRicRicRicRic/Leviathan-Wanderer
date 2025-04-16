@@ -5,7 +5,7 @@ extends "res://scripts/Optimization/Interpolate.gd"
 @export var rising_gravity_multiplier: float = 2.2
 @export var falling_gravity_multiplier: float = 2.2
 @export var knockback_power: float = 1200
-@export var onair_knockback_power: float = 600
+@export var onair_knockback_power: float = 750
 @export var projectile_scene: PackedScene = preload("res://scene/projectile.tscn")
 
 @onready var visuals: Node2D = $Node2D
@@ -24,10 +24,11 @@ var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity") a
 var jump_active: bool = false
 var was_on_floor: bool = true
 
-const JUMP_VELOCITY: float = -975.0
-const TOP_SPEED: float = 600.0
-const ACCELERATION: float = 3000.0
-const DECELERATION: float = 3000.0
+const JUMP_VELOCITY: float = -975.0       
+const TOP_SPEED: float = 600.0             
+const ACCELERATION: float = 3000.0        
+const DECELERATION: float = 3000.0       
+var speed_multiplier: float = 1.0
 
 func _ready() -> void:
 	interp_visuals = visuals
@@ -37,6 +38,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	previous_position = global_position
 	var mouse_pos: Vector2 = get_global_mouse_position()
+
 	if not is_on_floor():
 		if velocity.y < 0.0:
 			velocity.y += gravity * (rising_gravity_multiplier if not JumpHang_Timer.is_stopped() else 1.0) * delta
@@ -47,6 +49,7 @@ func _physics_process(delta: float) -> void:
 			JumpHang_Timer.stop()
 	if jump_active and velocity.y >= 0.0:
 		jump_active = false
+
 	if is_on_floor():
 		was_on_floor = true
 		if not cayote_timer.is_stopped():
@@ -55,9 +58,10 @@ func _physics_process(delta: float) -> void:
 		if was_on_floor:
 			cayote_timer.start()
 			was_on_floor = false
+
 	if Input.is_action_just_pressed("jump"):
 		if (is_on_floor() or not cayote_timer.is_stopped()) and not jump_active:
-			velocity.y = JUMP_VELOCITY
+			velocity.y = JUMP_VELOCITY   
 			JumpHang_Timer.start()
 			cayote_timer.stop()
 			jumpbuffer_timer.stop()
@@ -70,7 +74,8 @@ func _physics_process(delta: float) -> void:
 		jumpbuffer_timer.stop()
 		jump_active = true
 	var direction: float = Input.get_axis("left", "right")
-	velocity.x = move_toward(velocity.x, direction * TOP_SPEED, (ACCELERATION if direction != 0.0 else DECELERATION) * delta)
+	# Apply the speed multiplier to the target speed.
+	velocity.x = move_toward(velocity.x, direction * TOP_SPEED * speed_multiplier, (ACCELERATION if direction != 0.0 else DECELERATION) * delta)
 	main.play("run" if direction != 0.0 else "iddle")
 	visuals.scale.x = -1.0 if mouse_pos.x < global_position.x else 1.0
 	var local_mouse: Vector2 = visuals.to_local(mouse_pos)
@@ -90,7 +95,7 @@ func take_damage(amount: int, enemy_Velocity: Vector2 = Vector2.ZERO) -> void:
 			die()
 
 func die() -> void:
-	current_health = 1000
+	current_health = max_health
 	update_health_bar()
 
 func update_health_bar() -> void:
@@ -106,3 +111,8 @@ func knockback(enemy_Velocity: Vector2):
 	var knockback_direction: Vector2 = (enemy_Velocity - velocity).normalized() * current_knockback
 	velocity = knockback_direction
 	move_and_slide()
+
+func apply_slow(multiplier: float):
+	speed_multiplier = multiplier
+func reset_speed():
+	speed_multiplier = 1.0

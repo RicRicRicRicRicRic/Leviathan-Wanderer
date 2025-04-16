@@ -1,8 +1,8 @@
 #slug.gd
 extends "res://scripts/Optimization/Interpolate.gd"
 
-const SPEED: float = 380.0
-const GRAVITY: float = 980.0
+const SPEED: float = 380.0           
+const GRAVITY: float = 980.0         
 
 @export var max_health: int = 475
 var health: int = max_health
@@ -11,11 +11,10 @@ var health: int = max_health
 @onready var slime_main: AnimatedSprite2D = visuals.get_node("AnimatedSprite2D") as AnimatedSprite2D
 @onready var raycast_wall: RayCast2D = visuals.get_node("RayCast2D_wall") as RayCast2D
 @onready var raycast_fall: RayCast2D = visuals.get_node("RayCast2D_height") as RayCast2D
+@onready var damage_area: Area2D = visuals.get_node("DamageArea") as Area2D
 @onready var head_collision: CollisionShape2D = $CollisionShape2D_head
 @onready var body_collision: CollisionShape2D = $CollisionShape2D_body
-@onready var damage_area: Area2D = $DamageArea
 @onready var Time_before_turn: Timer = $Timer
-@onready var Damage_timer: Timer = $Timer
 
 var head_original_x: float
 var head_original_rot_deg: float
@@ -61,14 +60,16 @@ func _physics_process(delta: float) -> void:
 	var wall_detected: bool = raycast_wall.is_colliding()
 	var fall_detected: bool = not raycast_fall.is_colliding()
 	var should_turn: bool = (wall_detected or fall_detected)
+
 	if should_turn and not was_colliding and Time_before_turn.is_stopped():
 		Time_before_turn.start()
 		should_flip = true
-		velocity.x = 0.0 
+		velocity.x = 0.0  
 		slime_main.play("iddle")
 	elif not should_turn:
 		Time_before_turn.stop()
 		should_flip = false
+
 	if Time_before_turn.is_stopped():
 		velocity.x = SPEED * direction
 		visuals.scale.x = 1.0 if direction == -1 else -1.0
@@ -85,14 +86,14 @@ func _on_Timer_timeout() -> void:
 
 func _on_DamageArea_body_entered(body: Node) -> void:
 	if body.is_in_group("player"):
+		var knock_dir: Vector2 = Vector2.ZERO
+		var diff: Vector2 = body.global_position - global_position
+		if diff.length() > 0:
+			knock_dir = diff.normalized()
+		else:
+			knock_dir = Vector2(-direction, 0)
+		body.knockback(knock_dir)
 		body.take_damage(65)
-		body.knockback(self.velocity)
-		Damage_timer.start()
-
-func _on_DamageArea_body_exited(body: Node) -> void:
-	if body == player_in_contact:
-		player_in_contact = null
-		Damage_timer.stop()
 
 func take_damage(amount: int) -> void:
 	health = max(health - amount, 0)
