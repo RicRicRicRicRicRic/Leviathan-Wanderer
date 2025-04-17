@@ -7,21 +7,24 @@ const GRAVITY: float = 980.0
 @export var max_health: int = 475
 var health: int = max_health
 
-@onready var visuals         := $Node2D
-@onready var trail_area      := visuals.get_node("TrailArea")          as Node
-@onready var slime_main      := visuals.get_node("AnimatedSprite2D")    as AnimatedSprite2D
-@onready var raycast_wall    := visuals.get_node("RayCast2D_wall")     as RayCast2D
-@onready var raycast_fall    := visuals.get_node("RayCast2D_height")   as RayCast2D
-@onready var damage_area     := visuals.get_node("DamageArea")         as Area2D
-@onready var collision_shape := $CollisionPolygon2D_collider             as CollisionPolygon2D
-@onready var turn_timer      := $Timer                                 as Timer
+@onready var visuals := $Node2D
+@onready var trail_area := visuals.get_node("TrailArea") as Node
+@onready var slime_main := visuals.get_node("AnimatedSprite2D") as AnimatedSprite2D
+@onready var raycast_wall := visuals.get_node("RayCast2D_wall") as RayCast2D
+@onready var raycast_fall := visuals.get_node("RayCast2D_height") as RayCast2D
+@onready var damage_area := visuals.get_node("DamageArea") as Area2D
+@onready var collision_shape := $CollisionPolygon2D_collider as CollisionPolygon2D
+@onready var turn_timer := $Timer as Timer
+@export var projectile_scene: PackedScene = preload("res://scene/enemyscene/slug/slug_healing_orbs.tscn")
 
+var orb_spawned: bool = false
 var collision_original_x: float
 var direction: int       = -1
 var was_colliding: bool  = false
 var should_flip: bool    = false
 
 func _ready() -> void:
+	randomize()
 	interp_visuals = visuals
 	previous_position = global_position
 	add_to_group("enemy")
@@ -97,5 +100,18 @@ func _on_DamageArea_body_entered(body: Node) -> void:
 
 func take_damage(amount: int) -> void:
 	health = max(health - amount, 0)
-	if health <= 0:
+	if health <= 0 and not orb_spawned:
+		orb_spawned = true
 		queue_free()
+		spawn_healing_orbs()
+
+func heal(amount: float) -> void:
+	health = min(health + amount, max_health)
+
+func spawn_healing_orbs() -> void:
+	var count = randi_range(5, 8)
+	for i in range(count):
+		var orb = projectile_scene.instantiate() as RigidBody2D
+		get_parent().add_child(orb)
+		orb.global_position = global_position
+		orb.add_to_group("healing_orb")

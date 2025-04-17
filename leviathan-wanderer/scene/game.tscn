@@ -4,9 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://cts5lf6x30syo" path="res://assets/sprites/world_tileset.png" id="2_1et6v"]
 [ext_resource type="Texture2D" uid="uid://cvm1xsprhoww8" path="res://assets/sprites/prototype graphics.svg" id="2_q3eqi"]
 [ext_resource type="Script" path="res://scripts/Player/camera_2d.gd" id="3_wx7jf"]
-[ext_resource type="PackedScene" uid="uid://btcvab1s88w3u" path="res://scene/fps_counter.tscn" id="4_04w04"]
+[ext_resource type="PackedScene" uid="uid://btcvab1s88w3u" path="res://scene/UI_scenes/fps_counter.tscn" id="4_04w04"]
 [ext_resource type="PackedScene" uid="uid://cy5fmoflp5qlg" path="res://scene/UI_scenes/Player_healthbar.tscn" id="7_s4vhm"]
-[ext_resource type="PackedScene" uid="uid://bmkmj0t35mxxw" path="res://scene/enemyscene/slug.tscn" id="7_w4mmo"]
+[ext_resource type="PackedScene" uid="uid://bmkmj0t35mxxw" path="res://scene/enemyscene/slug/slug.tscn" id="7_w4mmo"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_n48tu"]
 texture = ExtResource("2_1et6v")
@@ -199,7 +199,7 @@ tile_map_data = PackedByteArray("AAD//wAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAEAAQAAAAA
 tile_set = SubResource("TileSet_j1i1r")
 
 [node name="Player" parent="." instance=ExtResource("1_j7gx8")]
-position = Vector2(1744, -280)
+position = Vector2(720, -280)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(0, -156)
@@ -221,4 +221,4 @@ position = Vector2(2056, -80)
 position = Vector2(2512, -136)
 
 [node name="Slug3" parent="." instance=ExtResource("7_w4mmo")]
-position = Vector2(16, -152)
+position = Vector2(1728, -248)

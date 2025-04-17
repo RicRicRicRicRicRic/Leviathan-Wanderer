@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://ni4rvm1b4puh"]
+
+[ext_resource type="Script" path="res://scripts/enemy-scripts/slug/slug_healing_orbs.gd" id="1_58q28"]
+[ext_resource type="Texture2D" uid="uid://cm7h526ig8swg" path="res://assets/sprites/enemy-sprites/Slug-enemy.svg" id="2_ad6a3"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_p53pd"]
+bounce = 0.35
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gr25n"]
+radius = 13.0
+
+[node name="RigidBody2D" type="RigidBody2D"]
+collision_layer = 2
+physics_material_override = SubResource("PhysicsMaterial_p53pd")
+script = ExtResource("1_58q28")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 2
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_ad6a3")
+region_enabled = true
+region_rect = Rect2(48.261, 531.261, 64.478, 64.478)
+
+[node name="Line2D" type="Line2D" parent="Sprite2D"]
+scale = Vector2(2, 2)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_gr25n")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 6.0
+one_shot = true

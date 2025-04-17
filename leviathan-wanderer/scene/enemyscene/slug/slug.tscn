@@ -151,8 +151,6 @@ physics_interpolation_mode = 1
 texture_filter = 4
 position = Vector2(0, -74)
 scale = Vector2(1.05, 1.05)
-collision_layer = 3
-collision_mask = 2
 safe_margin = 0.001
 script = ExtResource("1_mnw3t")
 
@@ -230,5 +228,5 @@ pivot_offset = Vector2(50, 0)
 polygon = PackedVector2Array(-45.7143, 70.4762, -60.9524, -36.1905, -30.4762, -36.1905, -7.61905, 24.7619, 0, 32.381, 30.4762, 32.381, 53.3333, 40, 68.5714, 70.4762)
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-position = Vector2(3.8147e-06, -28.5714)
+position = Vector2(0.000145674, -28.5714)
 scale = Vector2(11.4286, 9.90476)
