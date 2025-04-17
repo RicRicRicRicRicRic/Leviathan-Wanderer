@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://bmkmj0t35mxxw"]
+[gd_scene load_steps=26 format=3 uid="uid://bmkmj0t35mxxw"]
 
 [ext_resource type="Texture2D" uid="uid://cm7h526ig8swg" path="res://assets/sprites/enemy-sprites/Slug-enemy.svg" id="1_4yip8"]
 [ext_resource type="Script" path="res://scripts/enemy-scripts/slug/slug.gd" id="1_mnw3t"]
@@ -146,14 +146,6 @@ point_count = 3
 offsets = PackedFloat32Array(0, 0.205714, 1)
 colors = PackedColorArray(0.262745, 0.45098, 1, 0.419608, 0.262745, 0.45098, 1, 0.643137, 0.262745, 0.45098, 1, 0.858824)
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4g6j2"]
-radius = 12.012
-height = 68.1806
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f8adj"]
-radius = 15.2381
-height = 102.857
-
 [node name="Slug" type="CharacterBody2D"]
 physics_interpolation_mode = 1
 texture_filter = 4
@@ -168,6 +160,7 @@ script = ExtResource("1_mnw3t")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Node2D"]
 physics_interpolation_mode = 1
+position = Vector2(0, 1.90476)
 scale = Vector2(1.05, 1.05)
 sprite_frames = SubResource("SpriteFrames_tk01l")
 animation = &"iddle"
@@ -186,6 +179,7 @@ hit_from_inside = true
 
 [node name="CollisionPolygon2D_Hitbox" type="CollisionPolygon2D" parent="Node2D/DamageArea"]
 position = Vector2(0, 65)
+build_mode = 1
 polygon = PackedVector2Array(-15.2381, -139.286, 0, -40.2381, 38.0952, -40.2381, 68.5714, -25, 83.8095, 5.47619, -68.5714, 5.47619, -68.5714, -25, -76.1905, -139.286)
 
 [node name="TrailArea" type="Area2D" parent="Node2D"]
@@ -210,24 +204,20 @@ script = ExtResource("3_yt56m")
 [node name="CollisionPolygon2D_1" type="CollisionPolygon2D" parent="Node2D/TrailArea"]
 z_index = -3
 position = Vector2(-15.2381, -7.61905)
+build_mode = 1
 polygon = PackedVector2Array(129.524, 7.61904, 129.524, -15.2381, 266.667, -15.2381, 266.667, 7.61905)
 
 [node name="CollisionPolygon2D_2" type="CollisionPolygon2D" parent="Node2D/TrailArea"]
 z_index = -3
 position = Vector2(121.905, -7.61905)
+build_mode = 1
 polygon = PackedVector2Array(129.524, 7.61904, 129.524, -15.2381, 266.667, -15.2381, 266.667, 7.61905)
 
 [node name="CollisionPolygon2D_3" type="CollisionPolygon2D" parent="Node2D/TrailArea"]
 z_index = -3
 position = Vector2(259.048, -7.61905)
+build_mode = 1
 polygon = PackedVector2Array(129.524, 7.61904, 129.524, -15.2381, 266.667, -15.2381, 266.667, 7.61905)
-
-[node name="CollisionShape2D_head" type="CollisionShape2D" parent="."]
-z_index = 1
-position = Vector2(-34, 5.00001)
-rotation = 2.91075
-scale = Vector2(1.00248, 1.00248)
-shape = SubResource("CapsuleShape2D_4g6j2")
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.75
@@ -240,12 +230,10 @@ offset_right = 50.476
 offset_bottom = -85.0
 pivot_offset = Vector2(50, 0)
 
-[node name="CollisionShape2D_body" type="CollisionShape2D" parent="."]
-z_index = 2
-position = Vector2(9, 55)
-rotation = 1.5708
-shape = SubResource("CapsuleShape2D_f8adj")
+[node name="CollisionPolygon2D_collider" type="CollisionPolygon2D" parent="."]
+build_mode = 1
+polygon = PackedVector2Array(-45.7143, 70.4762, -60.9524, -36.1905, -30.4762, -36.1905, -7.61905, 24.7619, 0, 32.381, 30.4762, 32.381, 53.3333, 40, 68.5714, 70.4762)
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-position = Vector2(-1.90478, -19.0476)
-scale = Vector2(13.1429, 9.33333)
+position = Vector2(3.8147e-06, -28.5714)
+scale = Vector2(11.4286, 9.90476)

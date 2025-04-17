@@ -64,10 +64,7 @@ Cast={
 ]
 }
 
-[physics]
-
-2d/physics_engine="Rapier2D"
-
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+occlusion_culling/use_occlusion_culling=true

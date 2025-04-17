@@ -219,3 +219,6 @@ position = Vector2(2056, -80)
 
 [node name="Slug2" parent="." instance=ExtResource("7_w4mmo")]
 position = Vector2(2512, -136)
+
+[node name="Slug3" parent="." instance=ExtResource("7_w4mmo")]
+position = Vector2(16, -152)
