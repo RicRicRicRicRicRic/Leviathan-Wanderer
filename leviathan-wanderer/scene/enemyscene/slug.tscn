@@ -245,3 +245,7 @@ z_index = 2
 position = Vector2(9, 55)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_f8adj")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-1.90478, -19.0476)
+scale = Vector2(13.1429, 9.33333)
