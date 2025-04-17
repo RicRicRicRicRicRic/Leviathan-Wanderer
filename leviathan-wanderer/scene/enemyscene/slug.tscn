@@ -179,7 +179,6 @@ hit_from_inside = true
 
 [node name="CollisionPolygon2D_Hitbox" type="CollisionPolygon2D" parent="Node2D/DamageArea"]
 position = Vector2(0, 65)
-build_mode = 1
 polygon = PackedVector2Array(-15.2381, -139.286, 0, -40.2381, 38.0952, -40.2381, 68.5714, -25, 83.8095, 5.47619, -68.5714, 5.47619, -68.5714, -25, -76.1905, -139.286)
 
 [node name="TrailArea" type="Area2D" parent="Node2D"]
@@ -204,19 +203,16 @@ script = ExtResource("3_yt56m")
 [node name="CollisionPolygon2D_1" type="CollisionPolygon2D" parent="Node2D/TrailArea"]
 z_index = -3
 position = Vector2(-15.2381, -7.61905)
-build_mode = 1
 polygon = PackedVector2Array(129.524, 7.61904, 129.524, -15.2381, 266.667, -15.2381, 266.667, 7.61905)
 
 [node name="CollisionPolygon2D_2" type="CollisionPolygon2D" parent="Node2D/TrailArea"]
 z_index = -3
 position = Vector2(121.905, -7.61905)
-build_mode = 1
 polygon = PackedVector2Array(129.524, 7.61904, 129.524, -15.2381, 266.667, -15.2381, 266.667, 7.61905)
 
 [node name="CollisionPolygon2D_3" type="CollisionPolygon2D" parent="Node2D/TrailArea"]
 z_index = -3
 position = Vector2(259.048, -7.61905)
-build_mode = 1
 polygon = PackedVector2Array(129.524, 7.61904, 129.524, -15.2381, 266.667, -15.2381, 266.667, 7.61905)
 
 [node name="Timer" type="Timer" parent="."]
@@ -231,7 +227,6 @@ offset_bottom = -85.0
 pivot_offset = Vector2(50, 0)
 
 [node name="CollisionPolygon2D_collider" type="CollisionPolygon2D" parent="."]
-build_mode = 1
 polygon = PackedVector2Array(-45.7143, 70.4762, -60.9524, -36.1905, -30.4762, -36.1905, -7.61905, 24.7619, 0, 32.381, 30.4762, 32.381, 53.3333, 40, 68.5714, 70.4762)
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
