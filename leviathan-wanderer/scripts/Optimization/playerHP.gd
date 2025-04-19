@@ -2,10 +2,9 @@
 extends Control
 
 @onready var player: Node = get_tree().get_first_node_in_group("player")
-
-@onready var health_bar: ProgressBar = $ProgressBar_health
-@onready var damage_bar: ProgressBar = $ProgressBar_health/ProgressBar_damage
-@onready var update_timer: Timer = $Timer
+@onready var health_bar: ProgressBar = $ProgressBar_health as ProgressBar
+@onready var damage_bar: ProgressBar = $ProgressBar_health/ProgressBar_damage as ProgressBar
+@onready var update_timer: Timer = $Timer as Timer
 
 var depleting: bool = false
 var damage_start_value: float = 0.0
@@ -27,7 +26,6 @@ func _process(delta: float) -> void:
 		damage_elapsed += delta
 		var t: float = clamp(damage_elapsed / update_timer.wait_time, 0.0, 1.0)
 		damage_bar.value = lerp(damage_start_value, damage_target_value, t)
-
 		if t >= 1.0:
 			depleting = false
 

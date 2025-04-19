@@ -1,48 +1,55 @@
 [gd_scene load_steps=7 format=3 uid="uid://1smoe1vf8d2c"]
 
-[ext_resource type="Script" path="res://scripts/Abilities/projectile.gd" id="1_arsow"]
-[ext_resource type="Texture2D" uid="uid://c17lu264e832b" path="res://icon.svg" id="2_30aqd"]
+[ext_resource type="Script" uid="uid://bqb5mh0cm4ik" path="res://scripts/Abilities/projectile.gd" id="1_arsow"]
+[ext_resource type="Texture2D" uid="uid://cge20l2aafkuh" path="res://assets/sprites/MainChar.svg" id="2_u6xv6"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_jdrf7"]
-atlas = ExtResource("2_30aqd")
-region = Rect2(0, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_mu0s5"]
-atlas = ExtResource("2_30aqd")
-region = Rect2(0, 0, 128, 128)
+[sub_resource type="AtlasTexture" id="AtlasTexture_c0tm2"]
+atlas = ExtResource("2_u6xv6")
+region = Rect2(0, 1449, 161, 161)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_j6tqu"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_jdrf7")
+"texture": SubResource("AtlasTexture_c0tm2")
 }],
 "loop": true,
-"name": &"2nd_test",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_mu0s5")
-}],
-"loop": true,
-"name": &"Test_bullet",
+"name": &"Proj_shoot",
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5u5y4"]
-size = Vector2(61.7931, 61.7931)
+[sub_resource type="CircleShape2D" id="CircleShape2D_ujo14"]
 
-[node name="Projectile" type="CharacterBody2D"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_u6xv6"]
+particle_flag_disable_z = true
+particle_flag_damping_as_friction = true
+initial_velocity_min = 37.91
+initial_velocity_max = 106.14
+gravity = Vector3(0, 0, 0)
+scale_min = 8.0
+scale_max = 8.0
+color = Color(0, 1, 1, 1)
+
+[node name="Projectile" type="RigidBody2D"]
+collision_mask = 3
+gravity_scale = 0.0
 script = ExtResource("1_arsow")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+self_modulate = Color(2, 2, 2, 1)
+texture_filter = 2
 position = Vector2(1.43051e-06, -1.43051e-06)
-scale = Vector2(0.242188, 0.242188)
+scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_j6tqu")
-animation = &"2nd_test"
+animation = &"Proj_shoot"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-3.57628e-07, 3.57628e-07)
-scale = Vector2(0.453125, 0.453125)
-shape = SubResource("RectangleShape2D_5u5y4")
+shape = SubResource("CircleShape2D_ujo14")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+self_modulate = Color(2, 2, 2, 1)
+z_index = -1
+position = Vector2(1.43051e-06, -1.43051e-06)
+scale = Vector2(0.4, 0.4)
+amount = 12
+process_material = SubResource("ParticleProcessMaterial_u6xv6")

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://btcvab1s88w3u"]
 
-[ext_resource type="Script" path="res://scripts/Optimization/fps_counter.gd" id="1_ka32h"]
+[ext_resource type="Script" uid="uid://b6gmanak1vxyc" path="res://scripts/Optimization/fps_counter.gd" id="1_ka32h"]
 
 [node name="CanvasLayer" type="CanvasLayer"]
 
