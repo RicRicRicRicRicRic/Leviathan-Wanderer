@@ -57,7 +57,7 @@ func _on_slug_flipped() -> void:
 
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("player"):
-		body.apply_slow(0.5)
+		body.apply_slow(0.35)
 
 func _on_body_exited(body: Node) -> void:
 	if body.is_in_group("player"):
