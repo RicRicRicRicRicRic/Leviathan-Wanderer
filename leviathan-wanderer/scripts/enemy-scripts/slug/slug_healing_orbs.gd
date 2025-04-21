@@ -1,8 +1,8 @@
 # slug_healing_orbs.gd
 extends RigidBody2D
 
-@export var min_speed: float = 175.0
-@export var max_speed: float = 225.0
+@export var min_speed: float = 250.0
+@export var max_speed: float = 300.0
 @export var homing_speed: float = 600.0
 @export var heal_amount: float = 65.0
 @export var scan_radius: float = 550.0

@@ -1,7 +1,8 @@
-[gd_scene load_steps=54 format=3 uid="uid://rou3hvjvk4pe"]
+[gd_scene load_steps=55 format=3 uid="uid://rou3hvjvk4pe"]
 
 [ext_resource type="Texture2D" uid="uid://cge20l2aafkuh" path="res://assets/sprites/MainChar.svg" id="1_h0ky5"]
 [ext_resource type="Script" uid="uid://bakpi8c5mrky7" path="res://scripts/Player/player.gd" id="1_i8rfg"]
+[ext_resource type="Script" uid="uid://cfgob8p3djlkd" path="res://scripts/Player/animations.gd" id="3_fvtld"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_17xc2"]
 atlas = ExtResource("1_h0ky5")
@@ -277,7 +278,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_n3008")
 }, {
-"duration": 1.0,
+"duration": 1000.0,
 "texture": SubResource("AtlasTexture_xj5ck")
 }],
 "loop": false,
@@ -409,10 +410,9 @@ sprite_frames = SubResource("SpriteFrames_c4eut")
 z_index = 1
 position = Vector2(0, -68)
 sprite_frames = SubResource("SpriteFrames_x305y")
-animation = &"jump_acce"
+animation = &"jump_decce"
 autoplay = "iddle"
-frame = 4
-frame_progress = 1.0
+script = ExtResource("3_fvtld")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 2
