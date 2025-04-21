@@ -7,7 +7,7 @@
 bounce = 0.35
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gr25n"]
-radius = 13.0
+radius = 9.0
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_kflhe"]
 particle_flag_disable_z = true
@@ -28,7 +28,7 @@ script = ExtResource("1_58q28")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 self_modulate = Color(1.75, 1.75, 1.75, 1)
 texture_filter = 2
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.35, 0.35)
 texture = ExtResource("2_ad6a3")
 region_enabled = true
 region_rect = Rect2(48.261, 531.261, 64.478, 64.478)

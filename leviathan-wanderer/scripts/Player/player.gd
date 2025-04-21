@@ -42,13 +42,13 @@ func _ready() -> void:
 	time_to_fall = sqrt(2.0 * _jump_height / (gravity * falling_gravity_multiplier))
 	
 	main.time_to_apex = time_to_apex
-	main.jump_hang_duration = jump_hang_duration
+	main.jump_hang_duration = JumpHang_Timer.wait_time
 	main.time_to_fall = time_to_fall
 
 	interp_visuals = visuals
 	previous_position = global_position
 	add_to_group("player")
-	JumpHang_Timer.wait_time = jump_hang_duration
+
 
 func _physics_process(delta: float) -> void:
 	previous_position = global_position

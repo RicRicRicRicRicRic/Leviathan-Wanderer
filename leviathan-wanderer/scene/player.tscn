@@ -301,7 +301,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_4uieu")
 }, {
-"duration": 1.0,
+"duration": 1000.0,
 "texture": SubResource("AtlasTexture_5wapc")
 }],
 "loop": false,
@@ -410,7 +410,7 @@ sprite_frames = SubResource("SpriteFrames_c4eut")
 z_index = 1
 position = Vector2(0, -68)
 sprite_frames = SubResource("SpriteFrames_x305y")
-animation = &"jump_decce"
+animation = &"jump_hang"
 autoplay = "iddle"
 script = ExtResource("3_fvtld")
 
