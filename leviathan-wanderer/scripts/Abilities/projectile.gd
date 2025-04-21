@@ -2,7 +2,7 @@
 extends RigidBody2D
 class_name Projectile
 
-static var SPEED: float = 1100.0
+static var SPEED: float = 1200.0
 static var FIRE_RATE: float = 0.125
 
 var dir: float = 0.0
@@ -10,8 +10,9 @@ var spawnPos: Vector2 = Vector2.ZERO
 var spawnRot: float = 0.0
 var hit_count: int = 0
 @export var max_hits: int = 10
-@export var damage: float = 45.0
+@export var damage: float = 40
 
+@onready var delete_timer: Timer = $Timer
 @onready var anisprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collider: CollisionShape2D = $CollisionShape2D
 
@@ -38,9 +39,9 @@ static func shoot(start_pos: Vector2, target: Vector2, projectile_scene: PackedS
 	scene.add_child(proj)
 
 func _ready() -> void:
+	delete_timer.timeout.connect(_on_delete_timer_timeout)
 	global_position = spawnPos
 	global_rotation = spawnRot
-	add_to_group("projectile")
 	add_to_group("projectiles")
 	contact_monitor = true
 	max_contacts_reported = max_hits
@@ -56,3 +57,8 @@ func _on_body_entered(body: Node) -> void:
 	anisprite.queue_free()
 	collider.queue_free()
 	$GPUParticles2D.emitting = false
+	if not $GPUParticles2D.emitting:
+		delete_timer.start()
+
+func _on_delete_timer_timeout() -> void:
+	queue_free()

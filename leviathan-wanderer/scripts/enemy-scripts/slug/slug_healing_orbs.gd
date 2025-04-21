@@ -7,7 +7,8 @@ extends RigidBody2D
 @export var heal_amount: float = 65.0
 @export var scan_radius: float = 550.0
 
-@onready var despawn_timer: Timer = $Timer
+@onready var despawn_timer: Timer = $Timer_despawn
+@onready var delete_timer: Timer = $Timer_delete
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var collider: CollisionShape2D = $CollisionShape2D
 var homing_target: Node2D = null
@@ -63,8 +64,8 @@ func remove_orb() -> void:
 	if is_instance_valid(collider):collider.queue_free()
 	$GPUParticles2D.emitting = false
 	if not $GPUParticles2D.emitting:
-		var delay_timer: Timer = Timer.new()
-		delay_timer.wait_time = 3
-		delay_timer.one_shot = true
-		delay_timer.timeout.connect(func(): queue_free())
-		add_child(delay_timer)
+		delete_timer.timeout.connect(_on_delete_timer_timeout)
+		delete_timer.start()
+
+func _on_delete_timer_timeout() -> void:
+	queue_free()

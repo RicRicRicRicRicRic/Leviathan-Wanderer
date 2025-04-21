@@ -21,8 +21,7 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_ujo14"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_u6xv6"]
-particle_flag_disable_z = true
-particle_flag_damping_as_friction = true
+lifetime_randomness = 0.5
 initial_velocity_min = 37.91
 initial_velocity_max = 106.14
 gravity = Vector3(0, 0, 0)
@@ -31,7 +30,7 @@ scale_max = 8.0
 color = Color(0, 1, 1, 1)
 
 [node name="Projectile" type="RigidBody2D"]
-collision_mask = 3
+collision_layer = 4
 gravity_scale = 0.0
 script = ExtResource("1_arsow")
 
@@ -49,7 +48,9 @@ shape = SubResource("CircleShape2D_ujo14")
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 self_modulate = Color(2, 2, 2, 1)
 z_index = -1
-position = Vector2(1.43051e-06, -1.43051e-06)
 scale = Vector2(0.4, 0.4)
-amount = 12
+speed_scale = 3.0
 process_material = SubResource("ParticleProcessMaterial_u6xv6")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true

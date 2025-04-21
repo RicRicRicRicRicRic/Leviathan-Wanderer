@@ -21,6 +21,7 @@ color = Color(0.217149, 0.597039, 0.321605, 1)
 
 [node name="RigidBody2D" type="RigidBody2D"]
 collision_layer = 0
+collision_mask = 5
 physics_material_override = SubResource("PhysicsMaterial_p53pd")
 script = ExtResource("1_58q28")
 
@@ -35,12 +36,16 @@ region_rect = Rect2(48.261, 531.261, 64.478, 64.478)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_gr25n")
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 8.0
-one_shot = true
-
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 self_modulate = Color(2.5, 2.5, 2.5, 1)
 z_index = -1
 scale = Vector2(0.5, 0.5)
 process_material = SubResource("ParticleProcessMaterial_kflhe")
+
+[node name="Timer_delete" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="Timer_despawn" type="Timer" parent="."]
+wait_time = 8.0
+one_shot = true
