@@ -9,10 +9,13 @@ extends RigidBody2D
 
 @onready var despawn_timer: Timer = $Timer_despawn
 @onready var delete_timer: Timer = $Timer_delete
+@onready var orb_delay: Timer = $Timer_delay
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var collider: CollisionShape2D = $CollisionShape2D
+
 var homing_target: Node2D = null
 var _removed: bool = false
+var _can_scan: bool = false
 
 func _ready() -> void:
 	randomize()
@@ -27,21 +30,27 @@ func _ready() -> void:
 	despawn_timer.timeout.connect(_on_despawn_timer_timeout)
 	despawn_timer.start()
 
+	orb_delay.timeout.connect(_on_orb_delay_timeout)
+	orb_delay.start()
+
+func _on_orb_delay_timeout() -> void:
+	_can_scan = true
+
 func _physics_process(_delta: float) -> void:
 	if homing_target != null:
 		if not is_instance_valid(homing_target) or homing_target.health >= homing_target.max_health:
 			homing_target = null
 
-	if homing_target == null:
-		var nearest_dist := INF
+	if _can_scan and homing_target == null:
+		var nearest_dist: float = INF
 		for enemy in get_tree().get_nodes_in_group("enemy"):
 			if enemy.health < enemy.max_health:
-				var d := global_position.distance_to(enemy.global_position)
+				var d: float = global_position.distance_to(enemy.global_position)
 				if d <= scan_radius and d < nearest_dist:
 					nearest_dist = d
 					homing_target = enemy
 
-	if homing_target != null:
+	if homing_target != null and _can_scan:
 		var dir_vec: Vector2 = (homing_target.global_position - global_position).normalized()
 		linear_velocity = dir_vec * homing_speed
 
@@ -60,8 +69,10 @@ func remove_orb() -> void:
 	if _removed:
 		return
 	_removed = true
-	if is_instance_valid(sprite):sprite.queue_free()
-	if is_instance_valid(collider):collider.queue_free()
+	if is_instance_valid(sprite):
+		sprite.queue_free()
+	if is_instance_valid(collider):
+		collider.queue_free()
 	$GPUParticles2D.emitting = false
 	if not $GPUParticles2D.emitting:
 		delete_timer.timeout.connect(_on_delete_timer_timeout)

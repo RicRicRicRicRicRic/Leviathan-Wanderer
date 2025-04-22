@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=3 uid="uid://b6ca6kqgnvud3"]
+
+[ext_resource type="Script" uid="uid://dvl6oatx522tn" path="res://scripts/enemy-scripts/Jellyfish/electric_orbs.gd" id="1_do163"]
+[ext_resource type="Texture2D" uid="uid://cv633dfykpsuh" path="res://assets/sprites/enemy-sprites/jellyfish-enemy.svg" id="1_snfii"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_do163"]
+radius = 15.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_do163"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 98, 0)
+scale_min = 8.0
+scale_max = 8.0
+color = Color(1, 0, 1, 1)
+
+[node name="electric_orbs" type="RigidBody2D"]
+texture_filter = 2
+collision_layer = 4
+collision_mask = 9
+gravity_scale = 0.0
+script = ExtResource("1_do163")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(1.8, 1.8, 1.8, 1)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("1_snfii")
+region_enabled = true
+region_rect = Rect2(56, 1022, 49, 49)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_do163")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+self_modulate = Color(1.75, 1.75, 1.75, 1)
+z_index = -1
+process_material = SubResource("ParticleProcessMaterial_do163")
+
+[node name="Timer_despawn" type="Timer" parent="."]
+one_shot = true
+
+[node name="Timer_fire_rate" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true

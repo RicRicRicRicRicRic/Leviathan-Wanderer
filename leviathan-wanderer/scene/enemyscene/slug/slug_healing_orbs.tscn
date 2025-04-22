@@ -21,12 +21,13 @@ color = Color(0.217149, 0.597039, 0.321605, 1)
 
 [node name="RigidBody2D" type="RigidBody2D"]
 collision_layer = 0
-collision_mask = 5
+collision_mask = 7
 physics_material_override = SubResource("PhysicsMaterial_p53pd")
+gravity_scale = 0.0
 script = ExtResource("1_58q28")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-self_modulate = Color(1.75, 1.75, 1.75, 1)
+self_modulate = Color(2.25, 2.25, 2.25, 1)
 texture_filter = 2
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("2_ad6a3")
@@ -48,4 +49,8 @@ one_shot = true
 
 [node name="Timer_despawn" type="Timer" parent="."]
 wait_time = 8.0
+one_shot = true
+
+[node name="Timer_delay" type="Timer" parent="."]
+wait_time = 0.75
 one_shot = true

@@ -1,12 +1,13 @@
-[gd_scene load_steps=12 format=4 uid="uid://dcj28xdm2bjh5"]
+[gd_scene load_steps=13 format=4 uid="uid://dcj28xdm2bjh5"]
 
 [ext_resource type="PackedScene" uid="uid://rou3hvjvk4pe" path="res://scene/player.tscn" id="1_j7gx8"]
 [ext_resource type="Texture2D" uid="uid://cts5lf6x30syo" path="res://assets/sprites/world_tileset.png" id="2_1et6v"]
 [ext_resource type="Texture2D" uid="uid://cvm1xsprhoww8" path="res://assets/sprites/prototype graphics.svg" id="2_q3eqi"]
 [ext_resource type="Script" uid="uid://cp3fn6n5oq7nr" path="res://scripts/Player/camera_2d.gd" id="3_wx7jf"]
-[ext_resource type="PackedScene" uid="uid://btcvab1s88w3u" path="res://scene/fps_counter.tscn" id="4_04w04"]
+[ext_resource type="PackedScene" path="res://scene/fps_counter.tscn" id="4_04w04"]
 [ext_resource type="PackedScene" uid="uid://cy5fmoflp5qlg" path="res://scene/UI_scenes/Player_healthbar.tscn" id="7_s4vhm"]
 [ext_resource type="PackedScene" uid="uid://bmkmj0t35mxxw" path="res://scene/enemyscene/slug/slug.tscn" id="7_w4mmo"]
+[ext_resource type="PackedScene" uid="uid://e5ntgsa4ifr0" path="res://scene/enemyscene/jellyfish/jellyfish.tscn" id="8_ll5lq"]
 
 [sub_resource type="Environment" id="Environment_jaaoi"]
 background_mode = 3
@@ -208,7 +209,7 @@ tile_map_data = PackedByteArray("AAD//wAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAEAAQAAAAA
 tile_set = SubResource("TileSet_j1i1r")
 
 [node name="Player" parent="." instance=ExtResource("1_j7gx8")]
-position = Vector2(1738, -334)
+position = Vector2(1734, -242)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(0, -156)
@@ -234,3 +235,9 @@ position = Vector2(262, -131)
 
 [node name="Slug4" parent="." instance=ExtResource("7_w4mmo")]
 position = Vector2(-848, -133)
+
+[node name="Jellyfish" parent="." instance=ExtResource("8_ll5lq")]
+position = Vector2(1459, -654)
+
+[node name="Jellyfish2" parent="." instance=ExtResource("8_ll5lq")]
+position = Vector2(1094, -634)
