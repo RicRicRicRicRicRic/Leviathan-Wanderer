@@ -22,7 +22,7 @@ var hover_direction: int = 1
 @onready var timer_hover: Timer = $Timer_hover
 @onready var collision_shape: CollisionPolygon2D = $CollisionPolygon2D
 @onready var detect_floor: RayCast2D = $RayCast2D
-@onready var marker: Marker2D = $Marker2D
+@onready var marker: Marker2D = visuals.get_node("Marker2D") as Marker2D
 
 func _ready() -> void:
 	interp_visuals = visuals
@@ -30,11 +30,14 @@ func _ready() -> void:
 	health = max_health
 	add_to_group("enemy")
 	jellyfish_main.animation_finished.connect(_on_animation_finished)
+
 	mobility_time = timer_mobility.wait_time
 	hover_time = timer_hover.wait_time
 	timer_hover.connect("timeout", Callable(self, "_on_mobility_timeout"))
 	timer_hover.start()
+
 	timer_shoot_interval.connect("timeout", Callable(self, "_on_shoot_interval_timeout"))
+	
 
 func _physics_process(delta: float) -> void:
 	previous_position = global_position
@@ -77,21 +80,8 @@ func _on_mobility_timeout() -> void:
 func _on_shoot_interval_timeout() -> void:
 	var player_node: Node2D = get_tree().get_first_node_in_group("player") as Node2D
 	if player_node != null:
-		_shoot_electric_orb(marker.global_position, player_node.global_position)
-
-func _shoot_electric_orb(start_pos: Vector2, target_pos: Vector2) -> void:
-	var scene = get_tree().current_scene
-	var burst_size = 3
-	
-	for i in range(burst_size):
-		var orb = electric_orb_scene.instantiate()
-		orb.global_position = start_pos
-		var angle: float = (target_pos - start_pos).angle()
-		orb.rotation = angle
-		orb.linear_velocity = Vector2(1200.0, 0).rotated(angle)
-		scene.add_child(orb)
+		ElectricOrb.shoot(marker.global_position, player_node.global_position, electric_orb_scene)
 		
-		await get_tree().create_timer(0.15).timeout
 
 func take_damage(amount: int) -> void:
 	health -= amount

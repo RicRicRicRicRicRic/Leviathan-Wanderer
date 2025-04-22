@@ -388,9 +388,10 @@ collision_mask = 3
 script = ExtResource("1_i8rfg")
 
 [node name="Node2D" type="Node2D" parent="."]
+position = Vector2(0, 2)
 
 [node name="WeaponSprite2D" type="AnimatedSprite2D" parent="Node2D"]
-position = Vector2(19, -47)
+position = Vector2(19, 6)
 sprite_frames = SubResource("SpriteFrames_kn5lq")
 animation = &"Luminous staff"
 frame_progress = 0.716474
@@ -409,15 +410,15 @@ sprite_frames = SubResource("SpriteFrames_c4eut")
 
 [node name="CharacterSprite2D" type="AnimatedSprite2D" parent="Node2D"]
 z_index = 1
-position = Vector2(0, -68)
+position = Vector2(0, -15)
 sprite_frames = SubResource("SpriteFrames_x305y")
-animation = &"jump_hang"
+animation = &"iddle"
 autoplay = "iddle"
 script = ExtResource("3_fvtld")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 2
-position = Vector2(0, -65)
+position = Vector2(0, -9)
 shape = SubResource("CapsuleShape2D_eorov")
 
 [node name="CayoteTimer" type="Timer" parent="."]
@@ -433,5 +434,5 @@ wait_time = 0.45
 one_shot = true
 
 [node name="NoDamageTimer" type="Timer" parent="."]
-wait_time = 0.6
+wait_time = 0.3
 one_shot = true

@@ -248,19 +248,16 @@ collision_layer = 2
 collision_mask = 11
 script = ExtResource("1_ya64g")
 
-[node name="Marker2D" type="Marker2D" parent="."]
-scale = Vector2(1, 1)
-
 [node name="Node2D" type="Node2D" parent="."]
+
+[node name="Marker2D" type="Marker2D" parent="Node2D"]
 scale = Vector2(1, 1)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Node2D"]
-scale = Vector2(1, 1)
 sprite_frames = SubResource("SpriteFrames_ya64g")
 autoplay = "default"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-scale = Vector2(1, 1)
 polygon = PackedVector2Array(-11.4286, 57.1429, -28.5714, -17.1429, -40, -28.5714, -45.7143, -45.7143, -28.5714, -62.8571, 0, -71.4286, 28.5714, -62.8571, 45.7143, -45.7143, 40, -28.5714, 28.5714, -17.1429, 11.4286, 57.1429)
 
 [node name="Control" parent="." instance=ExtResource("2_ytqfs")]
@@ -270,7 +267,7 @@ offset_right = 50.0
 offset_bottom = -95.0
 
 [node name="Timer_shoot_interval" type="Timer" parent="."]
-wait_time = 2.5
+wait_time = 3.0
 one_shot = true
 
 [node name="Timer_mobility" type="Timer" parent="."]

@@ -54,5 +54,4 @@ speed_scale = 3.0
 process_material = SubResource("ParticleProcessMaterial_u6xv6")
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 3.0
 one_shot = true
