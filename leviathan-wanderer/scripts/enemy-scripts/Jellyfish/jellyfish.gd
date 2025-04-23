@@ -14,12 +14,14 @@ var hover_time: float
 var health: int
 var is_dying: bool = false
 var hover_direction: int = 1
+var burst_shots_fired: int = 0
 
 @onready var visuals: Node2D = $Node2D
 @onready var jellyfish_main: AnimatedSprite2D = visuals.get_node("AnimatedSprite2D") as AnimatedSprite2D
 @onready var timer_shoot_interval: Timer = $Timer_shoot_interval
 @onready var timer_mobility: Timer = $Timer_mobility
 @onready var timer_hover: Timer = $Timer_hover
+@onready var timer_fire_rate: Timer = $Timer_fire_rate
 @onready var collision_shape: CollisionPolygon2D = $CollisionPolygon2D
 @onready var detect_floor: RayCast2D = $RayCast2D
 @onready var marker: Marker2D = visuals.get_node("Marker2D") as Marker2D
@@ -30,44 +32,36 @@ func _ready() -> void:
 	health = max_health
 	add_to_group("enemy")
 	jellyfish_main.animation_finished.connect(_on_animation_finished)
-
 	mobility_time = timer_mobility.wait_time
 	hover_time = timer_hover.wait_time
 	timer_hover.connect("timeout", Callable(self, "_on_mobility_timeout"))
 	timer_hover.start()
-
 	timer_shoot_interval.connect("timeout", Callable(self, "_on_shoot_interval_timeout"))
-	
+	timer_fire_rate.connect("timeout", Callable(self, "_on_fire_rate_timeout"))
 
 func _physics_process(delta: float) -> void:
 	previous_position = global_position
 	if is_dying:
 		return
-
 	var player_node: Node2D = get_tree().get_first_node_in_group("player") as Node2D
 	var target_vel: Vector2 = Vector2.ZERO
-
 	if player_node != null:
 		var dir_vec: Vector2 = (player_node.global_position - global_position).normalized()
 		var dist: float = player_node.global_position.distance_to(global_position)
-
 		if dist <= long_scan_radius and dist > medium_scan_radius:
 			target_vel = dir_vec * move_speed
 		elif dist <= medium_scan_radius and dist > short_scan_radius:
 			target_vel = Vector2.ZERO
 		elif dist <= short_scan_radius:
 			target_vel = -dir_vec * move_speed
-
 		if detect_floor.is_colliding():
 			target_vel.y = -move_speed
-
 		if dist <= long_scan_radius:
 			if timer_shoot_interval.is_stopped():
 				timer_shoot_interval.start()
 		else:
 			if not timer_shoot_interval.is_stopped():
 				timer_shoot_interval.stop()
-
 	target_vel.y += hover_direction * hover_speed
 	var accel: float = move_speed / mobility_time
 	velocity = velocity.move_toward(target_vel, accel * delta)
@@ -78,10 +72,22 @@ func _on_mobility_timeout() -> void:
 	timer_hover.start()
 
 func _on_shoot_interval_timeout() -> void:
-	var player_node: Node2D = get_tree().get_first_node_in_group("player") as Node2D
-	if player_node != null:
-		ElectricOrb.shoot(marker.global_position, player_node.global_position, electric_orb_scene)
-		
+	burst_shots_fired = 0
+	timer_fire_rate.start()
+
+func _on_fire_rate_timeout() -> void:
+	if burst_shots_fired < ElectricOrb.BURST_SIZE:
+		var player_node: Node2D = get_tree().get_first_node_in_group("player") as Node2D
+		if player_node != null:
+			var orb: ElectricOrb = electric_orb_scene.instantiate() as ElectricOrb
+			orb.global_position = marker.global_position
+			var angle: float = (player_node.global_position - marker.global_position).angle()
+			orb.rotation = angle
+			orb.linear_velocity = Vector2(ElectricOrb.SPEED, 0).rotated(angle)
+			get_tree().current_scene.add_child(orb)
+		burst_shots_fired += 1
+		if burst_shots_fired < ElectricOrb.BURST_SIZE:
+			timer_fire_rate.start()
 
 func take_damage(amount: int) -> void:
 	health -= amount

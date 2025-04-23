@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://dcj28xdm2bjh5"]
+[gd_scene load_steps=13 format=4 uid="uid://dcj28xdm2bjh5"]
 
 [ext_resource type="PackedScene" uid="uid://rou3hvjvk4pe" path="res://scene/player.tscn" id="1_j7gx8"]
 [ext_resource type="Texture2D" uid="uid://cts5lf6x30syo" path="res://assets/sprites/world_tileset.png" id="2_1et6v"]
@@ -8,7 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://cy5fmoflp5qlg" path="res://scene/UI_scenes/Player_healthbar.tscn" id="7_s4vhm"]
 [ext_resource type="PackedScene" uid="uid://bmkmj0t35mxxw" path="res://scene/enemyscene/slug/slug.tscn" id="7_w4mmo"]
 [ext_resource type="PackedScene" uid="uid://e5ntgsa4ifr0" path="res://scene/enemyscene/jellyfish/jellyfish.tscn" id="8_ll5lq"]
-[ext_resource type="PackedScene" uid="uid://b6ca6kqgnvud3" path="res://scene/enemyscene/jellyfish/electric_orbs.tscn" id="9_17rxn"]
 
 [sub_resource type="Environment" id="Environment_jaaoi"]
 background_mode = 3
@@ -239,24 +238,6 @@ position = Vector2(-848, -133)
 
 [node name="Jellyfish" parent="." instance=ExtResource("8_ll5lq")]
 position = Vector2(1459, -654)
-max_health = 600
-long_scan_radius = 2500.0
-medium_scan_radius = 750.0
-short_scan_radius = 500.0
-move_speed = 450.0
-hover_speed = 25.0
-electric_orb_scene = ExtResource("9_17rxn")
-enable_interpolation = true
-interp_strength = 1.0
 
 [node name="Jellyfish2" parent="." instance=ExtResource("8_ll5lq")]
 position = Vector2(1094, -634)
-max_health = 600
-long_scan_radius = 2500.0
-medium_scan_radius = 750.0
-short_scan_radius = 500.0
-move_speed = 450.0
-hover_speed = 25.0
-electric_orb_scene = ExtResource("9_17rxn")
-enable_interpolation = true
-interp_strength = 1.0

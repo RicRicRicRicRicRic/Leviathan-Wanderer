@@ -43,7 +43,3 @@ process_material = SubResource("ParticleProcessMaterial_do163")
 
 [node name="Timer_despawn" type="Timer" parent="."]
 one_shot = true
-
-[node name="Timer_fire_rate" type="Timer" parent="."]
-wait_time = 0.3
-one_shot = true

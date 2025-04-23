@@ -251,13 +251,14 @@ script = ExtResource("1_ya64g")
 [node name="Node2D" type="Node2D" parent="."]
 
 [node name="Marker2D" type="Marker2D" parent="Node2D"]
-scale = Vector2(1, 1)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Node2D"]
 sprite_frames = SubResource("SpriteFrames_ya64g")
 autoplay = "default"
+frame_progress = 0.845745
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+z_index = -1
 polygon = PackedVector2Array(-11.4286, 57.1429, -28.5714, -17.1429, -40, -28.5714, -45.7143, -45.7143, -28.5714, -62.8571, 0, -71.4286, 28.5714, -62.8571, 45.7143, -45.7143, 40, -28.5714, 28.5714, -17.1429, 11.4286, 57.1429)
 
 [node name="Control" parent="." instance=ExtResource("2_ytqfs")]
@@ -275,6 +276,10 @@ one_shot = true
 
 [node name="Timer_hover" type="Timer" parent="."]
 wait_time = 0.65
+one_shot = true
+
+[node name="Timer_fire_rate" type="Timer" parent="."]
+wait_time = 0.3
 one_shot = true
 
 [node name="RayCast2D" type="RayCast2D" parent="."]

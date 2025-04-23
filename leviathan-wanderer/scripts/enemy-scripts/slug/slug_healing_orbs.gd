@@ -5,7 +5,7 @@ extends RigidBody2D
 @export var max_speed: float = 300.0
 @export var homing_speed: float = 600.0
 @export var heal_amount: float = 65.0
-@export var scan_radius: float = 550.0
+@export var scan_radius: float = 750.0
 
 @onready var despawn_timer: Timer = $Timer_despawn
 @onready var delete_timer: Timer = $Timer_delete
