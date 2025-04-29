@@ -6,7 +6,7 @@ extends "res://scripts/Optimization/Interpolate.gd"
 @export var falling_gravity_multiplier: float = 2.2
 @export var knockback_power: float = 1200.0
 @export var onair_knockback_power: float = 750.0
-@export var projectile_scene: PackedScene = preload("res://scene/projectile.tscn")
+@export var projectile_scene: PackedScene = preload("res://scene/Player_scene/projectile.tscn")
 
 @onready var visuals: Node2D = $Node2D
 @onready var main: AnimatedSprite2D = visuals.get_node("CharacterSprite2D")

@@ -281,7 +281,7 @@ animations = [{
 "duration": 1000.0,
 "texture": SubResource("AtlasTexture_xj5ck")
 }],
-"loop": false,
+"loop": true,
 "name": &"jump_decce",
 "speed": 15.0
 }, {
@@ -412,12 +412,13 @@ sprite_frames = SubResource("SpriteFrames_c4eut")
 z_index = 1
 position = Vector2(0, -15)
 sprite_frames = SubResource("SpriteFrames_x305y")
-animation = &"iddle"
+animation = &"run"
 autoplay = "iddle"
+frame_progress = 0.0891994
 script = ExtResource("3_fvtld")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-z_index = 2
+z_index = -1
 position = Vector2(0, -9)
 shape = SubResource("CapsuleShape2D_eorov")
 
@@ -434,5 +435,5 @@ wait_time = 0.45
 one_shot = true
 
 [node name="NoDamageTimer" type="Timer" parent="."]
-wait_time = 0.3
+wait_time = 0.15
 one_shot = true

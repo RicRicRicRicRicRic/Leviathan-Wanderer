@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://ohdt4a4o1ves"]
+
+[ext_resource type="Texture2D" uid="uid://qncl2u8pxywi" path="res://assets/sprites/enemy-sprites/worm-enemy.svg" id="1_flnh8"]
+[ext_resource type="Script" uid="uid://bp7rx20erfb1e" path="res://scripts/enemy-scripts/worm/worm.gd" id="1_q6oae"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3qcmk"]
+atlas = ExtResource("1_flnh8")
+region = Rect2(0, 0, 161, 161)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_a8tnv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3qcmk")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_21rt2"]
+radius = 29.0
+height = 74.0
+
+[node name="worm" type="CharacterBody2D"]
+texture_filter = 2
+collision_layer = 0
+script = ExtResource("1_q6oae")
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="AnimatedSprite2D_head" type="AnimatedSprite2D" parent="Node2D"]
+light_mask = 0
+visibility_layer = 2
+sprite_frames = SubResource("SpriteFrames_a8tnv")
+offset = Vector2(-26, 0)
+
+[node name="CollisionShape2D_head" type="CollisionShape2D" parent="."]
+z_index = 1
+shape = SubResource("CapsuleShape2D_21rt2")
+
+[node name="Timer_HitDelay" type="Timer" parent="."]
