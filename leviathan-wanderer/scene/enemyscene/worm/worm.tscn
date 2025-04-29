@@ -1,7 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://ohdt4a4o1ves"]
+[gd_scene load_steps=8 format=3 uid="uid://ohdt4a4o1ves"]
 
 [ext_resource type="Texture2D" uid="uid://qncl2u8pxywi" path="res://assets/sprites/enemy-sprites/worm-enemy.svg" id="1_flnh8"]
 [ext_resource type="Script" uid="uid://bp7rx20erfb1e" path="res://scripts/enemy-scripts/worm/worm.gd" id="1_q6oae"]
+[ext_resource type="PackedScene" uid="uid://ga1kg4j0ek8b" path="res://scene/UI_scenes/Enemy_healthbar.tscn" id="3_gq3k5"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_21rt2"]
+radius = 32.0
+height = 80.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gq3k5"]
+radius = 32.0
+height = 96.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3qcmk"]
 atlas = ExtResource("1_flnh8")
@@ -18,14 +27,75 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_21rt2"]
-radius = 29.0
-height = 74.0
-
 [node name="worm" type="CharacterBody2D"]
 texture_filter = 2
-collision_layer = 0
+scale = Vector2(0.7, 0.7)
 script = ExtResource("1_q6oae")
+
+[node name="CollisionShape2D_head" type="CollisionShape2D" parent="."]
+z_index = 1
+scale = Vector2(1, 1)
+shape = SubResource("CapsuleShape2D_21rt2")
+
+[node name="CollisionShape2D_body_main" type="CollisionShape2D" parent="."]
+position = Vector2(-67.1429, 0)
+scale = Vector2(1, 1)
+shape = SubResource("CapsuleShape2D_21rt2")
+
+[node name="CollisionShape2D_body1" type="CollisionShape2D" parent="."]
+z_index = -1
+position = Vector2(-140, 0)
+scale = Vector2(1, 1)
+shape = SubResource("CapsuleShape2D_21rt2")
+
+[node name="CollisionShape2D_body2" type="CollisionShape2D" parent="."]
+z_index = -1
+position = Vector2(-211.429, 0)
+scale = Vector2(1, 1)
+shape = SubResource("CapsuleShape2D_21rt2")
+
+[node name="CollisionShape2D_body4" type="CollisionShape2D" parent="."]
+z_index = -1
+position = Vector2(-354.286, 0)
+scale = Vector2(1, 1)
+shape = SubResource("CapsuleShape2D_21rt2")
+
+[node name="CollisionShape2D_body3" type="CollisionShape2D" parent="."]
+z_index = -1
+position = Vector2(-281.429, 0)
+scale = Vector2(1, 1)
+shape = SubResource("CapsuleShape2D_21rt2")
+
+[node name="CollisionShape2D_body5" type="CollisionShape2D" parent="."]
+z_index = -1
+position = Vector2(-425.714, 0)
+scale = Vector2(1, 1)
+shape = SubResource("CapsuleShape2D_21rt2")
+
+[node name="CollisionShape2D_body6" type="CollisionShape2D" parent="."]
+z_index = -1
+position = Vector2(-497.143, 0)
+scale = Vector2(1, 1)
+shape = SubResource("CapsuleShape2D_21rt2")
+
+[node name="CollisionShape2D_body7" type="CollisionShape2D" parent="."]
+z_index = -1
+position = Vector2(-567.143, 0)
+scale = Vector2(1, 1)
+shape = SubResource("CapsuleShape2D_21rt2")
+
+[node name="CollisionShape2D_tail" type="CollisionShape2D" parent="."]
+z_index = -1
+position = Vector2(-647.143, 0)
+rotation = 1.5708
+scale = Vector2(1, 1)
+shape = SubResource("CapsuleShape2D_gq3k5")
+
+[node name="Control" parent="." instance=ExtResource("3_gq3k5")]
+offset_left = -50.0
+offset_top = -100.0
+offset_right = 50.0
+offset_bottom = -95.0
 
 [node name="Node2D" type="Node2D" parent="."]
 
@@ -33,10 +103,78 @@ script = ExtResource("1_q6oae")
 light_mask = 0
 visibility_layer = 2
 sprite_frames = SubResource("SpriteFrames_a8tnv")
-offset = Vector2(-26, 0)
+offset = Vector2(22, 0)
+flip_h = true
 
-[node name="CollisionShape2D_head" type="CollisionShape2D" parent="."]
-z_index = 1
-shape = SubResource("CapsuleShape2D_21rt2")
+[node name="Sprite2D_body_main" type="Sprite2D" parent="Node2D/AnimatedSprite2D_head"]
+z_index = -1
+position = Vector2(-68.5714, 0)
+scale = Vector2(1, 1)
+texture = ExtResource("1_flnh8")
+flip_h = true
+region_enabled = true
+region_rect = Rect2(205, 26, 73, 109)
 
-[node name="Timer_HitDelay" type="Timer" parent="."]
+[node name="Sprite2D_body1" type="Sprite2D" parent="Node2D/AnimatedSprite2D_head/Sprite2D_body_main"]
+z_index = -1
+position = Vector2(-71.4285, -4.76837e-07)
+texture = ExtResource("1_flnh8")
+flip_h = true
+region_enabled = true
+region_rect = Rect2(205, 26, 73, 109)
+
+[node name="Sprite2D_body2" type="Sprite2D" parent="Node2D/AnimatedSprite2D_head/Sprite2D_body_main/Sprite2D_body1"]
+z_index = -2
+position = Vector2(-71.4286, -3.8147e-06)
+texture = ExtResource("1_flnh8")
+flip_h = true
+region_enabled = true
+region_rect = Rect2(205, 26, 73, 109)
+
+[node name="Sprite2D_body3" type="Sprite2D" parent="Node2D/AnimatedSprite2D_head/Sprite2D_body_main/Sprite2D_body1/Sprite2D_body2"]
+z_index = -1
+position = Vector2(-71.4286, 7.62939e-06)
+texture = ExtResource("1_flnh8")
+flip_h = true
+region_enabled = true
+region_rect = Rect2(205, 26, 73, 109)
+
+[node name="Sprite2D_body4" type="Sprite2D" parent="Node2D/AnimatedSprite2D_head/Sprite2D_body_main/Sprite2D_body1/Sprite2D_body2/Sprite2D_body3"]
+z_index = -5
+position = Vector2(-71.4286, -7.62939e-06)
+texture = ExtResource("1_flnh8")
+flip_h = true
+region_enabled = true
+region_rect = Rect2(205, 26, 73, 109)
+
+[node name="Sprite2D_body5" type="Sprite2D" parent="Node2D/AnimatedSprite2D_head/Sprite2D_body_main/Sprite2D_body1/Sprite2D_body2/Sprite2D_body3/Sprite2D_body4"]
+z_index = -1
+position = Vector2(-71.4286, 7.62939e-06)
+texture = ExtResource("1_flnh8")
+flip_h = true
+region_enabled = true
+region_rect = Rect2(205, 26, 73, 109)
+
+[node name="Sprite2D_body6" type="Sprite2D" parent="Node2D/AnimatedSprite2D_head/Sprite2D_body_main/Sprite2D_body1/Sprite2D_body2/Sprite2D_body3/Sprite2D_body4/Sprite2D_body5"]
+z_index = -2
+position = Vector2(-71.4286, 0)
+texture = ExtResource("1_flnh8")
+flip_h = true
+region_enabled = true
+region_rect = Rect2(205, 26, 73, 109)
+
+[node name="Sprite2D_body7" type="Sprite2D" parent="Node2D/AnimatedSprite2D_head/Sprite2D_body_main/Sprite2D_body1/Sprite2D_body2/Sprite2D_body3/Sprite2D_body4/Sprite2D_body5/Sprite2D_body6"]
+z_index = -1
+position = Vector2(-71.4286, 1.52588e-05)
+texture = ExtResource("1_flnh8")
+flip_h = true
+region_enabled = true
+region_rect = Rect2(205, 26, 73, 109)
+
+[node name="Sprite2D_tail" type="Sprite2D" parent="Node2D/AnimatedSprite2D_head/Sprite2D_body_main/Sprite2D_body1/Sprite2D_body2/Sprite2D_body3/Sprite2D_body4/Sprite2D_body5/Sprite2D_body6/Sprite2D_body7"]
+z_index = -10
+position = Vector2(-85.7142, -1.85966e-05)
+texture = ExtResource("1_flnh8")
+flip_h = true
+region_enabled = true
+region_rect = Rect2(346, 27, 113, 107)
