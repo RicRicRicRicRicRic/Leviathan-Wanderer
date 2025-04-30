@@ -1,11 +1,9 @@
 # player.gd
 extends "res://scripts/Optimization/Interpolate.gd"
 
-@export var max_health: int    = 1000
+@export var max_health: int = 1000
 @export var rising_gravity_multiplier: float = 2.2
 @export var falling_gravity_multiplier: float = 2.2
-@export var knockback_power: float = 1200.0
-@export var onair_knockback_power: float = 750.0
 @export var projectile_scene: PackedScene = preload("res://scene/Player_scene/projectile.tscn")
 
 @onready var visuals: Node2D = $Node2D
@@ -30,9 +28,9 @@ var _jump_height: float
 var time_to_fall: float
 
 var speed_multiplier: float = 1.0
-var jump_active: bool  = false
-var was_on_floor: bool  = true
-var current_health: int   = max_health
+var jump_active: bool = false
+var was_on_floor: bool = true
+var current_health: int = max_health
 
 func _ready() -> void:
 	time_to_apex = -JUMP_VELOCITY / (gravity * rising_gravity_multiplier)
@@ -40,26 +38,21 @@ func _ready() -> void:
 	jump_hang_duration = base_time_to_apex - time_to_apex
 	_jump_height = (JUMP_VELOCITY * JUMP_VELOCITY) / (2.0 * gravity * rising_gravity_multiplier)
 	time_to_fall = sqrt(2.0 * _jump_height / (gravity * falling_gravity_multiplier))
-	
 	main.time_to_apex = time_to_apex
 	main.jump_hang_duration = JumpHang_Timer.wait_time
 	main.time_to_fall = time_to_fall
-
 	interp_visuals = visuals
 	previous_position = global_position
 	add_to_group("player")
 
-
 func _physics_process(delta: float) -> void:
 	previous_position = global_position
 	var mouse_pos: Vector2 = get_global_mouse_position()
-
 	_handle_vertical_movement(delta)
 	_handle_jumping()
 	_handle_horizontal_movement(delta)
 	_play_animations()
 	_handle_visuals(mouse_pos)
-
 	move_and_slide()
 
 func _handle_vertical_movement(delta: float) -> void:
@@ -74,10 +67,8 @@ func _handle_vertical_movement(delta: float) -> void:
 	else:
 		if not JumpHang_Timer.is_stopped():
 			JumpHang_Timer.stop()
-
 	if jump_active and velocity.y >= 0.0:
 		jump_active = false
-
 	_handle_coyote_time()
 
 func _handle_coyote_time() -> void:
@@ -96,7 +87,6 @@ func _handle_jumping() -> void:
 			_perform_jump()
 		elif jumpbuffer_timer.is_stopped():
 			jumpbuffer_timer.start()
-
 	if is_on_floor() and not jumpbuffer_timer.is_stopped() and not jump_active:
 		_perform_jump()
 
@@ -109,7 +99,7 @@ func _perform_jump() -> void:
 
 func _handle_horizontal_movement(delta: float) -> void:
 	var direction: float = Input.get_axis("left", "right")
-	var accel:     float = DECELERATION
+	var accel: float = DECELERATION
 	if direction != 0.0:
 		accel = ACCELERATION
 	velocity.x = move_toward(velocity.x, direction * TOP_SPEED * speed_multiplier, accel * delta)
@@ -125,20 +115,18 @@ func _handle_visuals(mouse_pos: Vector2) -> void:
 		visuals.scale.x = -1.0
 	else:
 		visuals.scale.x = 1.0
-
 	var local_mouse: Vector2 = visuals.to_local(mouse_pos)
 	wep.rotation = clamp(local_mouse.angle(), deg_to_rad(-50.0), deg_to_rad(50.0))
-
 	if Input.is_action_pressed("Shoot"):
 		Projectile.shoot(proj_marker.global_position, mouse_pos, projectile_scene, self)
 
-func take_damage(amount: int, enemy_velocity: Vector2 = Vector2.ZERO) -> void:
+func take_damage(amount: int, knockback_force: Vector2 = Vector2.ZERO) -> void:
 	if NoDamage_Timer.is_stopped():
 		current_health = max(current_health - amount, 0)
 		update_health_bar()
 		NoDamage_Timer.start()
-		if enemy_velocity != Vector2.ZERO:
-			knockback(enemy_velocity)
+		if knockback_force != Vector2.ZERO:
+			knockback(knockback_force)
 		if current_health <= 0:
 			die()
 
@@ -150,17 +138,12 @@ func update_health_bar() -> void:
 	var hp_bar_node: Node = get_tree().get_first_node_in_group("playerHP")
 	if hp_bar_node:
 		var hp_bar: ProgressBar = hp_bar_node.get_node("ProgressBar_health")
-		var timer:  Timer       = hp_bar_node.get_node("Timer")
+		var timer: Timer = hp_bar_node.get_node("Timer")
 		hp_bar.value = float(current_health) / float(max_health) * 100.0
 		timer.start()
 
-func knockback(enemy_velocity: Vector2) -> void:
-	var current_knockback: float = onair_knockback_power
-	if is_on_floor():
-		current_knockback = knockback_power
-
-	var knock_dir: Vector2 = (enemy_velocity - velocity).normalized() * current_knockback
-	velocity = knock_dir
+func knockback(force: Vector2) -> void:
+	velocity = force
 	move_and_slide()
 
 func apply_slow(multiplier: float) -> void:
