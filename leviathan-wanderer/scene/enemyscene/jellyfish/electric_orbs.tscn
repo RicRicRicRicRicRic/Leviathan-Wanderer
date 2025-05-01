@@ -43,4 +43,9 @@ randomness = 1.0
 process_material = SubResource("ParticleProcessMaterial_do163")
 
 [node name="Timer_despawn" type="Timer" parent="."]
+wait_time = 2.5
+one_shot = true
+
+[node name="Timer_slow" type="Timer" parent="."]
+wait_time = 2.5
 one_shot = true

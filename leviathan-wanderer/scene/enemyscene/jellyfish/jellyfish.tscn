@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://e5ntgsa4ifr0"]
+[gd_scene load_steps=37 format=3 uid="uid://e5ntgsa4ifr0"]
 
 [ext_resource type="Texture2D" uid="uid://cv633dfykpsuh" path="res://assets/sprites/enemy-sprites/jellyfish-enemy.svg" id="1_7br4o"]
 [ext_resource type="Script" uid="uid://by5718shaqjtu" path="res://scripts/enemy-scripts/Jellyfish/jellyfish.gd" id="1_ya64g"]
@@ -241,11 +241,6 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_ya64g"]
-vertices = PackedVector2Array(108.969, -1.96875, 1.10156, 92.3984, -132.93, -67.75, -4.96875, -188.102)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-146.667, -68.5714, -2.85714, -203.81, 121.905, 0, 0, 106.667)])
-
 [node name="Jellyfish" type="CharacterBody2D"]
 texture_filter = 2
 scale = Vector2(1.05, 1.05)
@@ -293,9 +288,5 @@ scale = Vector2(4, 4)
 hit_from_inside = true
 
 [node name="RayCast2D_obstacle" type="RayCast2D" parent="."]
-scale = Vector2(4, 10)
-target_position = Vector2(-140, 0)
+target_position = Vector2(0, 0)
 hit_from_inside = true
-
-[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
-navigation_polygon = SubResource("NavigationPolygon_ya64g")

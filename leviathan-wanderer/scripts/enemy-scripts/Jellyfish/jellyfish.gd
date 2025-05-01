@@ -15,7 +15,6 @@ var health: int
 var is_dying: bool = false
 var hover_direction: int = 1
 var burst_shots_fired: int = 0
-var obstacle_detected: bool = false
 
 @onready var visuals: Node2D = $Node2D
 @onready var jellyfish_main: AnimatedSprite2D = visuals.get_node("AnimatedSprite2D") as AnimatedSprite2D
@@ -43,77 +42,90 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	previous_position = global_position
-
 	if is_dying:
 		return
-
 	var player_node: Node2D = get_tree().get_first_node_in_group("player") as Node2D
 	var target_vel: Vector2 = Vector2.ZERO
-
+	var dir_vec: Vector2 = Vector2.ZERO
 	if player_node != null:
 		detect_obstacle.add_exception(player_node)
 
+	if detect_floor.is_colliding():
+		target_vel.y = -move_speed
+		target_vel.y += hover_direction * hover_speed
+		if player_node != null:
+			var to_player: Vector2 = player_node.global_position - global_position
+			dir_vec = to_player.normalized()
+			var dist: float = to_player.length()
+			if dist <= long_scan_radius and dist > medium_scan_radius:
+				target_vel.x = dir_vec.x * move_speed
+			elif dist <= short_scan_radius:
+				target_vel.x = -dir_vec.x * move_speed
+			if dist <= long_scan_radius:
+				if timer_shoot_interval.is_stopped():
+					timer_shoot_interval.start()
+		var accel: float = move_speed / mobility_time
+		velocity = velocity.move_toward(target_vel, accel * delta)
+		move_and_slide()
+		return 
+
+	if player_node != null:
 		var to_player: Vector2 = player_node.global_position - global_position
-		var dir_vec: Vector2 = to_player.normalized()
+		dir_vec = to_player.normalized()
 		var dist: float = to_player.length()
 
-
-		detect_obstacle.rotation = (-dir_vec).angle()
-		obstacle_detected = detect_obstacle.is_colliding()
-		
-		if obstacle_detected:
+		detect_obstacle.target_position = to_player
+		if detect_obstacle.is_colliding():
 			var collider := detect_obstacle.get_collider()
 			if collider != player_node:
-				var perpendicular_dir: Vector2
-				
-				if int(float(int(global_position.x)) / 100 + float(int(global_position.y)) / 100) % 2 == 0:
-					perpendicular_dir = Vector2(dir_vec.y, -dir_vec.x)  
-				else:
-					perpendicular_dir = Vector2(-dir_vec.y, dir_vec.x)  
-
-				target_vel = perpendicular_dir * move_speed
-				velocity = velocity.move_toward(target_vel, move_speed * delta)
+				var normal: Vector2 = detect_obstacle.get_collision_normal()
+				var avoidance_direction: Vector2 = normal.rotated(PI / 2.0 * sign(normal.cross(dir_vec)))
+				target_vel = avoidance_direction * move_speed * 0.75
+				var accel_detect: float = move_speed / mobility_time
+				velocity = velocity.move_toward(target_vel, accel_detect * delta)
 				move_and_slide()
-				return
-		
+				return 
+
 		if dist <= long_scan_radius and dist > medium_scan_radius:
 			target_vel = dir_vec * move_speed
 		elif dist <= medium_scan_radius and dist > short_scan_radius:
-			target_vel = Vector2.ZERO
+			target_vel = Vector2.ZERO 
 		elif dist <= short_scan_radius:
-			target_vel = -dir_vec * move_speed
+			target_vel = -dir_vec * move_speed 
 
-		if detect_floor.is_colliding():
-			target_vel.y = -move_speed
-
+		target_vel.y += hover_direction * hover_speed
 		if dist <= long_scan_radius:
 			if timer_shoot_interval.is_stopped():
 				timer_shoot_interval.start()
 
-	target_vel.y += hover_direction * hover_speed
-
-	var accel: float = move_speed / mobility_time
-	velocity = velocity.move_toward(target_vel, accel * delta)
-	move_and_slide()
+		var accel: float = move_speed / mobility_time
+		velocity = velocity.move_toward(target_vel, accel * delta)
+		move_and_slide()
+	else:
+		target_vel.y += hover_direction * hover_speed
+		var accel: float = move_speed / mobility_time
+		velocity = velocity.move_toward(target_vel, accel * delta)
+		move_and_slide()
 
 func _on_mobility_timeout() -> void:
 	hover_direction = -hover_direction
 	timer_hover.start()
 
 func _on_shoot_interval_timeout() -> void:
-	burst_shots_fired = 0
-	timer_fire_rate.start()
+	burst_shots_fired = 0 
+	timer_fire_rate.start() 
 
 func _on_fire_rate_timeout() -> void:
 	if burst_shots_fired < ElectricOrb.BURST_SIZE:
 		var player_node: Node2D = get_tree().get_first_node_in_group("player") as Node2D
-		if player_node != null: 
+		if player_node != null:
 			var orb: ElectricOrb = electric_orb_scene.instantiate() as ElectricOrb
 			orb.global_position = marker.global_position
 			var angle: float = (player_node.global_position - marker.global_position).angle()
 			orb.rotation = angle
 			orb.linear_velocity = Vector2(ElectricOrb.SPEED, 0).rotated(angle)
 			get_tree().current_scene.add_child(orb)
+
 		burst_shots_fired += 1
 		if burst_shots_fired < ElectricOrb.BURST_SIZE:
 			timer_fire_rate.start()
@@ -121,10 +133,10 @@ func _on_fire_rate_timeout() -> void:
 func take_damage(amount: int) -> void:
 	health -= amount
 	if health <= 0 and not is_dying:
-		health = 0
-		is_dying = true
-		velocity = Vector2.ZERO
-		collision_shape.set_deferred("disabled", true)
+		health = 0 
+		is_dying = true 
+		velocity = Vector2.ZERO 
+		collision_shape.set_deferred("disabled", true) 
 		jellyfish_main.play("death")
 
 func _on_animation_finished() -> void:

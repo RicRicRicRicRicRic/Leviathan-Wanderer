@@ -27,6 +27,7 @@ var jump_hang_duration: float
 var _jump_height: float
 var time_to_fall: float
 
+var jump_multiplier: float = 1.0
 var speed_multiplier: float = 1.0
 var jump_active: bool = false
 var was_on_floor: bool = true
@@ -91,7 +92,7 @@ func _handle_jumping() -> void:
 		_perform_jump()
 
 func _perform_jump() -> void:
-	velocity.y = JUMP_VELOCITY
+	velocity.y = JUMP_VELOCITY * jump_multiplier
 	JumpHang_Timer.start()
 	cayote_timer.stop()
 	jumpbuffer_timer.stop()
@@ -148,6 +149,10 @@ func knockback(force: Vector2) -> void:
 
 func apply_slow(multiplier: float) -> void:
 	speed_multiplier = multiplier
-
 func reset_speed() -> void:
 	speed_multiplier = 1.0
+
+func apply_weakend_jump(multiplier: float) -> void:
+	jump_multiplier = multiplier
+func reset_jump() -> void:
+	jump_multiplier = 1.0
