@@ -52,6 +52,9 @@ var fade_timer: float = 0.0
 var fade_duration: float = 3.0
 var was_hitting_player: bool = false
 
+# new flag to suppress exit animation right after execute
+var skip_bite_exit: bool = false
+
 func _ready() -> void:
 	interp_visuals = visuals
 	previous_position = global_position
@@ -96,7 +99,9 @@ func _handle_player_detection() -> void:
 	if is_hitting and not was_hitting_player:
 		head.play("bite_prep")
 	elif not is_hitting and was_hitting_player:
-		head.play("bite_prep_exit")
+		if not skip_bite_exit:
+			head.play("bite_prep_exit")
+		skip_bite_exit = false
 	was_hitting_player = is_hitting
 
 func _handle_movement(delta: float) -> void:
@@ -174,13 +179,17 @@ func _initiate_death() -> void:
 func _on_DamageArea_body_entered(body: Node) -> void:
 	if not body.is_in_group("player"):
 		return
+	head.play("bite_execute")
+	skip_bite_exit = true
+	was_hitting_player = true
+
+	body.take_damage(65)
 	var diff: Vector2 = body.global_position - global_position
 	var knock_dir: Vector2 = Vector2.ZERO
 	if diff.length() > 0.0:
-		knock_dir = diff.normalized()	
+		knock_dir = diff.normalized()
 	var knockback_force: Vector2 = knock_dir * knockback_strength
-	head.play("bite_execute")
-	body.take_damage(65)
 	body.knockback(knockback_force)
+
 func heal(amount: int) -> void:
 	health = min(health + amount, max_health)

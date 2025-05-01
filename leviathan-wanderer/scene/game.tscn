@@ -6,13 +6,14 @@
 [ext_resource type="PackedScene" uid="uid://c5feweoi2hkte" path="res://scene/UI_scenes/fps_counter.tscn" id="4_04w04"]
 [ext_resource type="PackedScene" uid="uid://cpo6w3f0h3ie3" path="res://scene/Player_scene/camera_2d.tscn" id="4_ll5lq"]
 [ext_resource type="PackedScene" uid="uid://cy5fmoflp5qlg" path="res://scene/UI_scenes/Player_healthbar.tscn" id="7_s4vhm"]
-[ext_resource type="PackedScene" uid="uid://ohdt4a4o1ves" path="res://scene/enemyscene/worm/worm.tscn" id="9_17rxn"]
+[ext_resource type="PackedScene" uid="uid://e5ntgsa4ifr0" path="res://scene/enemyscene/jellyfish/jellyfish.tscn" id="9_yq8tf"]
 
 [sub_resource type="Environment" id="Environment_jaaoi"]
 background_mode = 3
 glow_enabled = true
 glow_intensity = 3.0
 glow_blend_mode = 0
+glow_hdr_threshold = 0.9
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_n48tu"]
 texture = ExtResource("2_1et6v")
@@ -216,6 +217,5 @@ position = Vector2(-1213, -312)
 
 [node name="CanvasLayer2-playerheatlhbar" parent="." instance=ExtResource("7_s4vhm")]
 
-[node name="worm" parent="." instance=ExtResource("9_17rxn")]
-z_index = -3
-position = Vector2(3322, -390)
+[node name="Jellyfish" parent="." instance=ExtResource("9_yq8tf")]
+position = Vector2(842, -324)
