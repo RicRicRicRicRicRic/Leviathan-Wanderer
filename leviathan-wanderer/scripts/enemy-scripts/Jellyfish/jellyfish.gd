@@ -2,7 +2,7 @@
 extends "res://scripts/Optimization/Interpolate.gd"
 
 @export var max_health: int = 600
-@export var long_scan_radius: float = 2500.0
+@export var long_scan_radius: float = 2200.0
 @export var medium_scan_radius: float = 750.0
 @export var short_scan_radius: float = 500.0
 @export var move_speed: float = 450.0
@@ -67,24 +67,24 @@ func _physics_process(delta: float) -> void:
 		var accel: float = move_speed / mobility_time
 		velocity = velocity.move_toward(target_vel, accel * delta)
 		move_and_slide()
-		return 
+		return
 
 	if player_node != null:
 		var to_player: Vector2 = player_node.global_position - global_position
 		dir_vec = to_player.normalized()
 		var dist: float = to_player.length()
-
-		detect_obstacle.target_position = to_player
-		if detect_obstacle.is_colliding():
-			var collider := detect_obstacle.get_collider()
-			if collider != player_node:
-				var normal: Vector2 = detect_obstacle.get_collision_normal()
-				var avoidance_direction: Vector2 = normal.rotated(PI / 2.0 * sign(normal.cross(dir_vec)))
-				target_vel = avoidance_direction * move_speed * 0.75
-				var accel_detect: float = move_speed / mobility_time
-				velocity = velocity.move_toward(target_vel, accel_detect * delta)
-				move_and_slide()
-				return 
+		if dist <= long_scan_radius:
+			detect_obstacle.target_position = to_player
+			if detect_obstacle.is_colliding():
+				var collider := detect_obstacle.get_collider()
+				if collider != player_node:
+					var normal: Vector2 = detect_obstacle.get_collision_normal()
+					var avoidance_direction: Vector2 = normal.rotated(PI / 2.0 * sign(normal.cross(dir_vec)))
+					target_vel = avoidance_direction * move_speed * 0.75
+					var accel_detect: float = move_speed / mobility_time
+					velocity = velocity.move_toward(target_vel, accel_detect * delta)
+					move_and_slide()
+					return
 
 		if dist <= long_scan_radius and dist > medium_scan_radius:
 			target_vel = dir_vec * move_speed
@@ -106,7 +106,6 @@ func _physics_process(delta: float) -> void:
 		var accel: float = move_speed / mobility_time
 		velocity = velocity.move_toward(target_vel, accel * delta)
 		move_and_slide()
-
 func _on_mobility_timeout() -> void:
 	hover_direction = -hover_direction
 	timer_hover.start()

@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bc73s8pmuo2oq"]
+
+[ext_resource type="Script" uid="uid://soo0633bovb0" path="res://scripts/enemy-scripts/slug/slug_spawner.gd" id="1_i0sh4"]
+
+[node name="slug_spawner" type="Area2D"]
+script = ExtResource("1_i0sh4")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true

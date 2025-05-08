@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://ci1mpwj3ds1xo"]
+
+[ext_resource type="Script" uid="uid://chxswtfc56aqk" path="res://scripts/enemy-scripts/Jellyfish/jellyfish_spawner.gd" id="1_2d6qh"]
+
+[node name="jellyfish_spawner" type="Area2D"]
+script = ExtResource("1_2d6qh")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true

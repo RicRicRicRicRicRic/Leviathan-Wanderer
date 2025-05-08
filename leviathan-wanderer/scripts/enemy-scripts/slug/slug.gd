@@ -23,7 +23,7 @@ var orb_spawned: bool = false
 var collision_original_x: float = 0.0
 var direction: int = -1
 var was_colliding: bool = false
-var should_flip: bool = false
+@export var should_flip: bool = false
 var is_dying: bool = false
 
 func _ready() -> void:

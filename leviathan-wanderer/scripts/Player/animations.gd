@@ -1,5 +1,5 @@
 # animations.gd
-# Attach this to your CharacterSprite2D node
+# Attached to CharacterSprite2D node
 extends AnimatedSprite2D
 
 var time_to_apex: float
