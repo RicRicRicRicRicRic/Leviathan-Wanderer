@@ -10,7 +10,6 @@ const GRAVITY: float = 980.0
 var health: int = max_health
 
 @onready var visuals: Node2D = $Node2D
-@onready var trail_area: Area2D = visuals.get_node("TrailArea") as Area2D
 @onready var slime_main: AnimatedSprite2D = visuals.get_node("AnimatedSprite2D") as AnimatedSprite2D
 @onready var raycast_wall: RayCast2D = visuals.get_node("RayCast2D_wall") as RayCast2D
 @onready var raycast_fall: RayCast2D = visuals.get_node("RayCast2D_height") as RayCast2D
@@ -84,7 +83,6 @@ func _on_Timer_timeout() -> void:
 	if should_flip:
 		direction *= -1
 		should_flip = false
-		trail_area.call("reset_polygons")
 
 func _on_DamageArea_body_entered(body: Node) -> void:
 	if body.is_in_group("player"):

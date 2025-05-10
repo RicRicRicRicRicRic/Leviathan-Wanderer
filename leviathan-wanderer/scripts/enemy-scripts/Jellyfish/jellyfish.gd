@@ -9,6 +9,8 @@ extends "res://scripts/Optimization/Interpolate.gd"
 @export var hover_speed: float = 25.0
 @export var electric_orb_scene: PackedScene = preload("res://scene/enemyscene/jellyfish/electric_orbs.tscn")
 
+var BURST_SIZE: int = 3
+
 var mobility_time: float
 var hover_time: float
 var health: int
@@ -106,6 +108,7 @@ func _physics_process(delta: float) -> void:
 		var accel: float = move_speed / mobility_time
 		velocity = velocity.move_toward(target_vel, accel * delta)
 		move_and_slide()
+
 func _on_mobility_timeout() -> void:
 	hover_direction = -hover_direction
 	timer_hover.start()
@@ -115,7 +118,7 @@ func _on_shoot_interval_timeout() -> void:
 	timer_fire_rate.start() 
 
 func _on_fire_rate_timeout() -> void:
-	if burst_shots_fired < ElectricOrb.BURST_SIZE:
+	if burst_shots_fired < BURST_SIZE:
 		var player_node: Node2D = get_tree().get_first_node_in_group("player") as Node2D
 		if player_node != null:
 			var orb: ElectricOrb = electric_orb_scene.instantiate() as ElectricOrb
@@ -124,9 +127,8 @@ func _on_fire_rate_timeout() -> void:
 			orb.rotation = angle
 			orb.linear_velocity = Vector2(ElectricOrb.SPEED, 0).rotated(angle)
 			get_tree().current_scene.add_child(orb)
-
 		burst_shots_fired += 1
-		if burst_shots_fired < ElectricOrb.BURST_SIZE:
+		if burst_shots_fired < BURST_SIZE:
 			timer_fire_rate.start()
 
 func take_damage(amount: int) -> void:

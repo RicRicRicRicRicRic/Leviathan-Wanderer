@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://53xqhj2xko3t"]
+
+[ext_resource type="Script" uid="uid://cgnuen8patu28" path="res://scripts/enemy-scripts/isopod/isopod_spawner.gd" id="1_enwn8"]
+
+[node name="isopod_spawner" type="Area2D"]
+script = ExtResource("1_enwn8")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true

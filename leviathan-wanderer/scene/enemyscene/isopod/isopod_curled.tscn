@@ -1,0 +1,138 @@
+[gd_scene load_steps=18 format=3 uid="uid://c85ujyx5y3c03"]
+
+[ext_resource type="Script" uid="uid://6yrsnmbsovq4" path="res://scripts/enemy-scripts/isopod/isopod_curled.gd" id="1_6j8uc"]
+[ext_resource type="Texture2D" uid="uid://d1jgl7qgw1vq4" path="res://assets/sprites/enemy-sprites/Isopod-enemy.svg" id="1_he4n2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6j8uc"]
+atlas = ExtResource("1_he4n2")
+region = Rect2(0, 322, 161, 161)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x2c3l"]
+atlas = ExtResource("1_he4n2")
+region = Rect2(0, 644, 161, 161)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_crb1y"]
+atlas = ExtResource("1_he4n2")
+region = Rect2(161, 644, 161, 161)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y3nml"]
+atlas = ExtResource("1_he4n2")
+region = Rect2(322, 644, 161, 161)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pludx"]
+atlas = ExtResource("1_he4n2")
+region = Rect2(483, 644, 161, 161)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_euk5f"]
+atlas = ExtResource("1_he4n2")
+region = Rect2(644, 644, 161, 161)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_odenq"]
+atlas = ExtResource("1_he4n2")
+region = Rect2(805, 644, 161, 161)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cwxrn"]
+atlas = ExtResource("1_he4n2")
+region = Rect2(966, 644, 161, 161)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dfyaf"]
+atlas = ExtResource("1_he4n2")
+region = Rect2(1127, 644, 161, 161)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tv8pg"]
+atlas = ExtResource("1_he4n2")
+region = Rect2(1288, 644, 161, 161)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7dbwg"]
+atlas = ExtResource("1_he4n2")
+region = Rect2(1449, 644, 161, 161)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7grvn"]
+atlas = ExtResource("1_he4n2")
+region = Rect2(1610, 644, 161, 161)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e1bmy"]
+atlas = ExtResource("1_he4n2")
+region = Rect2(1771, 644, 161, 161)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_x2c3l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6j8uc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x2c3l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_crb1y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y3nml")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pludx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_euk5f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_odenq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cwxrn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dfyaf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tv8pg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7dbwg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7grvn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e1bmy")
+}],
+"loop": false,
+"name": &"uncurl",
+"speed": 35.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6j8uc"]
+radius = 48.0
+
+[node name="Isopod_curled" type="RigidBody2D"]
+collision_layer = 3
+script = ExtResource("1_6j8uc")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 2
+position = Vector2(14, -2)
+sprite_frames = SubResource("SpriteFrames_x2c3l")
+autoplay = "default"
+offset = Vector2(-6, 9)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2, 6)
+shape = SubResource("CircleShape2D_6j8uc")
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(-5, 0)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+position = Vector2(7, 2)
+rotation = -1.309
+polygon = PackedVector2Array(3.41033, -56.8187, -31.8806, -49.433, -54, -28, -60, 0, -52.4002, 28.5346, -33.1832, 46.1614, -3.0314, 50.5056, 24, 42, 41.6414, 24.0415, 51.9198, 0.581908, 44.1551, -28.3959, 25.8347, -50.4041)
+
+[node name="Timer_whilecurl" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true

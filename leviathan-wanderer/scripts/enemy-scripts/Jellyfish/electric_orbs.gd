@@ -3,7 +3,6 @@ extends RigidBody2D
 class_name ElectricOrb
 
 static var SPEED: float = 1200.0
-static var BURST_SIZE: int = 3
 
 @export var damage: int = 35
 
@@ -26,7 +25,7 @@ func _on_body_entered(body: Node) -> void:
 		_player_node = body 
 		body.take_damage(damage)
 		body.apply_slow(0.35)
-		body.apply_weakend_jump(0.6)
+		body.apply_weakend_jump(0.6)  
 		slow_timer.start()
 	sprite.queue_free()
 	collider.queue_free()
