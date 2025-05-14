@@ -21,7 +21,7 @@ color = Color(0.217149, 0.597039, 0.321605, 1)
 
 [node name="RigidBody2D" type="RigidBody2D"]
 collision_layer = 0
-collision_mask = 7
+collision_mask = 15
 physics_material_override = SubResource("PhysicsMaterial_p53pd")
 gravity_scale = 0.0
 script = ExtResource("1_58q28")
