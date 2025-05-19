@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://dsu6a66x3ny6u"]
+[gd_scene load_steps=42 format=3 uid="uid://dsu6a66x3ny6u"]
 
 [ext_resource type="Texture2D" uid="uid://d1jgl7qgw1vq4" path="res://assets/sprites/enemy-sprites/Isopod-enemy.svg" id="1_d6xve"]
 [ext_resource type="Script" uid="uid://c6fi33mudbfxl" path="res://scripts/enemy-scripts/isopod/isopod.gd" id="1_ijh7n"]
@@ -269,6 +269,9 @@ animations = [{
 radius = 31.8182
 height = 136.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_ijh7n"]
+radius = 8.0
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ijh7n"]
 radius = 29.0909
 height = 80.0
@@ -293,8 +296,12 @@ position = Vector2(0, 4)
 scale = Vector2(1.1, 1)
 shape = SubResource("CapsuleShape2D_iv26h")
 
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ijh7n")
+
 [node name="Area2D" type="Area2D" parent="."]
 z_index = -1
+metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(0, -40)
@@ -320,6 +327,17 @@ offset_bottom = -95.0
 grow_horizontal = 1
 grow_vertical = 1
 
-[node name="RayCast2D_obstacle" type="RayCast2D" parent="."]
-target_position = Vector2(0, 0)
+[node name="RayCast2D_Forward" type="RayCast2D" parent="."]
+
+[node name="Node2D_raycasts" type="Node2D" parent="."]
+
+[node name="RayCast2D_Right" type="RayCast2D" parent="Node2D_raycasts"]
+position = Vector2(40, -48)
+target_position = Vector2(56, -112)
+hit_from_inside = true
+
+[node name="RayCast2D_Left" type="RayCast2D" parent="Node2D_raycasts"]
+position = Vector2(-40, -48)
+rotation = 1.57079
+target_position = Vector2(-112, 55.9997)
 hit_from_inside = true

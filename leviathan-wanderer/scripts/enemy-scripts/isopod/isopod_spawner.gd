@@ -6,7 +6,6 @@ extends Area2D
 @export var random_spread_radius: float = 100.0
 @export var delete: bool = true
 
-@onready var marker: Marker2D = $Marker2D
 @onready var collider: CollisionPolygon2D = $CollisionPolygon2D
 @onready var timer: Timer = $Timer
 
@@ -21,10 +20,8 @@ func _ready() -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player") and !is_active:
 		is_active = true
-
 		for i in range(spawn_ammount):
 			spawn_enemy()
-
 		if delete:
 			call_deferred("queue_free")
 		else:
@@ -39,16 +36,19 @@ func _on_body_exit(body: Node2D) -> void:
 func _on_timer_timeout() -> void:
 	for i in range(spawn_ammount):
 		spawn_enemy()
-		timer.start()
 
 func spawn_enemy() -> void:
 	if enemy:
 		var enemy_instance = enemy.instantiate()
-		var base_position = marker.global_position
-		var random_offset = Vector2(
-			randf_range(-random_spread_radius, random_spread_radius),
-			randf_range(-random_spread_radius, random_spread_radius)
-		)
-		var final_position = base_position + random_offset
-		enemy_instance.global_position = final_position
-		get_parent().call_deferred("add_child", enemy_instance)
+		var marker_node = $Marker2D
+		if marker_node != null and marker_node is Marker2D:
+			var base_position_in_room = position + marker_node.position
+			var random_offset = Vector2(
+				randf_range(-random_spread_radius, random_spread_radius),
+				randf_range(-random_spread_radius, random_spread_radius)
+			)
+			var final_position_in_room = base_position_in_room + random_offset
+			enemy_instance.position = final_position_in_room
+			get_parent().call_deferred("add_child", enemy_instance)
+		else:
+			print("Error: Marker2D node not found as a child of the spawner!")

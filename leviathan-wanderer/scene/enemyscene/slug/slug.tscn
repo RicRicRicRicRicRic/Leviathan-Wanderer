@@ -278,7 +278,7 @@ animations = [{
 physics_interpolation_mode = 1
 texture_filter = 4
 collision_layer = 2
-collision_mask = 2
+collision_mask = 3
 script = ExtResource("1_mnw3t")
 
 [node name="Node2D" type="Node2D" parent="."]
@@ -295,6 +295,7 @@ frame_progress = 0.70141
 [node name="RayCast2D_height" type="RayCast2D" parent="Node2D"]
 position = Vector2(-93.6667, 28.3333)
 target_position = Vector2(0, 60)
+collision_mask = 3
 
 [node name="RayCast2D_wall" type="RayCast2D" parent="Node2D"]
 position = Vector2(-55, 55)
@@ -321,7 +322,3 @@ pivot_offset = Vector2(50, 0)
 
 [node name="CollisionPolygon2D_collider" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(-45.7143, 70.4762, -60.9524, -36.1905, -30.4762, -36.1905, -7.61905, 24.7619, 0, 32.381, 30.4762, 32.381, 53.3333, 40, 68.5714, 70.4762)
-
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-position = Vector2(0.000145674, -28.5714)
-scale = Vector2(11.4286, 9.90476)

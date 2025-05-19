@@ -12,6 +12,7 @@ extends "res://scripts/Optimization/Interpolate.gd"
 @onready var proj_marker: Marker2D = wep.get_node("Marker2D")
 @onready var cayote_timer: Timer = $CayoteTimer
 @onready var jumpbuffer_timer: Timer = $JumpBufferTimer
+@onready var teleport_cooldown: Timer = $TeleportCDTimer
 @onready var JumpHang_Timer: Timer = $JumpHangTimer
 @onready var NoDamage_Timer: Timer = $NoDamageTimer
 
@@ -32,6 +33,7 @@ var speed_multiplier: float = 1.0
 var jump_active: bool = false
 var was_on_floor: bool = true
 var current_health: int = max_health
+var teleport_cancelled: bool = false
 
 func _ready() -> void:
 	time_to_apex = -JUMP_VELOCITY / (gravity * rising_gravity_multiplier)
@@ -48,6 +50,23 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	previous_position = global_position
+	if teleport_cooldown.is_stopped():
+		if Input.is_action_just_pressed("Teleport"):
+			teleport_cancelled = false
+		if Input.is_action_just_pressed("Cancel_input") and Input.is_action_pressed("Teleport"):
+			teleport_cancelled = true
+		if Input.is_action_just_released("Teleport"):
+			if not teleport_cancelled:
+				var target_position = get_global_mouse_position()
+				var query_params = PhysicsPointQueryParameters2D.new()
+				query_params.position = target_position
+				query_params.collide_with_bodies = true
+				query_params.exclude = [self]
+				var collisions = get_world_2d().direct_space_state.intersect_point(query_params)
+				if collisions.is_empty():
+					global_position = target_position
+					velocity = Vector2.ZERO
+					teleport_cooldown.start()
 	var mouse_pos: Vector2 = get_global_mouse_position()
 	_handle_vertical_movement(delta)
 	_handle_jumping()
@@ -145,14 +164,15 @@ func update_health_bar() -> void:
 
 func knockback(force: Vector2) -> void:
 	velocity = force
-	move_and_slide()
 
 func apply_slow(multiplier: float) -> void:
 	speed_multiplier = multiplier
+
 func reset_speed() -> void:
 	speed_multiplier = 1.0
 
 func apply_weakend_jump(multiplier: float) -> void:
 	jump_multiplier = multiplier
+
 func reset_jump() -> void:
 	jump_multiplier = 1.0

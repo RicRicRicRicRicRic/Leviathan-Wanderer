@@ -115,7 +115,7 @@ func heal(amount: float) -> void:
 	health = min(health + amount, max_health)
 
 func spawn_healing_orbs() -> void:
-	var count: int = randi_range(5, 8)
+	var count: int = randi_range(6, 9)
 	for i in int(count):
 		var orb: RigidBody2D = projectile_scene.instantiate() as RigidBody2D
 		get_parent().add_child(orb)

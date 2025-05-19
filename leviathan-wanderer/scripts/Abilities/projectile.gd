@@ -2,7 +2,7 @@
 extends RigidBody2D
 class_name Projectile
 
-static var SPEED: float = 1200.0
+static var SPEED: float = 1400.0
 static var FIRE_RATE: float = 0.125
 
 var dir: float = 0.0

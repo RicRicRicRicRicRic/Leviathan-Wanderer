@@ -14,20 +14,22 @@ var is_uncurling: bool = false
 func _ready() -> void:
 	_player_node = get_tree().get_nodes_in_group("player")[0]
 	add_to_group("isopod_curled")
-	launch_towards_player()
 	timer_whilecurl.start()
 	timer_whilecurl.timeout.connect(_on_Timer_whilecurl_timeout)
 	damage_area.body_entered.connect(_on_body_entered)
 	isopod_anim.animation_finished.connect(_on_animation_finished)
+	call_deferred("launch_towards_player")
 
 func _physics_process(_delta: float) -> void:
 	if is_uncurling:
 		return
 
 func launch_towards_player() -> void:
-	if _player_node:
+	if _player_node and is_instance_valid(_player_node):
 		var direction = (_player_node.global_position - global_position).normalized()
 		linear_velocity = direction * SPEED
+	else:
+		print("Curled Isopod could not launch: Player node is null or invalid.")
 
 func _on_animation_finished() -> void:
 	if is_uncurling and isopod_anim.animation == "uncurl":
@@ -36,7 +38,6 @@ func _on_animation_finished() -> void:
 func _on_body_entered(body: Node) -> void:
 	if linear_velocity.length() > 150:
 		if body.is_in_group("player") and body.has_method("take_damage"):
-			_player_node = body
 			body.take_damage(95)
 			var diff: Vector2 = body.global_position - global_position
 			var knock_dir: Vector2 = Vector2.ZERO
