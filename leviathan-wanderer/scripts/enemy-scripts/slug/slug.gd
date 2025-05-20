@@ -1,5 +1,5 @@
 #slug.gd
-extends "res://scripts/Optimization/Interpolate.gd"
+extends "res://scripts/Utility/Interpolate.gd"
 
 const SPEED: float = 380.0
 const GRAVITY: float = 980.0

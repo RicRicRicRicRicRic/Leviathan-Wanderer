@@ -1,13 +1,13 @@
 [gd_scene load_steps=17 format=4 uid="uid://bbssro71sr1jn"]
 
 [ext_resource type="Script" uid="uid://dfiqy68jx28a2" path="res://scripts/Chapter1/level_1_start.gd" id="1_15y3v"]
-[ext_resource type="PackedScene" uid="uid://2po5m5mgtl38" path="res://scene/world_environment_gloweffect.tscn" id="1_yhq2c"]
+[ext_resource type="PackedScene" uid="uid://2po5m5mgtl38" path="res://scene/Utility/world_environment_gloweffect.tscn" id="1_yhq2c"]
 [ext_resource type="Texture2D" uid="uid://cvm1xsprhoww8" path="res://assets/sprites/prototype graphics.svg" id="2_15y3v"]
-[ext_resource type="PackedScene" uid="uid://c5feweoi2hkte" path="res://scene/UI_scenes/fps_counter.tscn" id="2_q12no"]
+[ext_resource type="PackedScene" uid="uid://c5feweoi2hkte" path="res://scene/Utility/fps_counter.tscn" id="2_q12no"]
 [ext_resource type="PackedScene" uid="uid://rou3hvjvk4pe" path="res://scene/Player_scene/player.tscn" id="3_4lrcw"]
-[ext_resource type="PackedScene" uid="uid://cy5fmoflp5qlg" path="res://scene/UI_scenes/Player_healthbar.tscn" id="3_wa7mu"]
-[ext_resource type="PackedScene" uid="uid://cpo6w3f0h3ie3" path="res://scene/Player_scene/camera_2d.tscn" id="4_idbhw"]
-[ext_resource type="PackedScene" uid="uid://cfqff4kheixm" path="res://scene/Player_scene/area_2d_camera_room.tscn" id="6_4lrcw"]
+[ext_resource type="PackedScene" uid="uid://cy5fmoflp5qlg" path="res://scene/Utility/Player_healthbar.tscn" id="3_wa7mu"]
+[ext_resource type="PackedScene" uid="uid://cpo6w3f0h3ie3" path="res://scene/Utility/camera_2d.tscn" id="4_idbhw"]
+[ext_resource type="PackedScene" uid="uid://cfqff4kheixm" path="res://scene/Utility/area_2d_camera_room.tscn" id="6_4lrcw"]
 [ext_resource type="Texture2D" uid="uid://c17lu264e832b" path="res://icon.svg" id="9_wa7mu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wa7mu"]

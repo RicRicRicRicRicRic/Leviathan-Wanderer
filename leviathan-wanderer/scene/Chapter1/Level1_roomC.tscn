@@ -2,13 +2,13 @@
 
 [ext_resource type="Texture2D" uid="uid://cvm1xsprhoww8" path="res://assets/sprites/prototype graphics.svg" id="1_gtaxf"]
 [ext_resource type="Script" uid="uid://dtejkf44o7npw" path="res://scripts/Chapter1/chap1_roomscripts.gd" id="1_k2fnh"]
-[ext_resource type="PackedScene" uid="uid://cfqff4kheixm" path="res://scene/Player_scene/area_2d_camera_room.tscn" id="2_hpdar"]
+[ext_resource type="PackedScene" uid="uid://cfqff4kheixm" path="res://scene/Utility/area_2d_camera_room.tscn" id="2_hpdar"]
 [ext_resource type="Texture2D" uid="uid://c17lu264e832b" path="res://icon.svg" id="3_h7v3v"]
 [ext_resource type="PackedScene" uid="uid://bc73s8pmuo2oq" path="res://scene/enemyscene/slug/slug_spawner.tscn" id="5_k2fnh"]
 [ext_resource type="PackedScene" uid="uid://ci1mpwj3ds1xo" path="res://scene/enemyscene/jellyfish/jellyfish_spawner.tscn" id="6_tfbpw"]
 [ext_resource type="PackedScene" uid="uid://53xqhj2xko3t" path="res://scene/enemyscene/isopod/isopod_spawner.tscn" id="7_no7tr"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o7bcs"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k2fnh"]
 texture = ExtResource("1_gtaxf")
 texture_region_size = Vector2i(17, 17)
 0:0/0 = 0
@@ -39,7 +39,7 @@ texture_region_size = Vector2i(17, 17)
 [sub_resource type="TileSet" id="TileSet_68vx5"]
 tile_size = Vector2i(17, 17)
 physics_layer_0/collision_layer = 1
-sources/0 = SubResource("TileSetAtlasSource_o7bcs")
+sources/0 = SubResource("TileSetAtlasSource_k2fnh")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ipxcy"]
 size = Vector2(340, 85)
@@ -209,7 +209,6 @@ polygon = PackedVector2Array(-1224, 629, -1224, -629, 1224, -646, 1224, 629)
 [node name="Node3_Isopod_Spawners" type="Node2D" parent="."]
 
 [node name="isopod_spawner" parent="Node3_Isopod_Spawners" instance=ExtResource("7_no7tr")]
-spawn_ammount = 1
 
 [node name="Marker2D" type="Marker2D" parent="Node3_Isopod_Spawners/isopod_spawner"]
 position = Vector2(0, 592)

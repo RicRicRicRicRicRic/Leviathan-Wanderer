@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://qncl2u8pxywi" path="res://assets/sprites/enemy-sprites/worm-enemy.svg" id="1_flnh8"]
 [ext_resource type="Script" uid="uid://bp7rx20erfb1e" path="res://scripts/enemy-scripts/worm/worm.gd" id="1_q6oae"]
-[ext_resource type="PackedScene" uid="uid://ga1kg4j0ek8b" path="res://scene/UI_scenes/Enemy_healthbar.tscn" id="3_gq3k5"]
+[ext_resource type="PackedScene" uid="uid://ga1kg4j0ek8b" path="res://scene/Utility/Enemy_healthbar.tscn" id="3_gq3k5"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gq3k5"]
 radius = 64.3016

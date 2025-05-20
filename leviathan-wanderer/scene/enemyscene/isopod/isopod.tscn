@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://d1jgl7qgw1vq4" path="res://assets/sprites/enemy-sprites/Isopod-enemy.svg" id="1_d6xve"]
 [ext_resource type="Script" uid="uid://c6fi33mudbfxl" path="res://scripts/enemy-scripts/isopod/isopod.gd" id="1_ijh7n"]
-[ext_resource type="PackedScene" uid="uid://ga1kg4j0ek8b" path="res://scene/UI_scenes/Enemy_healthbar.tscn" id="3_yeo15"]
+[ext_resource type="PackedScene" uid="uid://ga1kg4j0ek8b" path="res://scene/Utility/Enemy_healthbar.tscn" id="3_yeo15"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hwclp"]
 atlas = ExtResource("1_d6xve")

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c5feweoi2hkte"]
 
-[ext_resource type="Script" uid="uid://b6gmanak1vxyc" path="res://scripts/Optimization/fps_counter.gd" id="1_ka32h"]
+[ext_resource type="Script" uid="uid://b6gmanak1vxyc" path="res://scripts/Utility/fps_counter.gd" id="1_ka32h"]
 
 [node name="CanvasLayer_fpscounter" type="CanvasLayer"]
 physics_interpolation_mode = 1

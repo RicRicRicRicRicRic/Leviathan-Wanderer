@@ -1,5 +1,5 @@
 # jellyfish.gd
-extends "res://scripts/Optimization/Interpolate.gd"
+extends "res://scripts/Utility/Interpolate.gd"
 
 @export var max_health: int = 600
 @export var long_scan_radius: float = 2200.0

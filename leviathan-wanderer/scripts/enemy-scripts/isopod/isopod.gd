@@ -1,5 +1,5 @@
 # isopod.gd
-extends "res://scripts/Optimization/Interpolate.gd"
+extends "res://scripts/Utility/Interpolate.gd"
 
 @export var max_health: int = 700
 @export var detect_player_scan_radius: float = 2000.0

@@ -1,5 +1,5 @@
 #worm.gd
-extends "res://scripts/Optimization/Interpolate.gd"
+extends "res://scripts/Utility/Interpolate.gd"
 
 @export var max_health: int = 900
 @export var scan_radius: float = 3000.0

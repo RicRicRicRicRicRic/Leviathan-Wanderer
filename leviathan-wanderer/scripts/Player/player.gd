@@ -1,5 +1,5 @@
 # player.gd
-extends "res://scripts/Optimization/Interpolate.gd"
+extends "res://scripts/Utility/Interpolate.gd"
 
 @export var max_health: int = 1000
 @export var rising_gravity_multiplier: float = 2.2

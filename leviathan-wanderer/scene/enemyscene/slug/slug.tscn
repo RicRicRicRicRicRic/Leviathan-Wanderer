@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://cm7h526ig8swg" path="res://assets/sprites/enemy-sprites/Slug-enemy.svg" id="1_4yip8"]
 [ext_resource type="Script" uid="uid://b2peks1b2fn84" path="res://scripts/enemy-scripts/slug/slug.gd" id="1_mnw3t"]
-[ext_resource type="PackedScene" uid="uid://ga1kg4j0ek8b" path="res://scene/UI_scenes/Enemy_healthbar.tscn" id="3_bksd1"]
+[ext_resource type="PackedScene" uid="uid://ga1kg4j0ek8b" path="res://scene/Utility/Enemy_healthbar.tscn" id="3_bksd1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e147q"]
 atlas = ExtResource("1_4yip8")

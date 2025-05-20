@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dtejkf44o7npw" path="res://scripts/Chapter1/chap1_roomscripts.gd" id="1_fjr4h"]
 [ext_resource type="Texture2D" uid="uid://cvm1xsprhoww8" path="res://assets/sprites/prototype graphics.svg" id="1_ogsup"]
-[ext_resource type="PackedScene" uid="uid://cfqff4kheixm" path="res://scene/Player_scene/area_2d_camera_room.tscn" id="2_5xyui"]
+[ext_resource type="PackedScene" uid="uid://cfqff4kheixm" path="res://scene/Utility/area_2d_camera_room.tscn" id="2_5xyui"]
 [ext_resource type="Texture2D" uid="uid://c17lu264e832b" path="res://icon.svg" id="3_y6kgj"]
 [ext_resource type="PackedScene" uid="uid://bc73s8pmuo2oq" path="res://scene/enemyscene/slug/slug_spawner.tscn" id="5_fjr4h"]
 [ext_resource type="PackedScene" uid="uid://ci1mpwj3ds1xo" path="res://scene/enemyscene/jellyfish/jellyfish_spawner.tscn" id="6_1tt6n"]

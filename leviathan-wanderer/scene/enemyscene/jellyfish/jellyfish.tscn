@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://cv633dfykpsuh" path="res://assets/sprites/enemy-sprites/jellyfish-enemy.svg" id="1_7br4o"]
 [ext_resource type="Script" uid="uid://by5718shaqjtu" path="res://scripts/enemy-scripts/Jellyfish/jellyfish.gd" id="1_ya64g"]
-[ext_resource type="PackedScene" uid="uid://ga1kg4j0ek8b" path="res://scene/UI_scenes/Enemy_healthbar.tscn" id="2_ytqfs"]
+[ext_resource type="PackedScene" uid="uid://ga1kg4j0ek8b" path="res://scene/Utility/Enemy_healthbar.tscn" id="2_ytqfs"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ch48h"]
 atlas = ExtResource("1_7br4o")

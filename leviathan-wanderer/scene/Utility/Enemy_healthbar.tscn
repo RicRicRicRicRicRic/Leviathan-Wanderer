@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://ga1kg4j0ek8b"]
 
-[ext_resource type="Script" uid="uid://7i2171mgygan" path="res://scripts/Optimization/enemyHP.gd" id="1_rvh5j"]
+[ext_resource type="Script" uid="uid://7i2171mgygan" path="res://scripts/Utility/enemyHP.gd" id="1_rvh5j"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nx8lb"]
 

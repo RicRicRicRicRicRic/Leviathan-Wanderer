@@ -1,9 +1,8 @@
 #isopod_spawner.gd
 extends Area2D
 
-@export var spawn_ammount: int = 2
+@export var spawn_ammount: int = 1
 @export var enemy: PackedScene = preload("res://scene/enemyscene/isopod/isopod.tscn")
-@export var random_spread_radius: float = 100.0
 @export var delete: bool = true
 
 @onready var collider: CollisionPolygon2D = $CollisionPolygon2D
@@ -43,12 +42,5 @@ func spawn_enemy() -> void:
 		var marker_node = $Marker2D
 		if marker_node != null and marker_node is Marker2D:
 			var base_position_in_room = position + marker_node.position
-			var random_offset = Vector2(
-				randf_range(-random_spread_radius, random_spread_radius),
-				randf_range(-random_spread_radius, random_spread_radius)
-			)
-			var final_position_in_room = base_position_in_room + random_offset
-			enemy_instance.position = final_position_in_room
+			enemy_instance.position = base_position_in_room
 			get_parent().call_deferred("add_child", enemy_instance)
-		else:
-			print("Error: Marker2D node not found as a child of the spawner!")
