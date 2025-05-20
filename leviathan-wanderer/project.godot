@@ -15,6 +15,10 @@ run/main_scene="uid://bbssro71sr1jn"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Chap1RoomManager="*res://scripts/Chapter1/Chap1_RoomManager.gd"
+
 [debug]
 
 settings/stdout/print_fps=true

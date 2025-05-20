@@ -15,4 +15,3 @@ func _physics_process(delta: float) -> void:
 
 func set_target_position(new_pos: Vector2) -> void:
 	target_position = new_pos
-	print("Camera target position set to: ", target_position)

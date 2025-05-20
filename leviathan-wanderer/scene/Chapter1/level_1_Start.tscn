@@ -44,10 +44,10 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_wa7mu")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wa7mu"]
-size = Vector2(17, 68)
+size = Vector2(6.80001, 68)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wsga7"]
-size = Vector2(17, 68)
+size = Vector2(6.80015, 68)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t8lnl"]
 size = Vector2(340, 85)
@@ -85,8 +85,7 @@ position = Vector2(-1408, -32)
 scale = Vector2(5, 5)
 
 [node name="CollisionPolygon2D" type="CollisionShape2D" parent="Area2D_left"]
-position = Vector2(-26.1, 6.4)
-scale = Vector2(1, 1)
+position = Vector2(-21, 6.4)
 shape = SubResource("RectangleShape2D_wa7mu")
 
 [node name="Area2D_right" type="Area2D" parent="."]
@@ -94,8 +93,7 @@ position = Vector2(-1408, -32)
 scale = Vector2(5, 5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_right"]
-position = Vector2(589.3, 6.4)
-scale = Vector2(1, 1)
+position = Vector2(584.2, 6.4)
 shape = SubResource("RectangleShape2D_wsga7")
 
 [node name="Area2D_bottom" type="Area2D" parent="."]
@@ -126,7 +124,6 @@ scale = Vector2(0.501961, 0.501961)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D_block_Right/StaticBody2D"]
 position = Vector2(0.499939, -0.187717)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_ojoao")
 
 [node name="Sprite2D_block_Bottom" type="Sprite2D" parent="."]
@@ -140,5 +137,4 @@ scale = Vector2(0.501961, 0.497579)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D_block_Bottom/StaticBody2D"]
 position = Vector2(-7.42077e-06, -1.12292)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_al2ft")

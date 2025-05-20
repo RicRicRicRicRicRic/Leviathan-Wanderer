@@ -10,6 +10,7 @@ extends "res://scripts/Optimization/Interpolate.gd"
 @export var avoidance_turn_speed: float = 5.0
 @export var rotation_speed: float = 10.0
 
+
 @onready var visuals: Node2D = $Node2D
 @onready var isopod_anim: AnimatedSprite2D = $Node2D/AnimatedSprite2D
 @onready var collider: CollisionShape2D = $CollisionShape2D
@@ -30,6 +31,7 @@ var last_direction: Vector2
 var player: Node2D
 var can_curl: bool = true
 var curled_instance: Node2D = null
+var _current_avoidance_turn_sign: float = 0.0 
 
 func _ready() -> void:
 	interp_visuals = visuals
@@ -55,62 +57,87 @@ func _physics_process(_delta: float) -> void:
 	previous_position = global_position
 	if is_dying:
 		return
+
 	var dir_to_player: Vector2 = (player.global_position - global_position).normalized()
 	var dist_to_player: float = global_position.distance_to(player.global_position)
 	detect_obstacle.target_position = (player.global_position - global_position)
+
 	var hit_fwd: bool = detect_obstacle.is_colliding() and detect_obstacle.get_collider() != player
 	var hit_left: bool = detect_left.is_colliding() and detect_left.get_collider() != player
 	var hit_right: bool = detect_right.is_colliding() and detect_right.get_collider() != player
 	var obstacle_detected: bool = hit_fwd or hit_left or hit_right
+
 	if obstacle_detected:
 		if not is_avoiding_obstacle:
 			is_avoiding_obstacle = true
 			last_direction = dir_to_player
 	else:
 		is_avoiding_obstacle = false
-		last_player_position = Vector2.ZERO
-		last_direction = dir_to_player
+		_current_avoidance_turn_sign = 0.0
+
 	if is_curling:
 		return
+
 	var target_dir: Vector2 = dir_to_player
+
 	if is_avoiding_obstacle:
-		var avoid_dir: Vector2 = Vector2.ZERO
+		var avoid_dir_decision: Vector2
+
 		if hit_left and not hit_right:
-			avoid_dir = last_direction.rotated(deg_to_rad(avoidance_turn_speed))
+			avoid_dir_decision = last_direction.rotated(deg_to_rad(avoidance_turn_speed))
+			_current_avoidance_turn_sign = 1.0
 		elif hit_right and not hit_left:
-			avoid_dir = last_direction.rotated(deg_to_rad(-avoidance_turn_speed))
-		else:
-			if hit_left and hit_right:
+			avoid_dir_decision = last_direction.rotated(deg_to_rad(-avoidance_turn_speed))
+			_current_avoidance_turn_sign = -1.0
+		elif hit_left and hit_right:
+			if _current_avoidance_turn_sign == 0.0:
 				if last_direction.cross(dir_to_player) > 0:
-					avoid_dir = last_direction.rotated(deg_to_rad(-avoidance_turn_speed))
+					_current_avoidance_turn_sign = -1.0
 				else:
-					avoid_dir = last_direction.rotated(deg_to_rad(avoidance_turn_speed))
+					_current_avoidance_turn_sign = 1.0
+			avoid_dir_decision = last_direction.rotated(deg_to_rad(avoidance_turn_speed * _current_avoidance_turn_sign))
+		elif hit_fwd:
+			if _current_avoidance_turn_sign == 0.0:
+				_current_avoidance_turn_sign = 1.0
+			avoid_dir_decision = last_direction.rotated(deg_to_rad(avoidance_turn_speed * _current_avoidance_turn_sign))
+		else:
+			if _current_avoidance_turn_sign != 0.0:
+				avoid_dir_decision = last_direction.rotated(deg_to_rad(avoidance_turn_speed * _current_avoidance_turn_sign))
 			else:
-				avoid_dir = last_direction
-		if avoid_dir != Vector2.ZERO:
-			last_direction = last_direction.lerp(avoid_dir.normalized(), _delta * 10.0)
+				avoid_dir_decision = last_direction
+
+		last_direction = last_direction.lerp(avoid_dir_decision.normalized(), _delta * 10.0)
 		target_dir = last_direction.normalized()
+	else:
+		last_direction = dir_to_player
+
 	var tgt_angle: float = target_dir.angle() + PI / 2
 	visuals.rotation = lerp_angle(visuals.rotation, tgt_angle, _delta * rotation_speed)
 	collider.rotation = visuals.rotation
 	damage_area.rotation = visuals.rotation
 	raycast_nodes.rotation = visuals.rotation
+
 	if dist_to_player <= detect_player_scan_radius:
 		velocity = target_dir * speed
 	else:
 		velocity = Vector2.ZERO
 		is_avoiding_obstacle = false
-		last_direction = Vector2.ZERO
+		_current_avoidance_turn_sign = 0.0
+
 	if velocity.length() > 0:
 		isopod_anim.play("crawl")
 	else:
 		isopod_anim.play("iddle")
+
 	move_and_slide()
+
 	if dist_to_player <= transform_to_curl_scan_radius and can_curl and not is_curling:
-		if not detect_obstacle.is_colliding() or detect_obstacle.get_collider() == player:
+		var forward_obstacle_is_player = detect_obstacle.is_colliding() and detect_obstacle.get_collider() == player
+		if not hit_fwd or forward_obstacle_is_player:
 			is_curling = true
 			velocity = Vector2.ZERO
 			isopod_anim.play("curl")
+
 
 func _on_DamageArea_body_entered(body: Node) -> void:
 	if is_curling:

@@ -1,7 +1,7 @@
 [gd_scene load_steps=18 format=4 uid="uid://dkiy4yivs7kvb"]
 
 [ext_resource type="Texture2D" uid="uid://cvm1xsprhoww8" path="res://assets/sprites/prototype graphics.svg" id="1_gtaxf"]
-[ext_resource type="Script" uid="uid://cjjqy7eeifo1n" path="res://scripts/Chapter1/chap1_room_scripts.gd" id="1_kqc3g"]
+[ext_resource type="Script" uid="uid://dtejkf44o7npw" path="res://scripts/Chapter1/chap1_roomscripts.gd" id="1_k2fnh"]
 [ext_resource type="PackedScene" uid="uid://cfqff4kheixm" path="res://scene/Player_scene/area_2d_camera_room.tscn" id="2_hpdar"]
 [ext_resource type="Texture2D" uid="uid://c17lu264e832b" path="res://icon.svg" id="3_h7v3v"]
 [ext_resource type="PackedScene" uid="uid://bc73s8pmuo2oq" path="res://scene/enemyscene/slug/slug_spawner.tscn" id="5_k2fnh"]
@@ -41,7 +41,7 @@ tile_size = Vector2i(17, 17)
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_o7bcs")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_no7tr"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ipxcy"]
 size = Vector2(340, 85)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k2fnh"]
@@ -50,23 +50,23 @@ size = Vector2(17, 68)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tfbpw"]
 size = Vector2(17, 68)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_pb670"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_no7tr"]
 size = Vector2(255, 255.349)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7k3rl"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pb670"]
 size = Vector2(128, 128)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_k1xsk"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7k3rl"]
 size = Vector2(255, 257.246)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_66ct6"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k1xsk"]
 size = Vector2(2550, 1360)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_kqc3g"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_66ct6"]
 size = Vector2(2384, 1184)
 
 [node name="Level1_roomC" type="Node2D"]
-script = ExtResource("1_kqc3g")
+script = ExtResource("1_k2fnh")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 scale = Vector2(5, 5)
@@ -78,7 +78,7 @@ position = Vector2(2, 800)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_bottom"]
 position = Vector2(-2, 92.5)
-shape = SubResource("RectangleShape2D_no7tr")
+shape = SubResource("RectangleShape2D_ipxcy")
 
 [node name="Area2D_left" type="Area2D" parent="."]
 position = Vector2(-1408, -32)
@@ -105,7 +105,7 @@ texture = ExtResource("3_h7v3v")
 scale = Vector2(0.501961, 0.501961)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D_block_Left/StaticBody2D"]
-shape = SubResource("RectangleShape2D_pb670")
+shape = SubResource("RectangleShape2D_no7tr")
 
 [node name="Sprite2D_block_Right" type="Sprite2D" parent="."]
 position = Vector2(1402.5, 0.249924)
@@ -117,7 +117,7 @@ scale = Vector2(0.501961, 0.501961)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D_block_Right/StaticBody2D"]
 position = Vector2(0.499939, -0.187717)
-shape = SubResource("RectangleShape2D_pb670")
+shape = SubResource("RectangleShape2D_no7tr")
 
 [node name="Sprite2D_block_Top" type="Sprite2D" parent="."]
 position = Vector2(2.86102e-06, -807.5)
@@ -128,7 +128,7 @@ texture = ExtResource("3_h7v3v")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D_block_Top/StaticBody2D"]
 position = Vector2(3.8147e-06, 0)
-shape = SubResource("RectangleShape2D_7k3rl")
+shape = SubResource("RectangleShape2D_pb670")
 
 [node name="Sprite2D_block_Bottom" type="Sprite2D" parent="."]
 position = Vector2(9.53674e-07, 807.5)
@@ -141,24 +141,21 @@ scale = Vector2(0.501961, 0.497579)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D_block_Bottom/StaticBody2D"]
 position = Vector2(-7.42077e-06, -1.12292)
-shape = SubResource("RectangleShape2D_k1xsk")
+shape = SubResource("RectangleShape2D_7k3rl")
 
 [node name="Area2D_cameraRoom" parent="." instance=ExtResource("2_hpdar")]
-visible = false
 
 [node name="Area2D_enemyCounter" type="Area2D" parent="."]
-visible = false
 collision_layer = 15
 collision_mask = 15
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_enemyCounter"]
-shape = SubResource("RectangleShape2D_66ct6")
+shape = SubResource("RectangleShape2D_k1xsk")
 
 [node name="Area2D_reblock" type="Area2D" parent="."]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_reblock"]
-shape = SubResource("RectangleShape2D_kqc3g")
+shape = SubResource("RectangleShape2D_66ct6")
 
 [node name="Node_Slug_Spawners" type="Node2D" parent="."]
 

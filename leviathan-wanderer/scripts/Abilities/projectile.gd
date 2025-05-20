@@ -10,7 +10,7 @@ var spawnPos: Vector2 = Vector2.ZERO
 var spawnRot: float = 0.0
 var hit_count: int = 0
 @export var max_hits: int = 10
-@export var damage: float = 40
+@export var damage: float = 4000
 
 @onready var delete_timer: Timer = $Timer
 @onready var anisprite: AnimatedSprite2D = $AnimatedSprite2D

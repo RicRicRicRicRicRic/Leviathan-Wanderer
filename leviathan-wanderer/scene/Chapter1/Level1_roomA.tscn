@@ -1,7 +1,7 @@
 [gd_scene load_steps=18 format=4 uid="uid://cqucq1m06exvd"]
 
 [ext_resource type="Texture2D" uid="uid://cvm1xsprhoww8" path="res://assets/sprites/prototype graphics.svg" id="1_0sths"]
-[ext_resource type="Script" uid="uid://cjjqy7eeifo1n" path="res://scripts/Chapter1/chap1_room_scripts.gd" id="1_hsnho"]
+[ext_resource type="Script" uid="uid://dtejkf44o7npw" path="res://scripts/Chapter1/chap1_roomscripts.gd" id="1_hsnho"]
 [ext_resource type="PackedScene" uid="uid://cfqff4kheixm" path="res://scene/Player_scene/area_2d_camera_room.tscn" id="2_22317"]
 [ext_resource type="Texture2D" uid="uid://c17lu264e832b" path="res://icon.svg" id="3_hr6v7"]
 [ext_resource type="PackedScene" uid="uid://bc73s8pmuo2oq" path="res://scene/enemyscene/slug/slug_spawner.tscn" id="5_g6mnd"]
@@ -89,7 +89,6 @@ scale = Vector2(5, 5)
 
 [node name="CollisionPolygon2D" type="CollisionShape2D" parent="Area2D_left"]
 position = Vector2(-26.1, 6.4)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_g6mnd")
 
 [node name="Area2D_right" type="Area2D" parent="."]
@@ -98,7 +97,6 @@ scale = Vector2(5, 5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_right"]
 position = Vector2(589.3, 6.4)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_1xw1j")
 
 [node name="Sprite2D_block_Left" type="Sprite2D" parent="."]
@@ -122,7 +120,6 @@ scale = Vector2(0.501961, 0.501961)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D_block_Right/StaticBody2D"]
 position = Vector2(0.499939, -0.187717)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_xofet")
 
 [node name="Sprite2D_block_Top" type="Sprite2D" parent="."]
@@ -134,7 +131,6 @@ texture = ExtResource("3_hr6v7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D_block_Top/StaticBody2D"]
 position = Vector2(3.8147e-06, 0)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_130xn")
 
 [node name="Sprite2D_block_Bottom" type="Sprite2D" parent="."]
@@ -148,14 +144,11 @@ scale = Vector2(0.501961, 0.497579)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D_block_Bottom/StaticBody2D"]
 position = Vector2(-7.42077e-06, -1.12292)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_otgwj")
 
 [node name="Area2D_cameraRoom" parent="." instance=ExtResource("2_22317")]
-visible = false
 
 [node name="Area2D_enemyCounter" type="Area2D" parent="."]
-visible = false
 collision_layer = 15
 collision_mask = 15
 
@@ -163,7 +156,6 @@ collision_mask = 15
 shape = SubResource("RectangleShape2D_q3p1p")
 
 [node name="Area2D_reblock" type="Area2D" parent="."]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_reblock"]
 shape = SubResource("RectangleShape2D_hsnho")

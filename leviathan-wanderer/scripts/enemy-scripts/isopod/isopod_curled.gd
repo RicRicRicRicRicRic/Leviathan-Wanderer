@@ -1,7 +1,7 @@
 # isopod_curled.gd
 extends RigidBody2D
 
-static var SPEED: float = 1500.0
+static var SPEED: float = 1800.0
 @export var knockback_strength: float = 1800.0
 
 var _player_node: Node = null

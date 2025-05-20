@@ -122,3 +122,10 @@ func _do_spawn(packed: PackedScene, direction: String) -> void:
 				bottom_path.queue_free()
 	if new_room.has_method("configure_exits"):
 		new_room.configure_exits(direction)
+	match direction:
+		"left":
+			if new_room.has_node("Area2D_right"):
+				new_room.get_node("Area2D_right").queue_free()
+		"right":
+			if new_room.has_node("Area2D_left"):
+				new_room.get_node("Area2D_left").queue_free()

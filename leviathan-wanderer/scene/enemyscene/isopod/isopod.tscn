@@ -332,12 +332,12 @@ grow_vertical = 1
 [node name="Node2D_raycasts" type="Node2D" parent="."]
 
 [node name="RayCast2D_Right" type="RayCast2D" parent="Node2D_raycasts"]
-position = Vector2(40, -48)
+position = Vector2(32, -48)
 target_position = Vector2(56, -112)
 hit_from_inside = true
 
 [node name="RayCast2D_Left" type="RayCast2D" parent="Node2D_raycasts"]
-position = Vector2(-40, -48)
+position = Vector2(-32, -48)
 rotation = 1.57079
 target_position = Vector2(-112, 55.9997)
 hit_from_inside = true
