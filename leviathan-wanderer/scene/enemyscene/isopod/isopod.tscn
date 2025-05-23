@@ -274,7 +274,7 @@ radius = 8.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ijh7n"]
 radius = 29.0909
-height = 80.0
+height = 160.0
 
 [node name="Isopod" type="CharacterBody2D"]
 collision_layer = 8
@@ -304,7 +304,8 @@ z_index = -1
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(0, -40)
+z_index = 10
+position = Vector2(0, -8)
 scale = Vector2(1.1, 1)
 shape = SubResource("CapsuleShape2D_ijh7n")
 

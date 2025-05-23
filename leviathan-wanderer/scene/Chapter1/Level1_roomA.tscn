@@ -212,7 +212,6 @@ polygon = PackedVector2Array(-1224, 629, -1224, -629, 1224, -646, 1224, 629)
 [node name="Node3_Isopod_Spawners" type="Node2D" parent="."]
 
 [node name="isopod_spawner" parent="Node3_Isopod_Spawners" instance=ExtResource("7_q3p1p")]
-spawn_ammount = 1
 
 [node name="Marker2D" type="Marker2D" parent="Node3_Isopod_Spawners/isopod_spawner"]
 position = Vector2(2, 289)

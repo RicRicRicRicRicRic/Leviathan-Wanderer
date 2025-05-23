@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://cvm1xsprhoww8" path="res://assets/sprites/prototype graphics.svg" id="2_15y3v"]
 [ext_resource type="PackedScene" uid="uid://c5feweoi2hkte" path="res://scene/Utility/fps_counter.tscn" id="2_q12no"]
 [ext_resource type="PackedScene" uid="uid://rou3hvjvk4pe" path="res://scene/Player_scene/player.tscn" id="3_4lrcw"]
-[ext_resource type="PackedScene" uid="uid://cy5fmoflp5qlg" path="res://scene/Utility/Player_healthbar.tscn" id="3_wa7mu"]
+[ext_resource type="PackedScene" uid="uid://cy5fmoflp5qlg" path="res://scene/Player_scene/Player_conditions.tscn" id="3_wa7mu"]
 [ext_resource type="PackedScene" uid="uid://cpo6w3f0h3ie3" path="res://scene/Utility/camera_2d.tscn" id="4_idbhw"]
 [ext_resource type="PackedScene" uid="uid://cfqff4kheixm" path="res://scene/Utility/area_2d_camera_room.tscn" id="6_4lrcw"]
 [ext_resource type="Texture2D" uid="uid://c17lu264e832b" path="res://icon.svg" id="9_wa7mu"]
@@ -75,10 +75,9 @@ position = Vector2(2, -67)
 
 [node name="CanvasLayer_fpscounter" parent="." instance=ExtResource("2_q12no")]
 
-[node name="CanvasLayer2_playerheatlhbar" parent="." instance=ExtResource("3_wa7mu")]
+[node name="Player_conditions" parent="." instance=ExtResource("3_wa7mu")]
 
 [node name="Area2D_cameraRoom" parent="." instance=ExtResource("6_4lrcw")]
-visible = false
 
 [node name="Area2D_left" type="Area2D" parent="."]
 position = Vector2(-1408, -32)

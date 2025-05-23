@@ -1,6 +1,6 @@
 [gd_scene load_steps=55 format=3 uid="uid://rou3hvjvk4pe"]
 
-[ext_resource type="Texture2D" uid="uid://cge20l2aafkuh" path="res://assets/sprites/MainChar.svg" id="1_h0ky5"]
+[ext_resource type="Texture2D" uid="uid://cge20l2aafkuh" path="res://assets/sprites/player-sprites/MainChar.svg" id="1_h0ky5"]
 [ext_resource type="Script" uid="uid://bakpi8c5mrky7" path="res://scripts/Player/player.gd" id="1_i8rfg"]
 [ext_resource type="Script" uid="uid://cfgob8p3djlkd" path="res://scripts/Player/animations.gd" id="3_fvtld"]
 
@@ -383,14 +383,18 @@ height = 130.0
 
 [node name="Player" type="CharacterBody2D"]
 physics_interpolation_mode = 1
+z_index = 1
 texture_filter = 4
 collision_mask = 3
 script = ExtResource("1_i8rfg")
+
+[node name="Node2D_player_combat" type="Node2D" parent="."]
 
 [node name="Node2D" type="Node2D" parent="."]
 position = Vector2(0, 2)
 
 [node name="WeaponSprite2D" type="AnimatedSprite2D" parent="Node2D"]
+z_index = 1
 position = Vector2(19, 6)
 sprite_frames = SubResource("SpriteFrames_kn5lq")
 animation = &"Luminous staff"
@@ -399,7 +403,11 @@ offset = Vector2(33, -22)
 
 [node name="Marker2D" type="Marker2D" parent="Node2D/WeaponSprite2D"]
 z_index = -1
-position = Vector2(89, -56)
+position = Vector2(91, -64)
+
+[node name="Marker2D_laser" type="Marker2D" parent="Node2D/WeaponSprite2D"]
+z_index = -1
+position = Vector2(73, -64)
 
 [node name="GemSprite2D" type="AnimatedSprite2D" parent="Node2D/WeaponSprite2D"]
 self_modulate = Color(2.5, 2.5, 2.5, 1)
@@ -440,4 +448,8 @@ one_shot = true
 
 [node name="TeleportCDTimer" type="Timer" parent="."]
 wait_time = 2.5
+one_shot = true
+
+[node name="Timer_mana_regen" type="Timer" parent="."]
+wait_time = 0.75
 one_shot = true

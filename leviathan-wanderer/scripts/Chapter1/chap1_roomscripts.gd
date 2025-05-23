@@ -38,6 +38,8 @@ var offset_bottom: float = 1870.0
 static var defeated_rooms_count: int = 0
 const DEFEATED_ROOMS_THRESHOLD: int = 9
 
+const THIS_SCRIPT = preload("res://scripts/Chapter1/chap1_roomscripts.gd")
+
 func _ready() -> void:
 	randomize()
 	if not is_instance_valid(blockade_left):
@@ -66,7 +68,7 @@ func _ready() -> void:
 		push_error("reblock missing in %s" % name)
 	if not is_instance_valid(enemy_counter):
 		push_error("enemy_counter missing in %s" % name)
-	
+
 	disable_all_blockades()
 	left_path.connect("body_entered", Callable(self, "_on_path_entered").bind("left"))
 	right_path.connect("body_entered", Callable(self, "_on_path_entered").bind("right"))
@@ -92,16 +94,17 @@ func disable_all_blockades() -> void:
 	if is_instance_valid(collision_top):
 		collision_top.set_deferred("disabled", true)
 
-func _on_path_entered(body: Node, direction: String) -> void:
+func _on_path_entered(body: Node, exit_direction_from_current_room: String) -> void:
 	if not body.is_in_group("player") or room_spawned:
 		return
 	room_spawned = true
-	opened_exit_direction = direction
-	spawned_from_bottom = (direction == "bottom")
-	call_deferred("handle_initial_blockades", direction)
+	opened_exit_direction = exit_direction_from_current_room
+	spawned_from_bottom = (exit_direction_from_current_room == "bottom")
+	
+	call_deferred("handle_initial_blockades", exit_direction_from_current_room)
 	var path: String = get_non_repeating_room()
 	var packed: PackedScene = ResourceLoader.load(path) as PackedScene
-	call_deferred("_do_spawn", packed, direction)
+	call_deferred("_do_spawn", packed, exit_direction_from_current_room)
 
 func get_non_repeating_room() -> String:
 	if defeated_rooms_count >= DEFEATED_ROOMS_THRESHOLD:
@@ -131,17 +134,34 @@ func handle_initial_blockades(direction: String) -> void:
 			enable_blockade("top")
 			free_blockade("bottom")
 
-func _do_spawn(packed: PackedScene, direction: String) -> void:
+func _do_spawn(packed: PackedScene, exit_direction_from_current_room: String) -> void:
 	var new_room: Node2D = packed.instantiate()
 	add_child(new_room)
-	match direction:
+
+	var entry_direction_for_new_room_relative: String = ""
+	match exit_direction_from_current_room:
+		"left":
+			entry_direction_for_new_room_relative = "right"
+		"right":
+			entry_direction_for_new_room_relative = "left"
+		"bottom":
+			entry_direction_for_new_room_relative = "top"
+		"top":
+			entry_direction_for_new_room_relative = "bottom"
+
+	if new_room.get_script() == THIS_SCRIPT:
+		new_room.opened_exit_direction = entry_direction_for_new_room_relative
+		new_room.spawned_from_bottom = (entry_direction_for_new_room_relative == "bottom")
+	
+	match exit_direction_from_current_room:
 		"left":
 			new_room.position = Vector2(offset_left, 0)
 		"right":
 			new_room.position = Vector2(offset_right, 0)
 		"bottom":
 			new_room.position = Vector2(0, offset_bottom)
-	match direction:
+
+	match exit_direction_from_current_room:
 		"left":
 			if is_instance_valid(left_path):
 				left_path.queue_free()
@@ -151,32 +171,47 @@ func _do_spawn(packed: PackedScene, direction: String) -> void:
 		"bottom":
 			if is_instance_valid(bottom_path):
 				bottom_path.queue_free()
-	match direction:
+
+	match entry_direction_for_new_room_relative:
 		"left":
-			if new_room.has_node("Area2D_right"):
-				new_room.get_node("Area2D_right").queue_free()
-		"right":
 			if new_room.has_node("Area2D_left"):
 				new_room.get_node("Area2D_left").queue_free()
+		"right":
+			if new_room.has_node("Area2D_right"):
+				new_room.get_node("Area2D_right").queue_free()
+		"top":
+			if new_room.has_node("Area2D_top"):
+				new_room.get_node("Area2D_top").queue_free()
+		"bottom":
+			if new_room.has_node("Area2D_bottom"):
+				new_room.get_node("Area2D_bottom").queue_free()
+
 	if packed.resource_path == final_room_path:
-		match direction:
+		match entry_direction_for_new_room_relative:
 			"left":
-				if new_room.has_node("Sprite2D_block_Right"):
-					new_room.get_node("Sprite2D_block_Right").queue_free()
-				if new_room.has_node("Sprite2D_block_Right/StaticBody2D/CollisionShape2D"):
-					new_room.get_node("Sprite2D_block_Right/StaticBody2D/CollisionShape2D").queue_free()
-			"right":
 				if new_room.has_node("Sprite2D_block_Left"):
 					new_room.get_node("Sprite2D_block_Left").queue_free()
 				if new_room.has_node("Sprite2D_block_Left/StaticBody2D/CollisionShape2D"):
 					new_room.get_node("Sprite2D_block_Left/StaticBody2D/CollisionShape2D").queue_free()
-			"bottom":
+			"right":
+				if new_room.has_node("Sprite2D_block_Right"):
+					new_room.get_node("Sprite2D_block_Right").queue_free()
+				if new_room.has_node("Sprite2D_block_Right/StaticBody2D/CollisionShape2D"):
+					new_room.get_node("Sprite2D_block_Right/StaticBody2D/CollisionShape2D").queue_free()
+			"top":
 				if new_room.has_node("Sprite2D_block_Top"):
 					new_room.get_node("Sprite2D_block_Top").queue_free()
 				if new_room.has_node("Sprite2D_block_Top/StaticBody2D/CollisionShape2D"):
 					new_room.get_node("Sprite2D_block_Top/StaticBody2D/CollisionShape2D").queue_free()
+			"bottom":
+				if new_room.has_node("Sprite2D_block_Bottom"):
+					new_room.get_node("Sprite2D_block_Bottom").queue_free()
+				if new_room.has_node("Sprite2D_block_Bottom/StaticBody2D/CollisionShape2D"):
+					new_room.get_node("Sprite2D_block_Bottom/StaticBody2D/CollisionShape2D").queue_free()
+
 	if new_room.has_method("configure_exits"):
-		new_room.configure_exits(direction)
+		new_room.configure_exits(entry_direction_for_new_room_relative)
+
 
 func enable_blockade(direction: String) -> void:
 	match direction:

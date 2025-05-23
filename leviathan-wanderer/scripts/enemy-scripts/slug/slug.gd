@@ -4,7 +4,7 @@ extends "res://scripts/Utility/Interpolate.gd"
 const SPEED: float = 380.0
 const GRAVITY: float = 980.0
 
-@export var max_health: int = 475
+@export var max_health: int = 501
 @export var knockback_strength: float = 1200.0
 
 var health: int = max_health

@@ -1,0 +1,104 @@
+[gd_scene load_steps=11 format=3 uid="uid://bviadp68fjyg1"]
+
+[ext_resource type="Script" uid="uid://cymq5gwrkoedu" path="res://scripts/Player/teleprot.gd" id="1_w4sxr"]
+[ext_resource type="Texture2D" uid="uid://cge20l2aafkuh" path="res://assets/sprites/player-sprites/MainChar.svg" id="2_k1vm7"]
+[ext_resource type="Texture2D" uid="uid://cbcgjld05l4qw" path="res://assets/sprites/player-sprites/Teleport_line.svg" id="3_p5yjs"]
+[ext_resource type="Texture2D" uid="uid://dln4woaj2ks0j" path="res://assets/sprites/player-sprites/Teleport_line_CD.svg" id="4_dok48"]
+[ext_resource type="Texture2D" uid="uid://cwdrg8255xs0l" path="res://assets/sprites/player-sprites/Teleport_line_wall.svg" id="5_k1vm7"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_w4sxr"]
+radius = 35.0
+height = 130.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hnw8a"]
+atlas = ExtResource("2_k1vm7")
+region = Rect2(161, 1771, 161, 161)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p5yjs"]
+atlas = ExtResource("2_k1vm7")
+region = Rect2(322, 1771, 161, 161)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qtayt"]
+atlas = ExtResource("2_k1vm7")
+region = Rect2(0, 1771, 161, 161)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hnw8a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hnw8a")
+}],
+"loop": true,
+"name": &"teleport_on_cd",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p5yjs")
+}],
+"loop": true,
+"name": &"teleport_on_wall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qtayt")
+}],
+"loop": true,
+"name": &"teleport_ready",
+"speed": 5.0
+}]
+
+[node name="Teleprot" type="Node2D"]
+script = ExtResource("1_w4sxr")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+z_index = -1
+position = Vector2(0, -9)
+shape = SubResource("CapsuleShape2D_w4sxr")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+self_modulate = Color(1.45, 1.45, 1.45, 1)
+texture_filter = 2
+position = Vector2(0, -15)
+sprite_frames = SubResource("SpriteFrames_hnw8a")
+animation = &"teleport_on_wall"
+autoplay = "teleport_ready"
+
+[node name="Marker2D" type="Marker2D" parent="AnimatedSprite2D"]
+position = Vector2(0, 15)
+
+[node name="Line2D_tp_ready" type="Line2D" parent="."]
+self_modulate = Color(7, 7, 7, 1)
+z_index = -1
+texture_filter = 2
+texture_repeat = 2
+points = PackedVector2Array(0, 0)
+width = 48.0
+texture = ExtResource("3_p5yjs")
+texture_mode = 1
+joint_mode = 2
+
+[node name="Line2D2_tp_cd" type="Line2D" parent="."]
+self_modulate = Color(7, 7, 7, 1)
+z_index = -1
+texture_filter = 2
+texture_repeat = 2
+points = PackedVector2Array(0, 0)
+width = 48.0
+texture = ExtResource("4_dok48")
+texture_mode = 1
+joint_mode = 2
+
+[node name="Line2D2_tp_wall" type="Line2D" parent="."]
+self_modulate = Color(4.5, 4.5, 4.5, 1)
+z_index = -1
+texture_filter = 2
+texture_repeat = 2
+points = PackedVector2Array(0, 0)
+width = 48.0
+texture = ExtResource("5_k1vm7")
+texture_mode = 1
+joint_mode = 2

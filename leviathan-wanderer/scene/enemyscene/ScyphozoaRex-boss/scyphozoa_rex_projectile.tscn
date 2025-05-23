@@ -1,0 +1,61 @@
+[gd_scene load_steps=5 format=3 uid="uid://5dox7y2ashxl"]
+
+[ext_resource type="Texture2D" uid="uid://fgqi6qacmfb" path="res://assets/sprites/enemy-sprites/ScyphozoaRex-boss.svg" id="1_4o0jm"]
+[ext_resource type="Script" uid="uid://d24kg2ta60ofy" path="res://scripts/enemy-scripts/scyphozoa_rex/scyphozoa_rex_projectile.gd" id="1_lek4u"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lek4u"]
+radius = 26.0192
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ckam3"]
+lifetime_randomness = 0.5
+spread = 15.0
+initial_velocity_min = 37.91
+initial_velocity_max = 106.14
+gravity = Vector3(0, 0, 0)
+scale_min = 10.0
+scale_max = 10.0
+color = Color(0.329412, 0.2, 0.647059, 1)
+
+[node name="ScyphozoaRex_projectile" type="RigidBody2D"]
+z_index = 10
+collision_layer = 4
+collision_mask = 9
+gravity_scale = 0.0
+script = ExtResource("1_lek4u")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(1.75, 1.75, 1.75, 1)
+texture_filter = 4
+texture = ExtResource("1_4o0jm")
+region_enabled = true
+region_rect = Rect2(1829, 377, 51, 52)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_lek4u")
+
+[node name="Timer_despawn" type="Timer" parent="."]
+wait_time = 2.5
+one_shot = true
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+self_modulate = Color(1.75, 1.75, 1.75, 1)
+z_index = -1
+lifetime = 0.75
+speed_scale = 5.0
+process_material = SubResource("ParticleProcessMaterial_ckam3")
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="."]
+self_modulate = Color(1.75, 1.75, 1.75, 1)
+z_index = -1
+position = Vector2(0, -18)
+lifetime = 0.4
+speed_scale = 5.0
+process_material = SubResource("ParticleProcessMaterial_ckam3")
+
+[node name="GPUParticles2D3" type="GPUParticles2D" parent="."]
+self_modulate = Color(1.75, 1.75, 1.75, 1)
+z_index = -1
+position = Vector2(0, 18)
+lifetime = 0.4
+speed_scale = 5.0
+process_material = SubResource("ParticleProcessMaterial_ckam3")

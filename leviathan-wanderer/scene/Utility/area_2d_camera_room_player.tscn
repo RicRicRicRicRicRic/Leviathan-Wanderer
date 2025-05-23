@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b645dh8vclbvr"]
+
+[ext_resource type="Script" uid="uid://x2ridt5vgia0" path="res://scripts/Utility/area_2d_camera_room_player.gd" id="1_fokep"]
+
+[node name="Area2D_cameraRoomPlayer" type="Area2D"]
+script = ExtResource("1_fokep")
