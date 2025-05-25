@@ -14,6 +14,10 @@ collision_layer = 2
 collision_mask = 11
 script = ExtResource("1_61tw5")
 
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+z_index = -2
+polygon = PackedVector2Array(0, -204, -153, -85, -442, 17, -680, 68, -697, 85, -697, 119, -663, 153, -357, 238, -272, 204, -153, 170, -51, 153, 51, 153, 153, 170, 272, 204, 340, 238, 663, 153, 697, 119, 697, 85, 646, 51, 408, 17, 170, -85)
+
 [node name="Node2D_visuals" type="Node2D" parent="."]
 script = ExtResource("2_7lu5h")
 
@@ -380,17 +384,10 @@ position = Vector2(-255, 918)
 [node name="Marker2D_start" type="Marker2D" parent="Node2D_visuals/Node2D_Lines_tentacles/Node2D_right_side/Node2D_tentacle5_left"]
 position = Vector2(-255, 204)
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-z_index = -2
-polygon = PackedVector2Array(0, -204, -153, -85, -442, 17, -680, 68, -697, 85, -697, 119, -663, 153, -357, 238, -272, 204, -153, 170, -51, 153, 51, 153, 153, 170, 272, 204, 340, 238, 663, 153, 697, 119, 697, 85, 646, 51, 408, 17, 170, -85)
-
-[node name="Area2D_damage_contact" type="Area2D" parent="."]
-visible = false
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D_damage_contact"]
-z_index = -2
-polygon = PackedVector2Array(0, -221, -170, -102, -442, 0, -697, 68, -714, 85, -714, 119, -663, 170, -357, 255, -272, 221, -153, 187, -51, 170, 51, 170, 153, 187, 272, 221, 340, 255, 663, 170, 714, 119, 714, 85, 646, 34, 408, 0, 170, -102)
-
 [node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="DeathTimer" type="Timer" parent="."]
 wait_time = 3.0
 one_shot = true

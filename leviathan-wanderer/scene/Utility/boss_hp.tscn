@@ -1,0 +1,100 @@
+[gd_scene load_steps=6 format=3 uid="uid://cmkg0mghk4p0b"]
+
+[ext_resource type="Script" uid="uid://o3w0vphhwop1" path="res://scripts/Utility/boss_healthbar.gd" id="1_ewyrb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_huyyo"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ewyrb"]
+bg_color = Color(1, 0.203, 0.78, 1)
+border_width_top = 2
+border_width_bottom = 2
+border_color = Color(0.3952, 0.2028, 0.78, 0)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r8mvw"]
+bg_color = Color(0.140447, 0.140447, 0.140447, 1)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color(0.603129, 0, 0.181425, 1)
+border_blend = true
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 16
+expand_margin_left = 3.0
+expand_margin_top = 3.0
+expand_margin_right = 3.0
+expand_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nmmmr"]
+bg_color = Color(0.39, 0.1014, 0.33228, 1)
+border_width_top = 2
+border_width_bottom = 2
+border_color = Color(0.39, 0.1014, 0.33228, 0)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 16
+
+[node name="CanvasLayer_boss_HP" type="CanvasLayer"]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -87.0
+offset_top = 366.0
+offset_right = 661.0
+offset_bottom = 417.0
+grow_horizontal = 0
+grow_vertical = 2
+rotation = -1.5708
+script = ExtResource("1_ewyrb")
+
+[node name="ProgressBar_health" type="ProgressBar" parent="Control"]
+physics_interpolation_mode = 1
+z_index = 1
+texture_filter = 4
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxEmpty_huyyo")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ewyrb")
+value = 60.0
+show_percentage = false
+
+[node name="ProgressBar_damage" type="ProgressBar" parent="Control/ProgressBar_health"]
+physics_interpolation_mode = 1
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_r8mvw")
+theme_override_styles/fill = SubResource("StyleBoxFlat_nmmmr")
+value = 80.0
+show_percentage = false
+
+[node name="Timer" type="Timer" parent="Control"]
+wait_time = 3.0
+one_shot = true
+
+[node name="Timer2" type="Timer" parent="Control"]
+wait_time = 1.5
+one_shot = true

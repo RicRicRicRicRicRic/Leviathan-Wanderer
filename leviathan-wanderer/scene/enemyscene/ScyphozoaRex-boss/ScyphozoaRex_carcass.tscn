@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://yubaeix3e584"]
+
+[ext_resource type="Texture2D" uid="uid://fgqi6qacmfb" path="res://assets/sprites/enemy-sprites/ScyphozoaRex-boss.svg" id="1_616g0"]
+
+[node name="ScyphozoaRex_carcass" type="RigidBody2D"]
+mass = 100.0
+gravity_scale = 0.8
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 17)
+texture = ExtResource("1_616g0")
+region_enabled = true
+region_rect = Rect2(43, 34, 1404, 437)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+z_index = -2
+polygon = PackedVector2Array(0, -204, -153, -85, -442, 17, -680, 68, -697, 85, -697, 119, -663, 153, -357, 238, -272, 204, -153, 170, -51, 153, 51, 153, 153, 170, 272, 204, 340, 238, 663, 153, 697, 119, 697, 85, 646, 51, 408, 17, 170, -85)
+
+[node name="Sprite2D_eye" type="Sprite2D" parent="."]
+z_index = 3
+texture_filter = 2
+texture = ExtResource("1_616g0")
+region_enabled = true
+region_rect = Rect2(387, 709, 194, 194)
+
+[node name="Sprite2D_pupil" type="Sprite2D" parent="."]
+z_index = 4
+texture_filter = 4
+texture = ExtResource("1_616g0")
+region_enabled = true
+region_rect = Rect2(1807, 679, 94, 94)

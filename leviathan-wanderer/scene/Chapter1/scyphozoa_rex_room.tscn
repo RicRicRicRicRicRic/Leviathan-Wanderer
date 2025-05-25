@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://bq30odh4xktf2"]
+[gd_scene load_steps=20 format=4 uid="uid://bq30odh4xktf2"]
 
 [ext_resource type="PackedScene" uid="uid://2po5m5mgtl38" path="res://scene/Utility/world_environment_gloweffect.tscn" id="1_j7cue"]
 [ext_resource type="Script" uid="uid://dis47d0otjwk7" path="res://scripts/Chapter1/scyphozoa_rex_room.gd" id="1_rumaj"]
@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://cy5fmoflp5qlg" path="res://scene/Player_scene/Player_conditions.tscn" id="4_w4sh5"]
 [ext_resource type="PackedScene" uid="uid://dsny12w51oug" path="res://scene/enemyscene/ScyphozoaRex-boss/ScyphozoaRex-boss.tscn" id="9_w4sh5"]
 [ext_resource type="Texture2D" uid="uid://c17lu264e832b" path="res://icon.svg" id="11_s0j7e"]
-[ext_resource type="PackedScene" uid="uid://e5ntgsa4ifr0" path="res://scene/enemyscene/jellyfish/jellyfish.tscn" id="12_rw5am"]
+[ext_resource type="PackedScene" uid="uid://cmkg0mghk4p0b" path="res://scene/Utility/boss_hp.tscn" id="13_fpjfx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w4sh5"]
 texture = ExtResource("1_y1uan")
@@ -61,6 +61,9 @@ size = Vector2(255, 255.349)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fpjfx"]
 size = Vector2(1015.47, 128)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q80ub"]
+size = Vector2(2703, 1836)
+
 [node name="ScyphozoaRex_room" type="Node2D"]
 script = ExtResource("1_rumaj")
 
@@ -72,13 +75,15 @@ tile_map_data = PackedByteArray("AADw//f/AAAAAAAAAADw//j/AAAAAAAAAADw//n/AAAAAAA
 tile_set = SubResource("TileSet_w4sh5")
 
 [node name="Player" parent="." instance=ExtResource("3_j7cue")]
-position = Vector2(7072, -34)
+position = Vector2(6936, 40)
 
 [node name="Camera2D" parent="." instance=ExtResource("4_lg68n")]
 
 [node name="CanvasLayer_fpscounter" parent="." instance=ExtResource("3_twe08")]
 
 [node name="Player_conditions" parent="." instance=ExtResource("4_w4sh5")]
+
+[node name="CanvasLayer_boss_HP" parent="." instance=ExtResource("13_fpjfx")]
 
 [node name="Area2D_cameraRoomPlayer" parent="." instance=ExtResource("2_j7cue")]
 position = Vector2(3162, 255)
@@ -132,5 +137,9 @@ scale = Vector2(1.99219, 2.65625)
 position = Vector2(-563.199, 0)
 shape = SubResource("RectangleShape2D_fpjfx")
 
-[node name="Jellyfish" parent="." instance=ExtResource("12_rw5am")]
-position = Vector2(5865, -7.62939e-06)
+[node name="Area2D_boss_hp" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_boss_hp"]
+position = Vector2(9341.5, 0.000717469)
+rotation = 3.14159
+shape = SubResource("RectangleShape2D_q80ub")
