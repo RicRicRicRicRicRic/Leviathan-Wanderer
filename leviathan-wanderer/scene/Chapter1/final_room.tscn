@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=4 uid="uid://im4f6o53tgdy"]
+[gd_scene load_steps=10 format=4 uid="uid://im4f6o53tgdy"]
 
 [ext_resource type="Texture2D" uid="uid://cvm1xsprhoww8" path="res://assets/sprites/prototype graphics.svg" id="1_3cx5i"]
+[ext_resource type="PackedScene" uid="uid://2po5m5mgtl38" path="res://scene/Utility/world_environment_gloweffect.tscn" id="1_e1xqy"]
 [ext_resource type="Texture2D" uid="uid://c17lu264e832b" path="res://icon.svg" id="2_e1xqy"]
 [ext_resource type="PackedScene" uid="uid://cfqff4kheixm" path="res://scene/Utility/area_2d_camera_room.tscn" id="3_hb6ls"]
 
@@ -50,6 +51,8 @@ size = Vector2(128, 128)
 size = Vector2(255, 257.246)
 
 [node name="Final_room" type="Node2D"]
+
+[node name="WorldEnvironment_gloweffect" parent="." instance=ExtResource("1_e1xqy")]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 scale = Vector2(5, 5)

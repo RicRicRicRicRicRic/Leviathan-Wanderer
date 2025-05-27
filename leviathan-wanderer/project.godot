@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Leviathan-Wanderer"
-run/main_scene="uid://bq30odh4xktf2"
+run/main_scene="uid://dsdl7ayo5cc26"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -74,3 +74,4 @@ Cancel_input={
 textures/canvas_textures/default_texture_filter=0
 viewport/hdr_2d=true
 occlusion_culling/use_occlusion_culling=true
+environment/main_scene="uid://dsdl7ayo5cc26"

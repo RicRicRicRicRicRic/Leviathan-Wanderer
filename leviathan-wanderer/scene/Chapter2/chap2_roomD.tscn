@@ -1,0 +1,427 @@
+[gd_scene load_steps=30 format=4 uid="uid://5qfhutaxt7km"]
+
+[ext_resource type="Script" uid="uid://dn1c7eskwl04t" path="res://scripts/Chapter2/chap2_roomscripts.gd" id="1_1jvub"]
+[ext_resource type="Texture2D" uid="uid://cvm1xsprhoww8" path="res://assets/sprites/prototype graphics.svg" id="2_05bda"]
+[ext_resource type="PackedScene" uid="uid://2po5m5mgtl38" path="res://scene/Utility/world_environment_gloweffect.tscn" id="2_ou3ot"]
+[ext_resource type="Texture2D" uid="uid://c17lu264e832b" path="res://icon.svg" id="3_ou3ot"]
+[ext_resource type="PackedScene" uid="uid://cfqff4kheixm" path="res://scene/Utility/area_2d_camera_room.tscn" id="4_gk2il"]
+[ext_resource type="PackedScene" uid="uid://ci4db1u0umgpa" path="res://scene/Chapter2/area_2d_acid.tscn" id="6_gk2il"]
+[ext_resource type="Shader" uid="uid://wag0rlsi12u4" path="res://scripts/Chapter2/acid.gdshader" id="7_uqvbr"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_c0702"]
+texture = ExtResource("2_05bda")
+texture_region_size = Vector2i(17, 17)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8.5, -8.5, 8.5, -8.5, 8.5, 8.5, -8.5, 8.5)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8.5, -8.5, 8.5, -8.5, 8.5, 0.5, -8.5, 0.5)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8.5, -0.5, 8.5, -0.5, 8.5, 8.5, -8.5, 8.5)
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8.5, -8.5, 8.5, -8.5, 8.5, 8.5, -8.5, 8.5)
+1:2/0 = 0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8.5, -8.5, 8.5, -8.5, 8.5, 8.5, -8.5, 8.5)
+2:2/0 = 0
+2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8.5, -8.5, 8.5, -8.5, 8.5, 8.5, -8.5, 8.5)
+0:3/0 = 0
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8.5, -8.5, 8.5, -8.5, 8.5, 8.5, -8.5, 8.5)
+
+[sub_resource type="TileSet" id="TileSet_i2bvk"]
+tile_size = Vector2i(17, 17)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_c0702")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jc4b1"]
+size = Vector2(340, 85)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j31rb"]
+size = Vector2(17, 68)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vut2d"]
+size = Vector2(17, 68)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uiprc"]
+size = Vector2(255, 255.349)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nb1kk"]
+size = Vector2(128, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4m5ht"]
+size = Vector2(255, 257.246)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7gaj5"]
+size = Vector2(2550, 1360)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0gams"]
+size = Vector2(2384, 1184)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iploo"]
+shader = ExtResource("7_uqvbr")
+shader_parameter/scroll_speed = 5.0
+shader_parameter/wave_strength = 0.012
+shader_parameter/wave_frequency = 20.0
+shader_parameter/acid_color = Color(0.8, 1.35, 0.4, 1)
+shader_parameter/foam_color = Color(0.8, 0.9, 0.7, 0)
+shader_parameter/foam_threshold = 0.8
+shader_parameter/foam_intensity = 0.0
+shader_parameter/top_wobble_strength = 5.0
+shader_parameter/top_wobble_frequency = 2.5
+shader_parameter/top_wobble_speed = 1.0
+shader_parameter/top_wiggle_strength = 1.5
+shader_parameter/top_wiggle_frequency_x = 10.0
+shader_parameter/top_wiggle_speed = 1.0
+shader_parameter/time_offset = 0.0
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_apkow"]
+seed = -2
+frequency = 0.0027
+offset = Vector3(-1000, 0, 0)
+fractal_type = 3
+fractal_octaves = 10
+fractal_gain = 0.75
+domain_warp_type = 1
+domain_warp_amplitude = 100.0
+metadata/_preview_in_3d_space_ = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3xck5"]
+width = 400
+height = 100
+noise = SubResource("FastNoiseLite_apkow")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gk2il"]
+shader = ExtResource("7_uqvbr")
+shader_parameter/scroll_speed = 5.0
+shader_parameter/wave_strength = 0.012
+shader_parameter/wave_frequency = 20.0
+shader_parameter/acid_color = Color(0.8, 1.35, 0.4, 1)
+shader_parameter/foam_color = Color(0.8, 0.9, 0.7, 0)
+shader_parameter/foam_threshold = 0.8
+shader_parameter/foam_intensity = 0.0
+shader_parameter/top_wobble_strength = 5.0
+shader_parameter/top_wobble_frequency = 2.5
+shader_parameter/top_wobble_speed = 1.0
+shader_parameter/top_wiggle_strength = 1.5
+shader_parameter/top_wiggle_frequency_x = 10.0
+shader_parameter/top_wiggle_speed = 1.0
+shader_parameter/time_offset = 0.0
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_uqvbr"]
+noise_type = 0
+frequency = 0.0027
+offset = Vector3(1000, 380.95, 0)
+fractal_type = 3
+fractal_octaves = 10
+fractal_gain = 0.75
+domain_warp_type = 1
+domain_warp_amplitude = 100.0
+metadata/_preview_in_3d_space_ = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_iploo"]
+width = 400
+height = 100
+noise = SubResource("FastNoiseLite_uqvbr")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3xck5"]
+shader = ExtResource("7_uqvbr")
+shader_parameter/scroll_speed = 5.0
+shader_parameter/wave_strength = 0.012
+shader_parameter/wave_frequency = 20.0
+shader_parameter/acid_color = Color(0.8, 1.35, 0.4, 1)
+shader_parameter/foam_color = Color(0.8, 0.9, 0.7, 0)
+shader_parameter/foam_threshold = 0.8
+shader_parameter/foam_intensity = 0.0
+shader_parameter/top_wobble_strength = 5.0
+shader_parameter/top_wobble_frequency = 2.5
+shader_parameter/top_wobble_speed = 1.0
+shader_parameter/top_wiggle_strength = 1.5
+shader_parameter/top_wiggle_frequency_x = 10.0
+shader_parameter/top_wiggle_speed = 1.0
+shader_parameter/time_offset = 0.0
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_y5cht"]
+seed = 100
+frequency = 0.0027
+fractal_type = 3
+fractal_octaves = 10
+fractal_gain = 0.75
+domain_warp_type = 1
+domain_warp_amplitude = 100.0
+metadata/_preview_in_3d_space_ = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_j5r0f"]
+width = 400
+height = 100
+noise = SubResource("FastNoiseLite_y5cht")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vh04p"]
+shader = ExtResource("7_uqvbr")
+shader_parameter/scroll_speed = 5.0
+shader_parameter/wave_strength = 0.012
+shader_parameter/wave_frequency = 20.0
+shader_parameter/acid_color = Color(0.8, 1.35, 0.4, 1)
+shader_parameter/foam_color = Color(0.8, 0.9, 0.7, 0)
+shader_parameter/foam_threshold = 0.8
+shader_parameter/foam_intensity = 0.0
+shader_parameter/top_wobble_strength = 5.0
+shader_parameter/top_wobble_frequency = 2.5
+shader_parameter/top_wobble_speed = 1.0
+shader_parameter/top_wiggle_strength = 1.5
+shader_parameter/top_wiggle_frequency_x = 10.0
+shader_parameter/top_wiggle_speed = 1.0
+shader_parameter/time_offset = 0.0
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_hvfrj"]
+noise_type = 0
+seed = 1
+frequency = 0.0027
+fractal_type = 3
+fractal_octaves = 10
+fractal_gain = 0.75
+domain_warp_type = 1
+domain_warp_amplitude = 100.0
+metadata/_preview_in_3d_space_ = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_2f41h"]
+width = 400
+height = 100
+noise = SubResource("FastNoiseLite_hvfrj")
+
+[node name="chap2_roomD" type="Node2D"]
+script = ExtResource("1_1jvub")
+
+[node name="WorldEnvironment_gloweffect" parent="." instance=ExtResource("2_ou3ot")]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+scale = Vector2(5, 5)
+tile_map_data = PackedByteArray("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")
+tile_set = SubResource("TileSet_i2bvk")
+
+[node name="Area2D_bottom" type="Area2D" parent="."]
+position = Vector2(2, 800)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_bottom"]
+position = Vector2(-2, 92.5)
+shape = SubResource("RectangleShape2D_jc4b1")
+
+[node name="Area2D_left" type="Area2D" parent="."]
+position = Vector2(-1408, -32)
+scale = Vector2(5, 5)
+
+[node name="CollisionPolygon2D" type="CollisionShape2D" parent="Area2D_left"]
+position = Vector2(-26.1, 6.4)
+shape = SubResource("RectangleShape2D_j31rb")
+
+[node name="Area2D_right" type="Area2D" parent="."]
+position = Vector2(-1408, -32)
+scale = Vector2(5, 5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_right"]
+position = Vector2(589.3, 6.4)
+shape = SubResource("RectangleShape2D_vut2d")
+
+[node name="Sprite2D_block_Left" type="Sprite2D" parent="."]
+position = Vector2(-1402.5, -8.01086e-05)
+scale = Vector2(1.99219, 2.65625)
+texture = ExtResource("3_ou3ot")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Sprite2D_block_Left"]
+scale = Vector2(0.501961, 0.501961)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D_block_Left/StaticBody2D"]
+shape = SubResource("RectangleShape2D_uiprc")
+
+[node name="Sprite2D_block_Right" type="Sprite2D" parent="."]
+position = Vector2(1402.5, 0.249924)
+scale = Vector2(1.99219, 2.65235)
+texture = ExtResource("3_ou3ot")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Sprite2D_block_Right"]
+scale = Vector2(0.501961, 0.501961)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D_block_Right/StaticBody2D"]
+position = Vector2(0.499939, -0.187717)
+shape = SubResource("RectangleShape2D_uiprc")
+
+[node name="Sprite2D_block_Top" type="Sprite2D" parent="."]
+position = Vector2(2.86102e-06, -807.5)
+scale = Vector2(2.65625, 1.99219)
+texture = ExtResource("3_ou3ot")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Sprite2D_block_Top"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D_block_Top/StaticBody2D"]
+position = Vector2(3.8147e-06, 0)
+shape = SubResource("RectangleShape2D_nb1kk")
+
+[node name="Sprite2D_block_Bottom" type="Sprite2D" parent="."]
+position = Vector2(9.53674e-07, 807.5)
+scale = Vector2(2.65625, 1.99219)
+texture = ExtResource("3_ou3ot")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Sprite2D_block_Bottom"]
+position = Vector2(0, 0.558746)
+scale = Vector2(0.501961, 0.497579)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D_block_Bottom/StaticBody2D"]
+position = Vector2(-7.42077e-06, -1.12292)
+shape = SubResource("RectangleShape2D_4m5ht")
+
+[node name="Area2D_cameraRoom" parent="." instance=ExtResource("4_gk2il")]
+visible = false
+
+[node name="Area2D_enemyCounter" type="Area2D" parent="."]
+visible = false
+collision_layer = 15
+collision_mask = 15
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_enemyCounter"]
+shape = SubResource("RectangleShape2D_7gaj5")
+
+[node name="Area2D_reblock" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_reblock"]
+shape = SubResource("RectangleShape2D_0gams")
+
+[node name="Area2D_acid" parent="." instance=ExtResource("6_gk2il")]
+z_index = 100
+position = Vector2(306, -272)
+
+[node name="Control_acid" type="Control" parent="Area2D_acid"]
+self_modulate = Color(1.5, 1.5, 1.5, 1)
+layout_mode = 3
+anchors_preset = 0
+offset_left = -1581.0
+offset_top = 714.0
+offset_right = -1541.0
+offset_bottom = 731.0
+
+[node name="TextureRect_acid" type="TextureRect" parent="Area2D_acid/Control_acid"]
+process_mode = 3
+z_index = 10
+texture_filter = 4
+material = SubResource("ShaderMaterial_iploo")
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -4.0
+anchor_right = 10.625
+anchor_bottom = 14.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("NoiseTexture2D_3xck5")
+metadata/_edit_use_anchors_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D_acid"]
+position = Vector2(-1377, 697)
+polygon = PackedVector2Array(-204, -51, 221, -51, 221, 255, -204, 255)
+
+[node name="Area2D_acid2" parent="." instance=ExtResource("6_gk2il")]
+z_index = 100
+position = Vector2(2091, -272)
+
+[node name="Control_acid" type="Control" parent="Area2D_acid2"]
+self_modulate = Color(1.5, 1.5, 1.5, 1)
+layout_mode = 3
+anchors_preset = 0
+offset_left = -1581.0
+offset_top = 714.0
+offset_right = -1541.0
+offset_bottom = 731.0
+
+[node name="TextureRect_acid" type="TextureRect" parent="Area2D_acid2/Control_acid"]
+process_mode = 3
+z_index = 10
+texture_filter = 4
+material = SubResource("ShaderMaterial_gk2il")
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 8.5
+anchor_top = -4.0
+anchor_right = 19.125
+anchor_bottom = 14.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("NoiseTexture2D_iploo")
+metadata/_edit_use_anchors_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D_acid2"]
+position = Vector2(-1377, 697)
+polygon = PackedVector2Array(136, -51, 561, -51, 561, 255, 136, 255)
+
+[node name="Area2D_acid3" parent="." instance=ExtResource("6_gk2il")]
+z_index = 100
+position = Vector2(816, -272)
+
+[node name="Control_acid" type="Control" parent="Area2D_acid3"]
+self_modulate = Color(1.5, 1.5, 1.5, 1)
+layout_mode = 3
+anchors_preset = 0
+offset_left = -1581.0
+offset_top = 714.0
+offset_right = -1541.0
+offset_bottom = 731.0
+
+[node name="TextureRect_acid" type="TextureRect" parent="Area2D_acid3/Control_acid"]
+process_mode = 3
+z_index = 10
+texture_filter = 4
+material = SubResource("ShaderMaterial_3xck5")
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -4.0
+anchor_right = 10.625
+anchor_bottom = 14.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("NoiseTexture2D_j5r0f")
+metadata/_edit_use_anchors_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D_acid3"]
+position = Vector2(-1377, 697)
+polygon = PackedVector2Array(-204, -51, 221, -51, 221, 255, -204, 255)
+
+[node name="Area2D_acid4" parent="." instance=ExtResource("6_gk2il")]
+z_index = 100
+position = Vector2(1581, -272)
+
+[node name="Control_acid" type="Control" parent="Area2D_acid4"]
+self_modulate = Color(1.5, 1.5, 1.5, 1)
+layout_mode = 3
+anchors_preset = 0
+offset_left = -1581.0
+offset_top = 714.0
+offset_right = -1541.0
+offset_bottom = 731.0
+
+[node name="TextureRect_acid" type="TextureRect" parent="Area2D_acid4/Control_acid"]
+process_mode = 3
+z_index = 10
+texture_filter = 4
+material = SubResource("ShaderMaterial_vh04p")
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 8.5
+anchor_top = -4.0
+anchor_right = 19.125
+anchor_bottom = 14.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("NoiseTexture2D_2f41h")
+metadata/_edit_use_anchors_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D_acid4"]
+position = Vector2(-1377, 697)
+polygon = PackedVector2Array(136, -51, 561, -51, 561, 255, 136, 255)
