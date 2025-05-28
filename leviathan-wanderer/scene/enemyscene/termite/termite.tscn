@@ -1,21 +1,54 @@
-[gd_scene load_steps=26 format=3 uid="uid://by4mivyvn1dni"]
+[gd_scene load_steps=38 format=3 uid="uid://by4mivyvn1dni"]
 
+[ext_resource type="Script" uid="uid://ddvtsntqmmc0o" path="res://scripts/enemy-scripts/termite/termite.gd" id="1_dwxgq"]
 [ext_resource type="Texture2D" uid="uid://xn6msbjqfr7m" path="res://assets/sprites/enemy-sprites/Termite-enemy.svg" id="1_l40vn"]
+[ext_resource type="PackedScene" uid="uid://ga1kg4j0ek8b" path="res://scene/Utility/Enemy_healthbar.tscn" id="3_3jm30"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_l40vn"]
-atlas = ExtResource("1_l40vn")
-region = Rect2(0, 161, 161, 161)
+[sub_resource type="Curve" id="Curve_3jm30"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_dwxgq"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_l40vn")
-}],
-"loop": false,
-"name": &"default",
-"speed": 1.0
-}]
+[sub_resource type="CurveTexture" id="CurveTexture_6m7vr"]
+curve = SubResource("Curve_3jm30")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3jm30"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 300.0
+initial_velocity_max = 300.0
+gravity = Vector3(0, 0, 0)
+scale_min = 5.0
+scale_max = 5.0
+scale_curve = SubResource("CurveTexture_6m7vr")
+color = Color(0.121569, 0.223529, 0.0392157, 1)
+
+[sub_resource type="Gradient" id="Gradient_dwxgq"]
+offsets = PackedFloat32Array(0.534884, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3jm30"]
+gradient = SubResource("Gradient_dwxgq")
+
+[sub_resource type="Curve" id="Curve_6m7vr"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_o48gg"]
+curve = SubResource("Curve_6m7vr")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dwxgq"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 400.0
+initial_velocity_max = 650.0
+gravity = Vector3(0, 0, 0)
+scale_min = 10.0
+scale_max = 15.0
+scale_curve = SubResource("CurveTexture_o48gg")
+color = Color(0.122234, 0.22283, 0.0372709, 1)
+color_ramp = SubResource("GradientTexture1D_3jm30")
+collision_mode = 2
+collision_use_scale = true
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3jm30"]
 atlas = ExtResource("1_l40vn")
@@ -172,26 +205,115 @@ animations = [{
 "speed": 80.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_l40vn"]
+atlas = ExtResource("1_l40vn")
+region = Rect2(0, 161, 161, 161)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dwxgq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l40vn")
+}],
+"loop": false,
+"name": &"default",
+"speed": 1.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3jm30"]
+radius = 188.571
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6m7vr"]
+radius = 145.714
+
 [node name="termite" type="CharacterBody2D"]
+scale = Vector2(1.05, 1.05)
+collision_layer = 8
+collision_mask = 9
+script = ExtResource("1_dwxgq")
 
 [node name="Node2D" type="Node2D" parent="."]
-scale = Vector2(0.7, 0.7)
+scale = Vector2(0.65, 0.65)
 
-[node name="AnimatedSprite2D_tail" type="AnimatedSprite2D" parent="Node2D"]
-self_modulate = Color(1.65, 1.65, 1.65, 1)
-texture_filter = 6
-position = Vector2(0, 65)
-sprite_frames = SubResource("SpriteFrames_dwxgq")
-autoplay = "default"
+[node name="GPUParticles2D_circle" type="GPUParticles2D" parent="Node2D"]
+self_modulate = Color(4, 4, 4, 1)
+scale = Vector2(1.53846, 1.53846)
+emitting = false
+amount = 500
+lifetime = 0.6
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_3jm30")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Node2D"]
+self_modulate = Color(4, 4, 4, 1)
+scale = Vector2(1.53846, 1.53846)
+emitting = false
+amount = 45
+lifetime = 0.6
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_dwxgq")
+
+[node name="Node2D_raycasts" type="Node2D" parent="Node2D"]
+scale = Vector2(1.53846, 1.53846)
+
+[node name="RayCast2D_Right" type="RayCast2D" parent="Node2D/Node2D_raycasts"]
+position = Vector2(17.1429, 34.2857)
+target_position = Vector2(34.2857, -128.571)
+hit_from_inside = true
+
+[node name="RayCast2D_Left" type="RayCast2D" parent="Node2D/Node2D_raycasts"]
+position = Vector2(-17.1429, 34.2857)
+rotation = 1.57079
+target_position = Vector2(-128.572, 34.2849)
+hit_from_inside = true
 
 [node name="AnimatedSprite2D_body" type="AnimatedSprite2D" parent="Node2D"]
+z_index = 1
 texture_filter = 6
 sprite_frames = SubResource("SpriteFrames_2ls45")
 autoplay = "default"
 frame_progress = 0.113601
+metadata/_edit_lock_ = true
+
+[node name="AnimatedSprite2D_tail" type="AnimatedSprite2D" parent="Node2D/AnimatedSprite2D_body"]
+self_modulate = Color(1.6, 1.6, 1.6, 1)
+z_index = -1
+texture_filter = 6
+position = Vector2(0, 61.5385)
+sprite_frames = SubResource("SpriteFrames_dwxgq")
+autoplay = "default"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-z_index = -1
-position = Vector2(-8, 58)
-scale = Vector2(0.6, 0.6)
-polygon = PackedVector2Array(13.3333, 6.66666, 6.66667, 6.66666, 0, 0, -6.66667, -13.3333, -10, -33.3333, -6.66667, -46.6667, 3.33333, -66.6667, 6.66667, -90, 3.33333, -90, 0.098835, -97.7622, 0, -106.667, 0, -113.333, 3.33333, -120, 14.0988, -125.762, 23.3333, -120, 26.6667, -113.333, 26.6667, -106.667, 26.6667, -96.6667, 23.3333, -90, 20, -90, 23.3333, -66.6667, 33.3333, -46.6667, 36.6667, -33.3333, 33.3333, -13.3333, 26.6667, 0, 20, 6.66666)
+polygon = PackedVector2Array(0, -19.0476, -7.61905, -15.2381, -9.52381, -7.61905, -9.52381, 0, -7.61905, 3.80952, -3.80952, 5.71429, -5.71429, 19.0476, -5.71429, 20.9524, -9.52381, 26.6667, -13.3333, 36.1905, -13.3333, 45.7143, -7.61905, 57.1429, -3.80952, 60.9524, 3.80952, 60.9524, 7.61905, 57.1429, 13.3333, 45.7143, 13.3333, 36.1905, 9.52381, 26.6667, 5.71429, 20.9524, 5.71429, 19.0476, 3.80952, 5.71429, 7.61905, 3.80952, 9.52381, 0, 9.52381, -7.61905, 7.61905, -15.2381)
+
+[node name="RayCast2D_Forward" type="RayCast2D" parent="."]
+
+[node name="Control" parent="." instance=ExtResource("3_3jm30")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = -50.0
+offset_top = -100.0
+offset_right = 50.0
+offset_bottom = -95.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(0, -3.8147e-06)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 3.8147e-06)
+shape = SubResource("CircleShape2D_3jm30")
+
+[node name="Area2D_suicide" type="Area2D" parent="."]
+position = Vector2(0, -3.8147e-06)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_suicide"]
+position = Vector2(0, 3.8147e-06)
+shape = SubResource("CircleShape2D_6m7vr")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true

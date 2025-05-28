@@ -268,5 +268,13 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(-1377, 697)
 polygon = PackedVector2Array(-204, 34, 561, 34, 561, 255, -204, 255)
 
+[node name="termite3" parent="." instance=ExtResource("12_3yujv")]
+position = Vector2(-731, -476)
+scale = Vector2(1.15762, 1.15762)
+
+[node name="termite2" parent="." instance=ExtResource("12_3yujv")]
+position = Vector2(-459, -425)
+scale = Vector2(1.1025, 1.1025)
+
 [node name="termite" parent="." instance=ExtResource("12_3yujv")]
-position = Vector2(-357, -51)
+position = Vector2(-816, -289)
