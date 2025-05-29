@@ -1,12 +1,12 @@
 # termite.gd
-extends CharacterBody2D
+extends "res://scripts/Utility/Interpolate.gd"
 
 @export var rotation_speed: float = 3.0
 @export var movement_speed: float = 275.0
 @export var rotation_stop_threshold_degrees: float = 45.0
 @export var avoidance_turn_angle_degrees: float = 15.0
 @export var fast_rotation_speed: float = 10.0
-@export var max_health: int = 450
+@export var max_health: int = 150
 @export var knockback_strength: float = 1500.0
 @export var health: int
 
@@ -31,13 +31,17 @@ var _last_avoidance_turn_direction_factor: float = 0.0
 var _was_detecting_side_obstacles_last_frame: bool = false
 var is_dying: bool = false
 var direction: int = -1
-var damage: int = 65
+var damage: int = 45
 
 var _explosion_collision_shape: CollisionShape2D = null
 var _initial_explosion_scale: Vector2 = Vector2.ONE
 var _explosion_tween_duration: float = 0.225
 
+signal died
+
 func _ready():
+	interp_visuals = visuals
+	previous_position = global_position
 	add_to_group("enemy")
 	health = max_health
 	player_node = get_tree().get_first_node_in_group("player")
@@ -62,6 +66,7 @@ func _ready():
 			break
 
 func _physics_process(delta: float):
+	previous_position = global_position
 	if is_dying:
 		velocity = Vector2.ZERO
 		move_and_slide()
@@ -176,6 +181,8 @@ func take_damage(amount: float) -> void:
 		death_particles_circle.emitting = true
 		hp_bar.queue_free()
 
+		emit_signal("died")
+
 		if _explosion_collision_shape:
 			_explosion_collision_shape.scale = Vector2(0.1, 0.1)
 			explostion_area.monitoring = true
@@ -208,6 +215,7 @@ func _on_SuicideArea_body_entered(body) -> void:
 		suicide_area.queue_free()
 		
 func _on_explosion_scale_finished() -> void:
+	explostion_area.queue_free()
 	time_to_delete.start()
 
 func _on_time_to_delete_timeout() -> void:

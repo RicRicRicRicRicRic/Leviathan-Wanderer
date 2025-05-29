@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://bshpse7n5xktd"]
+[gd_scene load_steps=22 format=4 uid="uid://bshpse7n5xktd"]
 
 [ext_resource type="Script" uid="uid://dn1c7eskwl04t" path="res://scripts/Chapter2/chap2_roomscripts.gd" id="1_no6wp"]
 [ext_resource type="Texture2D" uid="uid://cvm1xsprhoww8" path="res://assets/sprites/prototype graphics.svg" id="2_exubj"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cfqff4kheixm" path="res://scene/Utility/area_2d_camera_room.tscn" id="4_8kb2u"]
 [ext_resource type="PackedScene" uid="uid://ci4db1u0umgpa" path="res://scene/Chapter2/area_2d_acid.tscn" id="6_8kb2u"]
 [ext_resource type="Shader" uid="uid://wag0rlsi12u4" path="res://scripts/Chapter2/acid.gdshader" id="7_c0702"]
+[ext_resource type="PackedScene" uid="uid://cyvaw008gmc5j" path="res://scene/enemyscene/termite/termite_shroom.tscn" id="8_c0702"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_c0702"]
 texture = ExtResource("2_exubj")
@@ -229,3 +230,39 @@ metadata/_edit_use_anchors_ = true
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D_acid"]
 position = Vector2(-867, 272)
 polygon = PackedVector2Array(-119, 34, 1241, 34, 1241, 170, -119, 170)
+
+[node name="Termite_shroom_containter" type="Node2D" parent="."]
+
+[node name="Termite_shroom" parent="Termite_shroom_containter" instance=ExtResource("8_c0702")]
+position = Vector2(-459, 289)
+initial_rotation_degrees = 180.0
+
+[node name="Area2D" type="Area2D" parent="Termite_shroom_containter/Termite_shroom"]
+visible = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Termite_shroom_containter/Termite_shroom/Area2D"]
+position = Vector2(459, -289)
+polygon = PackedVector2Array(-1224, 629, -1224, -629, 1224, -646, 1224, 629)
+
+[node name="Termite_shroom2" parent="Termite_shroom_containter" instance=ExtResource("8_c0702")]
+position = Vector2(459, 289)
+initial_rotation_degrees = 180.0
+
+[node name="Area2D" type="Area2D" parent="Termite_shroom_containter/Termite_shroom2"]
+visible = false
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Termite_shroom_containter/Termite_shroom2/Area2D"]
+position = Vector2(-459, -289)
+polygon = PackedVector2Array(-1224, 629, -1224, -629, 1224, -646, 1224, 629)
+
+[node name="Termite_shroom3" parent="Termite_shroom_containter" instance=ExtResource("8_c0702")]
+position = Vector2(2, 306)
+initial_rotation_degrees = 180.0
+
+[node name="Area2D" type="Area2D" parent="Termite_shroom_containter/Termite_shroom3"]
+visible = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Termite_shroom_containter/Termite_shroom3/Area2D"]
+position = Vector2(-2, -306)
+polygon = PackedVector2Array(-1224, 629, -1224, -629, 1224, -646, 1224, 629)

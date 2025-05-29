@@ -4,52 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://xn6msbjqfr7m" path="res://assets/sprites/enemy-sprites/Termite-enemy.svg" id="1_l40vn"]
 [ext_resource type="PackedScene" uid="uid://ga1kg4j0ek8b" path="res://scene/Utility/Enemy_healthbar.tscn" id="3_3jm30"]
 
-[sub_resource type="Curve" id="Curve_3jm30"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_6m7vr"]
-curve = SubResource("Curve_3jm30")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3jm30"]
-particle_flag_disable_z = true
-spread = 180.0
-initial_velocity_min = 300.0
-initial_velocity_max = 300.0
-gravity = Vector3(0, 0, 0)
-scale_min = 5.0
-scale_max = 5.0
-scale_curve = SubResource("CurveTexture_6m7vr")
-color = Color(0.121569, 0.223529, 0.0392157, 1)
-
-[sub_resource type="Gradient" id="Gradient_dwxgq"]
-offsets = PackedFloat32Array(0.534884, 1)
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_3jm30"]
-gradient = SubResource("Gradient_dwxgq")
-
-[sub_resource type="Curve" id="Curve_6m7vr"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_o48gg"]
-curve = SubResource("Curve_6m7vr")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dwxgq"]
-particle_flag_disable_z = true
-spread = 180.0
-initial_velocity_min = 400.0
-initial_velocity_max = 650.0
-gravity = Vector3(0, 0, 0)
-scale_min = 10.0
-scale_max = 15.0
-scale_curve = SubResource("CurveTexture_o48gg")
-color = Color(0.122234, 0.22283, 0.0372709, 1)
-color_ramp = SubResource("GradientTexture1D_3jm30")
-collision_mode = 2
-collision_use_scale = true
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_3jm30"]
 atlas = ExtResource("1_l40vn")
 region = Rect2(0, 0, 161, 161)
@@ -220,6 +174,52 @@ animations = [{
 "speed": 1.0
 }]
 
+[sub_resource type="Curve" id="Curve_3jm30"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_6m7vr"]
+curve = SubResource("Curve_3jm30")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3jm30"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 300.0
+initial_velocity_max = 300.0
+gravity = Vector3(0, 0, 0)
+scale_min = 5.0
+scale_max = 5.0
+scale_curve = SubResource("CurveTexture_6m7vr")
+color = Color(0.121569, 0.223529, 0.0392157, 1)
+
+[sub_resource type="Gradient" id="Gradient_dwxgq"]
+offsets = PackedFloat32Array(0.534884, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3jm30"]
+gradient = SubResource("Gradient_dwxgq")
+
+[sub_resource type="Curve" id="Curve_6m7vr"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_o48gg"]
+curve = SubResource("Curve_6m7vr")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dwxgq"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 400.0
+initial_velocity_max = 650.0
+gravity = Vector3(0, 0, 0)
+scale_min = 10.0
+scale_max = 15.0
+scale_curve = SubResource("CurveTexture_o48gg")
+color = Color(0.122234, 0.22283, 0.0372709, 1)
+color_ramp = SubResource("GradientTexture1D_3jm30")
+collision_mode = 2
+collision_use_scale = true
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_3jm30"]
 radius = 188.571
 
@@ -234,6 +234,22 @@ script = ExtResource("1_dwxgq")
 
 [node name="Node2D" type="Node2D" parent="."]
 scale = Vector2(0.65, 0.65)
+
+[node name="AnimatedSprite2D_body" type="AnimatedSprite2D" parent="Node2D"]
+z_index = 1
+texture_filter = 6
+sprite_frames = SubResource("SpriteFrames_2ls45")
+autoplay = "default"
+frame_progress = 0.113601
+metadata/_edit_lock_ = true
+
+[node name="AnimatedSprite2D_tail" type="AnimatedSprite2D" parent="Node2D/AnimatedSprite2D_body"]
+self_modulate = Color(1.6, 1.6, 1.6, 1)
+z_index = -1
+texture_filter = 6
+position = Vector2(0, 61.5385)
+sprite_frames = SubResource("SpriteFrames_dwxgq")
+autoplay = "default"
 
 [node name="GPUParticles2D_circle" type="GPUParticles2D" parent="Node2D"]
 self_modulate = Color(4, 4, 4, 1)
@@ -268,22 +284,6 @@ position = Vector2(-17.1429, 34.2857)
 rotation = 1.57079
 target_position = Vector2(-128.572, 34.2849)
 hit_from_inside = true
-
-[node name="AnimatedSprite2D_body" type="AnimatedSprite2D" parent="Node2D"]
-z_index = 1
-texture_filter = 6
-sprite_frames = SubResource("SpriteFrames_2ls45")
-autoplay = "default"
-frame_progress = 0.113601
-metadata/_edit_lock_ = true
-
-[node name="AnimatedSprite2D_tail" type="AnimatedSprite2D" parent="Node2D/AnimatedSprite2D_body"]
-self_modulate = Color(1.6, 1.6, 1.6, 1)
-z_index = -1
-texture_filter = 6
-position = Vector2(0, 61.5385)
-sprite_frames = SubResource("SpriteFrames_dwxgq")
-autoplay = "default"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(0, -19.0476, -7.61905, -15.2381, -9.52381, -7.61905, -9.52381, 0, -7.61905, 3.80952, -3.80952, 5.71429, -5.71429, 19.0476, -5.71429, 20.9524, -9.52381, 26.6667, -13.3333, 36.1905, -13.3333, 45.7143, -7.61905, 57.1429, -3.80952, 60.9524, 3.80952, 60.9524, 7.61905, 57.1429, 13.3333, 45.7143, 13.3333, 36.1905, 9.52381, 26.6667, 5.71429, 20.9524, 5.71429, 19.0476, 3.80952, 5.71429, 7.61905, 3.80952, 9.52381, 0, 9.52381, -7.61905, 7.61905, -15.2381)
