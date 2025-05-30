@@ -4,8 +4,8 @@ extends Area2D
 @onready var collision: CollisionPolygon2D = $CollisionPolygon2D
 
 var players_in_acid: Array[Node2D] = []
-const DAMAGE_AMOUNT: int = 7
-const DAMAGE_INTERVAL: float = 1.0
+const DAMAGE_AMOUNT: int = 15
+const DAMAGE_INTERVAL: float = 0.1
 
 var _time_since_last_damage_tick: float = 0.0
 var _is_damage_active: bool = false

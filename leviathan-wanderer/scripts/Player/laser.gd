@@ -32,7 +32,7 @@ func _ready() -> void:
 	if is_laser_active:
 		queue_free()
 		return
-
+	add_to_group("laser")
 	is_laser_active = true
 
 	var player_node = get_tree().get_first_node_in_group("player")
@@ -40,10 +40,7 @@ func _ready() -> void:
 		var wep_node = player_node.get_node_or_null("Node2D/WeaponSprite2D")
 		if wep_node and wep_node.has_node("Marker2D_laser"):
 			_player_laser_marker = wep_node.get_node("Marker2D_laser")
-		else:
-			push_error("Error: Could not find 'Marker2D_laser' under player's weapon node. Check path or node name.")
-	else:
-		push_error("Error: Player node not found in group 'player'. Make sure player is in 'player' group.")
+
 
 	_rotate_immediately_towards_mouse()
 	current_state = LaserState.CHARGING

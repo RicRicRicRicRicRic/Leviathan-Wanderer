@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://cyvaw008gmc5j"]
+[gd_scene load_steps=41 format=3 uid="uid://cyvaw008gmc5j"]
 
 [ext_resource type="Script" uid="uid://cng1lxdn6y20w" path="res://scripts/enemy-scripts/termite/termite_shroom.gd" id="1_2aylh"]
 [ext_resource type="Texture2D" uid="uid://xn6msbjqfr7m" path="res://assets/sprites/enemy-sprites/Termite-enemy.svg" id="2_nid8c"]
@@ -241,6 +241,37 @@ animations = [{
 "speed": 60.0
 }]
 
+[sub_resource type="Curve" id="Curve_nid8c"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.988024, 0.494382), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_b34hy"]
+curve = SubResource("Curve_nid8c")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ecf52"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+spread = 135.0
+initial_velocity_min = 75.0
+initial_velocity_max = 125.0
+gravity = Vector3(0, 0, 0)
+scale_min = 10.0
+scale_max = 15.0
+scale_curve = SubResource("CurveTexture_b34hy")
+color = Color(0.741176, 1, 0.368627, 1)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nid8c"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+spread = 135.0
+initial_velocity_min = 75.0
+initial_velocity_max = 125.0
+gravity = Vector3(0, 0, 0)
+scale_min = 15.0
+scale_max = 30.0
+scale_curve = SubResource("CurveTexture_b34hy")
+color = Color(0.741176, 1, 0.368627, 1)
+
 [node name="Termite_shroom" type="CharacterBody2D"]
 collision_layer = 2
 script = ExtResource("1_2aylh")
@@ -254,10 +285,30 @@ autoplay = "default"
 frame = 30
 frame_progress = 1.0
 
+[node name="GPUParticles2D_spawn" type="GPUParticles2D" parent="AnimatedSprite2D"]
+self_modulate = Color(1.4, 1.4, 1.4, 1)
+rotation = -1.57079
+emitting = false
+amount = 16
+lifetime = 1.5
+one_shot = true
+explosiveness = 0.9
+process_material = SubResource("ParticleProcessMaterial_ecf52")
+
 [node name="Marker2D" type="Marker2D" parent="AnimatedSprite2D"]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(-27, 54, -27, 9, -72, 9, -63, -9, -27, -27, -18, -27, -18, -36, -36, -36, -45, -45, -36, -54, 18, -54, 36, -45, 72, -18, 63, -9, 45, -18, 18, -27, 18, -18, 18, -9, 9, 0, 9, 9, 18, 9, 45, 27, 36, 36, 18, 36, 18, 54)
+
+[node name="GPUParticles2D_death" type="GPUParticles2D" parent="CollisionPolygon2D"]
+self_modulate = Color(1.4, 1.4, 1.4, 1)
+rotation = -1.57079
+emitting = false
+amount = 24
+lifetime = 1.5
+one_shot = true
+explosiveness = 0.9
+process_material = SubResource("ParticleProcessMaterial_nid8c")
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 3.0

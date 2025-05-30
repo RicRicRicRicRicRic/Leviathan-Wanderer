@@ -6,8 +6,8 @@ extends "res://scripts/Utility/Interpolate.gd"
 @export var rotation_stop_threshold_degrees: float = 45.0
 @export var avoidance_turn_angle_degrees: float = 15.0
 @export var fast_rotation_speed: float = 10.0
-@export var max_health: int = 150
-@export var knockback_strength: float = 1500.0
+@export var max_health: int = 140
+@export var knockback_strength: float = 1250.0
 @export var health: int
 
 @onready var visuals: Node2D = $Node2D
@@ -31,7 +31,7 @@ var _last_avoidance_turn_direction_factor: float = 0.0
 var _was_detecting_side_obstacles_last_frame: bool = false
 var is_dying: bool = false
 var direction: int = -1
-var damage: int = 45
+var damage: int = 30
 
 var _explosion_collision_shape: CollisionShape2D = null
 var _initial_explosion_scale: Vector2 = Vector2.ONE

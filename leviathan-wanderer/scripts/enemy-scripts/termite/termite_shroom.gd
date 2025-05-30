@@ -3,11 +3,11 @@ extends CharacterBody2D
 
 @export var termite_scene: PackedScene = preload("res://scene/enemyscene/termite/termite.tscn")
 @export var health: int
-@export var max_health: int = 400
+@export var max_health: int = 350
 @export var initial_rotation_degrees: float = 0.0
 
 var termite_count: int = 0
-@export var max_termite_spawn: int = 6
+@export var max_termite_spawn: int = 4
 
 @onready var timer: Timer =$Timer
 @onready var shroom_anim: AnimatedSprite2D = $AnimatedSprite2D
@@ -15,6 +15,8 @@ var termite_count: int = 0
 @onready var collider: CollisionPolygon2D = $CollisionPolygon2D
 @onready var area2D: Area2D = $Area2D
 @onready var spawn_point: Marker2D = $AnimatedSprite2D/Marker2D
+@onready var particles_spawn: GPUParticles2D = $AnimatedSprite2D/GPUParticles2D_spawn
+@onready var particles_death: GPUParticles2D = $CollisionPolygon2D/GPUParticles2D_death
 
 var is_dying: bool = false
 
@@ -43,14 +45,15 @@ func spawn_termite_at_position(global_spawn_position: Vector2):
 		new_termite.position = global_spawn_position
 		get_tree().get_root().call_deferred("add_child", new_termite)
 
+	particles_spawn.global_position = global_spawn_position
+	particles_spawn.restart()
+
 	if new_termite.has_signal("died"):
 		new_termite.died.connect(_on_termite_died)
 	else:
-
 		new_termite.tree_exited.connect(_on_termite_died)
 
-	termite_count += 1 # 
-	print("Termite spawned. Current count: ", termite_count)
+	termite_count += 1
 
 
 func _on_timer_timeout() -> void:
@@ -67,10 +70,14 @@ func take_damage(amount: float) -> void:
 	_update_hp_bar()
 
 	if health <= 0 and not is_dying:
+		timer.stop()
 		is_dying = true
 		shroom_anim.visible = false
 		hp_bar.queue_free()
 		collider.set_deferred("disabled", true)
+
+		particles_death.emitting = true
+		particles_death.finished.connect(_on_death_particles_finished)
 
 		var base_spawn_position = spawn_point.global_position
 		var spread_offset = 75.0
@@ -80,9 +87,6 @@ func take_damage(amount: float) -> void:
 			var final_spawn_position = base_spawn_position + offset_direction * spread_offset
 
 			var new_termite_on_death = termite_scene.instantiate()
-			new_termite_on_death.health = 90 
-			new_termite_on_death.max_health = 90 
-			new_termite_on_death.scale = Vector2(0.9, 0.9) 
 
 			var target_parent = get_parent()
 			if target_parent:
@@ -91,15 +95,12 @@ func take_damage(amount: float) -> void:
 			else:
 				new_termite_on_death.position = final_spawn_position
 				get_tree().get_root().call_deferred("add_child", new_termite_on_death)
+
 			if new_termite_on_death.has_signal("died"):
 				new_termite_on_death.died.connect(_on_termite_died)
 			else:
 				new_termite_on_death.tree_exited.connect(_on_termite_died)
 			termite_count += 1
-			print("Death Termite spawned. Current count: ", termite_count)
-
-		queue_free()
-
 
 func _update_hp_bar() -> void:
 	if hp_bar is ProgressBar:
@@ -120,4 +121,7 @@ func _on_area2D_body_entered(body: Node2D) -> void:
 		area2D.queue_free()
 
 func _on_termite_died() -> void:
-	termite_count -= 1 
+	termite_count -= 1
+
+func _on_death_particles_finished() -> void:
+	queue_free()

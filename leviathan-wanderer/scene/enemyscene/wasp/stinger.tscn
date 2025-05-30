@@ -1,0 +1,47 @@
+[gd_scene load_steps=4 format=3 uid="uid://bnwpukkkg0rki"]
+
+[ext_resource type="Texture2D" uid="uid://dollodgnjecxn" path="res://assets/sprites/enemy-sprites/wasp-enemy.svg" id="1_aarwh"]
+[ext_resource type="Script" uid="uid://bj41ovqyew2nu" path="res://scripts/enemy-scripts/wasp/stinger.gd" id="1_qv6ql"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fggox"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+spread = 30.0
+initial_velocity_min = 300.0
+initial_velocity_max = 350.0
+gravity = Vector3(0, 0, 0)
+scale_min = 6.0
+scale_max = 6.0
+color = Color(0.596078, 0.643137, 0.360784, 1)
+
+[node name="Stinger" type="RigidBody2D"]
+collision_layer = 20
+collision_mask = 9
+gravity_scale = 0.0
+script = ExtResource("1_qv6ql")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(0, -1)
+scale = Vector2(0.5, 0.5)
+polygon = PackedVector2Array(-60, 2, -72, -38, 72, 2, -72, 38)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 4
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_aarwh")
+region_enabled = true
+region_rect = Rect2(0, 322, 161, 161)
+
+[node name="Timer_despawn" type="Timer" parent="."]
+wait_time = 2.5
+one_shot = true
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+self_modulate = Color(2, 2, 2, 1)
+z_index = -1
+position = Vector2(-24, 0)
+rotation = 3.14159
+amount = 15
+lifetime = 0.15
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_fggox")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=4 uid="uid://5qfhutaxt7km"]
+[gd_scene load_steps=32 format=4 uid="uid://5qfhutaxt7km"]
 
 [ext_resource type="Script" uid="uid://dn1c7eskwl04t" path="res://scripts/Chapter2/chap2_roomscripts.gd" id="1_1jvub"]
 [ext_resource type="Texture2D" uid="uid://cvm1xsprhoww8" path="res://assets/sprites/prototype graphics.svg" id="2_05bda"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://ci4db1u0umgpa" path="res://scene/Chapter2/area_2d_acid.tscn" id="6_gk2il"]
 [ext_resource type="Shader" uid="uid://wag0rlsi12u4" path="res://scripts/Chapter2/acid.gdshader" id="7_uqvbr"]
 [ext_resource type="PackedScene" uid="uid://cyvaw008gmc5j" path="res://scene/enemyscene/termite/termite_shroom.tscn" id="8_uqvbr"]
+[ext_resource type="PackedScene" uid="uid://658423jrbh1y" path="res://scene/enemyscene/wasp/wasp_spawner.tscn" id="9_iploo"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_c0702"]
 texture = ExtResource("2_05bda")
@@ -448,4 +449,18 @@ metadata/_edit_lock_ = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Termite_shroom_containter/Termite_shroom2/Area2D"]
 position = Vector2(-1222, 561)
+polygon = PackedVector2Array(-1224, 629, -1224, -629, 1224, -646, 1224, 629)
+
+[node name="Wasp_spawner" type="Node2D" parent="."]
+position = Vector2(459, -629)
+
+[node name="wasp_spawner" parent="Wasp_spawner" instance=ExtResource("9_iploo")]
+position = Vector2(-459, 629)
+spawn_ammount = 1
+
+[node name="Marker2D" type="Marker2D" parent="Wasp_spawner/wasp_spawner"]
+position = Vector2(2, -136)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Wasp_spawner/wasp_spawner"]
+position = Vector2(2, 0)
 polygon = PackedVector2Array(-1224, 629, -1224, -629, 1224, -646, 1224, 629)
