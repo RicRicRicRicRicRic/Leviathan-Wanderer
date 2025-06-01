@@ -1,5 +1,5 @@
 # wasp.gd
-extends CharacterBody2D
+extends "res://scripts/Utility/Interpolate.gd"
 
 @export var max_health: int = 600
 @export var stinger_scene: PackedScene = preload("res://scene/enemyscene/wasp/stinger.tscn")
@@ -33,8 +33,10 @@ var _is_dodging: bool = false
 @onready var detect_floor: RayCast2D = $RayCast2D_floor
 @onready var area2D: Area2D = $Area2D
 
-func _ready():
+func _ready() -> void:
 	add_to_group("enemy")
+	interp_visuals = visuals
+	previous_position = global_position
 	health = max_health
 	timer.timeout.connect(_on_timer_timeout)
 	timer.start()
@@ -46,20 +48,21 @@ func _ready():
 
 	area2D.body_entered.connect(_on_Area2D_body_entered)
 
-func _physics_process(delta: float):
+func _physics_process(delta: float) -> void:
+	previous_position = global_position
 	if is_dying:
 		var gravity: float = 2000.0
 		velocity.y += gravity * delta
-		velocity.x += 0
+		velocity.x += 0.0
 		move_and_slide()
 		if global_position.y - death_y_position >= fall_distance_to_free:
 			queue_free()
 		return
 
-	var player_follow_velocity = Vector2.ZERO
+	var player_follow_velocity: Vector2 = Vector2.ZERO
 	if _player_node and is_instance_valid(_player_node):
-		var direction_to_player = (_player_node.global_position - global_position)
-		var distance_to_player = direction_to_player.length()
+		var direction_to_player: Vector2 = (_player_node.global_position - global_position)
+		var distance_to_player: float = direction_to_player.length()
 
 		detect_obstacle.target_position = detect_obstacle.to_local(_player_node.global_position)
 		detect_obstacle.force_raycast_update()
@@ -70,12 +73,12 @@ func _physics_process(delta: float):
 			player_follow_velocity = -direction_to_player.normalized() * follow_speed
 			player_follow_velocity = player_follow_velocity.limit_length(follow_speed)
 
-	var final_target_velocity = player_follow_velocity
+	var final_target_velocity: Vector2 = player_follow_velocity
 
 	if _is_dodging:
-		var dodge_progress = (global_position - _dodge_start_position).length()
+		var dodge_progress: float = (global_position - _dodge_start_position).length()
 		if dodge_progress < max_dodge_distance:
-			var avoidance_velocity = _avoid_direction * follow_speed * avoidance_speed_multiplier
+			var avoidance_velocity: Vector2 = _avoid_direction * follow_speed * avoidance_speed_multiplier
 			final_target_velocity += avoidance_velocity
 			final_target_velocity = final_target_velocity.limit_length(follow_speed * avoidance_speed_multiplier)
 		else:
@@ -86,8 +89,8 @@ func _physics_process(delta: float):
 	if detect_floor.is_colliding():
 		final_target_velocity.y = -follow_speed
 
-	var current_speed = velocity.length()
-	var target_speed = final_target_velocity.length()
+	var current_speed: float = velocity.length()
+	var target_speed: float = final_target_velocity.length()
 
 	if target_speed > current_speed:
 		velocity = velocity.move_toward(final_target_velocity, acceleration_rate * delta)
@@ -109,10 +112,11 @@ func take_damage(amount: float) -> void:
 	health -= int(amount)
 	if health <= 0 and not is_dying:
 		is_dying = true
-		hp_bar.queue_free()
+		if is_instance_valid(hp_bar):
+			hp_bar.queue_free()
 		collision_polygon.set_deferred("disabled", true)
-		velocity.y = 100
-		velocity.x = 0
+		velocity.y = 100.0
+		velocity.x = 0.0
 		wing_left.stop()
 		wing_right.stop()
 		wing_left.self_modulate = Color(1, 1, 1)
@@ -130,21 +134,21 @@ func _on_timer_timeout() -> void:
 func shoot_stinger() -> void:
 	if stinger_scene == null:
 		return
-	var stinger_instance = stinger_scene.instantiate() as RigidBody2D
+	var stinger_instance: RigidBody2D = stinger_scene.instantiate() as RigidBody2D
 	if stinger_instance == null:
 		return
 	stinger_instance.global_position = marker.global_position
 	stinger_instance._player_node = _player_node
-	var direction = (_player_node.global_position - marker.global_position).normalized()
+	var direction: Vector2 = (_player_node.global_position - marker.global_position).normalized()
 	stinger_instance.rotation = direction.angle()
 	get_tree().current_scene.add_child(stinger_instance)
 
 func _on_Area2D_body_entered(body: Node2D) -> void:
 	if body.is_in_group("projectiles") or body.is_in_group("laser"):
-		var direction_from_body = (global_position - body.global_position)
-		
+		var direction_from_body: Vector2 = (global_position - body.global_position)
+
 		_avoid_direction = direction_from_body.normalized()
-			
+
 		_dodge_start_position = global_position
 		_is_dodging = true
 	elif body == self or body == _player_node:

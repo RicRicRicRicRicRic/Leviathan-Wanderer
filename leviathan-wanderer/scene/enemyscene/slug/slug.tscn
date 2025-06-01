@@ -296,6 +296,7 @@ frame_progress = 0.70141
 position = Vector2(-93.6667, 28.3333)
 target_position = Vector2(0, 60)
 collision_mask = 3
+hit_from_inside = true
 
 [node name="RayCast2D_wall" type="RayCast2D" parent="Node2D"]
 position = Vector2(-55, 55)

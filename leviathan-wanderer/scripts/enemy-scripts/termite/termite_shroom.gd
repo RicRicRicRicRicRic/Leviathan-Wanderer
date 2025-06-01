@@ -1,4 +1,3 @@
-# termite_shroom.gd
 extends CharacterBody2D
 
 @export var termite_scene: PackedScene = preload("res://scene/enemyscene/termite/termite.tscn")
@@ -7,7 +6,7 @@ extends CharacterBody2D
 @export var initial_rotation_degrees: float = 0.0
 
 var termite_count: int = 0
-@export var max_termite_spawn: int = 4
+@export var max_termite_spawn: int = 3
 
 @onready var timer: Timer =$Timer
 @onready var shroom_anim: AnimatedSprite2D = $AnimatedSprite2D
@@ -34,9 +33,9 @@ func _ready() -> void:
 
 	area2D.body_entered.connect(_on_area2D_body_entered)
 
-func spawn_termite_at_position(global_spawn_position: Vector2):
-	var new_termite = termite_scene.instantiate()
-	var target_parent = get_parent()
+func spawn_termite_at_position(global_spawn_position: Vector2) -> void:
+	var new_termite: CharacterBody2D = termite_scene.instantiate() as CharacterBody2D
+	var target_parent: Node = get_parent()
 
 	if target_parent:
 		new_termite.position = target_parent.to_local(global_spawn_position)
@@ -73,22 +72,23 @@ func take_damage(amount: float) -> void:
 		timer.stop()
 		is_dying = true
 		shroom_anim.visible = false
-		hp_bar.queue_free()
+		if is_instance_valid(hp_bar):
+			hp_bar.queue_free()
 		collider.set_deferred("disabled", true)
 
 		particles_death.emitting = true
 		particles_death.finished.connect(_on_death_particles_finished)
 
-		var base_spawn_position = spawn_point.global_position
-		var spread_offset = 75.0
+		var base_spawn_position: Vector2 = spawn_point.global_position
+		var spread_offset: float = 75.0
 
-		for i in range(3):
-			var offset_direction = Vector2(cos(i * PI * 2 / 3), sin(i * PI * 2 / 3)).normalized()
-			var final_spawn_position = base_spawn_position + offset_direction * spread_offset
+		for i: int in range(3):
+			var offset_direction: Vector2 = Vector2(cos(i * PI * 2 / 3), sin(i * PI * 2 / 3)).normalized()
+			var final_spawn_position: Vector2 = base_spawn_position + offset_direction * spread_offset
 
-			var new_termite_on_death = termite_scene.instantiate()
+			var new_termite_on_death: CharacterBody2D = termite_scene.instantiate() as CharacterBody2D
 
-			var target_parent = get_parent()
+			var target_parent: Node = get_parent()
 			if target_parent:
 				new_termite_on_death.position = target_parent.to_local(final_spawn_position)
 				target_parent.call_deferred("add_child", new_termite_on_death)
@@ -104,10 +104,10 @@ func take_damage(amount: float) -> void:
 
 func _update_hp_bar() -> void:
 	if hp_bar is ProgressBar:
-		hp_bar.value = health
-		hp_bar.max_value = max_health
+		(hp_bar as ProgressBar).value = health
+		(hp_bar as ProgressBar).max_value = max_health
 	else:
-		var progress_bar_child = hp_bar.find_child("ProgressBar")
+		var progress_bar_child: ProgressBar = hp_bar.find_child("ProgressBar") as ProgressBar
 		if progress_bar_child and progress_bar_child is ProgressBar:
 			progress_bar_child.value = health
 			progress_bar_child.max_value = max_health
@@ -118,7 +118,8 @@ func _on_area2D_body_entered(body: Node2D) -> void:
 		hp_bar.visible = true
 		shroom_anim.visible = true
 		collider.set_deferred("disabled", false)
-		area2D.queue_free()
+		if is_instance_valid(area2D):
+			area2D.queue_free()
 
 func _on_termite_died() -> void:
 	termite_count -= 1

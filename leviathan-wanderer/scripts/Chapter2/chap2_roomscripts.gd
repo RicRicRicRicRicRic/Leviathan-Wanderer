@@ -1,4 +1,4 @@
-# chap1_roomscripts.gd
+# chap2_roomscripts.gd
 extends Node2D
 
 @onready var blockade_left: Sprite2D = $Sprite2D_block_Left
@@ -38,7 +38,7 @@ var offset_bottom: float = 1870.0
 static var defeated_rooms_count: int = 0
 const DEFEATED_ROOMS_THRESHOLD: int = 9
 
-const THIS_SCRIPT = preload("res://scripts/Chapter1/chap1_roomscripts.gd")
+const THIS_SCRIPT = preload("res://scripts/Chapter2/chap2_roomscripts.gd")
 
 func _ready() -> void:
 	randomize()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=4 uid="uid://8yn6otc82hc"]
+[gd_scene load_steps=27 format=4 uid="uid://8yn6otc82hc"]
 
 [ext_resource type="Script" uid="uid://dn1c7eskwl04t" path="res://scripts/Chapter2/chap2_roomscripts.gd" id="1_d23ys"]
 [ext_resource type="Texture2D" uid="uid://cvm1xsprhoww8" path="res://assets/sprites/prototype graphics.svg" id="1_dfnqw"]
@@ -9,6 +9,7 @@
 [ext_resource type="Shader" uid="uid://wag0rlsi12u4" path="res://scripts/Chapter2/acid.gdshader" id="7_mc7is"]
 [ext_resource type="PackedScene" uid="uid://cyvaw008gmc5j" path="res://scene/enemyscene/termite/termite_shroom.tscn" id="8_mc7is"]
 [ext_resource type="PackedScene" uid="uid://658423jrbh1y" path="res://scene/enemyscene/wasp/wasp_spawner.tscn" id="9_udrhv"]
+[ext_resource type="PackedScene" uid="uid://citx8tdyqxrld" path="res://scene/enemyscene/beetle/beetle_spawner.tscn" id="10_apkow"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d23ys"]
 texture = ExtResource("1_dfnqw")
@@ -46,29 +47,8 @@ tile_size = Vector2i(17, 17)
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_d23ys")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_mc7is"]
-size = Vector2(340, 85)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_udrhv"]
-size = Vector2(17, 68)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_apkow"]
-size = Vector2(17, 68)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_76k2i"]
-size = Vector2(255, 255.349)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_sa4x6"]
-size = Vector2(128, 128)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_lqj60"]
-size = Vector2(255, 257.246)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h7v0u"]
 size = Vector2(2550, 1360)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_w5ji6"]
-size = Vector2(2384, 1184)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_udrhv"]
 shader = ExtResource("7_mc7is")
@@ -134,6 +114,27 @@ width = 400
 height = 100
 noise = SubResource("FastNoiseLite_mc7is")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w5ji6"]
+size = Vector2(2384, 1184)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_udrhv"]
+size = Vector2(340, 85)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_apkow"]
+size = Vector2(17, 68)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_76k2i"]
+size = Vector2(17, 68)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sa4x6"]
+size = Vector2(255, 255.349)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lqj60"]
+size = Vector2(128, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hloit"]
+size = Vector2(255, 257.246)
+
 [node name="chap2_roomB" type="Node2D"]
 script = ExtResource("1_d23ys")
 
@@ -141,78 +142,8 @@ script = ExtResource("1_d23ys")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 scale = Vector2(5, 5)
-tile_map_data = PackedByteArray("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AADv/woAAAAAAAMAAADu/woAAAAAAAMAAAD2/wkAAAAAAAMAAAAQAAkAAAAAAAMAAAARAAkAAAAAAAMAAAAPAAkAAAAAAAMAAAAOAAkAAAAAAAMAAAANAAkAAAAAAAMAAAAMAAkAAAAAAAMAAAALAAkAAAAAAAMAAAAKAAkAAAAAAAMAAAAJAAkAAAAAAAMAAAAIAAkAAAAAAAMAAAAHAAkAAAAAAAMAAAAGAAkAAAAAAAMAAAAFAAkAAAAAAAMAAAAEAAkAAAAAAAMAAAADAAkAAAAAAAMAAAACAAkAAAAAAAAAAAACAAoAAAAAAAAAAAADAAoAAAAAAAMAAAAEAAoAAAAAAAMAAAAFAAoAAAAAAAMAAAAGAAoAAAAAAAMAAAAHAAoAAAAAAAMAAAAIAAoAAAAAAAMAAAAJAAoAAAAAAAMAAAAKAAoAAAAAAAMAAAALAAoAAAAAAAMAAAAMAAoAAAAAAAMAAAARAAoAAAAAAAMAAAAQAAoAAAAAAAMAAAAPAAoAAAAAAAMAAAAOAAoAAAAAAAMAAAANAAoAAAAAAAMAAADv//3/AAAAAAAAAADu//3/AAAAAAAAAAD9//b/AAAAAAAAAAD9//X/AAAAAAAAAAAJAAMAAAAAAAAAAAAJAAQAAAAAAAAAAAAJAAUAAAAAAAAAAAAJAAYAAAAAAAAAAAAJAAcAAAAAAAAAAAD2/wcAAAAAAAAAAAD2/wYAAAAAAAAAAAD2/wUAAAAAAAAAAAD2/wQAAAAAAAAAAAD2/wMAAAAAAAAAAAD6/wMAAAAAAAAAAAD7/wMAAAAAAAAAAAAEAAMAAAAAAAAAAAD2//j/AAAAAAAAAAD2//n/AAAAAAAAAAD2//r/AAAAAAAAAAD2//v/AAAAAAAAAAD2//z/AAAAAAAAAAAJAPj/AAAAAAAAAAAJAPn/AAAAAAAAAAAJAPr/AAAAAAAAAAAJAPv/AAAAAAAAAAAJAPz/AAAAAAAAAAD6//z/AAAAAAAAAAD7//z/AAAAAAAAAAAEAPz/AAAAAAAAAAAFAPz/AAAAAAAAAAAFAAMAAAAAAAAAAAD7/wQAAAAAAAAAAAD6/wQAAAAAAAAAAAAEAAQAAAAAAAAAAAAFAAQAAAAAAAAAAAD6//v/AAAAAAAAAAD7//v/AAAAAAAAAAAFAPv/AAAAAAAAAAAEAPv/AAAAAAAAAAD///7/AAACAAAAAAAAAP7/AAACAAAAAAAAAAEAAAABAAAAAAD//wEAAAABAAAAAAA=")
+tile_map_data = PackedByteArray("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AADv/woAAAAAAAMAAADu/woAAAAAAAMAAAD2/wkAAAAAAAMAAAAQAAkAAAAAAAMAAAARAAkAAAAAAAMAAAAPAAkAAAAAAAMAAAAOAAkAAAAAAAMAAAANAAkAAAAAAAMAAAAMAAkAAAAAAAMAAAALAAkAAAAAAAMAAAAKAAkAAAAAAAMAAAAJAAkAAAAAAAMAAAAIAAkAAAAAAAMAAAAHAAkAAAAAAAMAAAAGAAkAAAAAAAMAAAAFAAkAAAAAAAMAAAAEAAkAAAAAAAMAAAADAAkAAAAAAAMAAAACAAkAAAAAAAAAAAACAAoAAAAAAAAAAAADAAoAAAAAAAMAAAAEAAoAAAAAAAMAAAAFAAoAAAAAAAMAAAAGAAoAAAAAAAMAAAAHAAoAAAAAAAMAAAAIAAoAAAAAAAMAAAAJAAoAAAAAAAMAAAAKAAoAAAAAAAMAAAALAAoAAAAAAAMAAAAMAAoAAAAAAAMAAAARAAoAAAAAAAMAAAAQAAoAAAAAAAMAAAAPAAoAAAAAAAMAAAAOAAoAAAAAAAMAAAANAAoAAAAAAAMAAADv//3/AAAAAAAAAADu//3/AAAAAAAAAAD9//b/AAAAAAAAAAD9//X/AAAAAAAAAAAJAAMAAAAAAAAAAAAJAAQAAAAAAAAAAAAJAAUAAAAAAAAAAAAJAAYAAAAAAAAAAAAJAAcAAAAAAAAAAAD2/wcAAAAAAAAAAAD2/wYAAAAAAAAAAAD2/wUAAAAAAAAAAAD2/wQAAAAAAAAAAAD2/wMAAAAAAAAAAAD6/wMAAAAAAAAAAAD7/wMAAAAAAAAAAAD2//j/AAAAAAAAAAD2//n/AAAAAAAAAAD2//r/AAAAAAAAAAD2//v/AAAAAAAAAAD2//z/AAAAAAAAAAAJAPj/AAAAAAAAAAAJAPn/AAAAAAAAAAAJAPr/AAAAAAAAAAAJAPv/AAAAAAAAAAAJAPz/AAAAAAAAAAAEAPz/AAAAAAAAAAAFAPz/AAAAAAAAAAD7/wQAAAAAAAAAAAD6/wQAAAAAAAAAAAAFAPv/AAAAAAAAAAAEAPv/AAAAAAAAAAD///7/AAACAAAAAAAAAP7/AAACAAAAAAAAAAEAAAABAAAAAAD//wEAAAABAAAAAAA=")
 tile_set = SubResource("TileSet_h1vsg")
-
-[node name="Area2D_bottom" type="Area2D" parent="."]
-position = Vector2(2, 800)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_bottom"]
-position = Vector2(-2, 92.5)
-shape = SubResource("RectangleShape2D_mc7is")
-
-[node name="Area2D_left" type="Area2D" parent="."]
-position = Vector2(-1408, -32)
-scale = Vector2(5, 5)
-
-[node name="CollisionPolygon2D" type="CollisionShape2D" parent="Area2D_left"]
-position = Vector2(-26.1, 6.4)
-shape = SubResource("RectangleShape2D_udrhv")
-
-[node name="Area2D_right" type="Area2D" parent="."]
-position = Vector2(-1408, -32)
-scale = Vector2(5, 5)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_right"]
-position = Vector2(589.3, 6.4)
-shape = SubResource("RectangleShape2D_apkow")
-
-[node name="Sprite2D_block_Left" type="Sprite2D" parent="."]
-position = Vector2(-1402.5, -8.01086e-05)
-scale = Vector2(1.99219, 2.65625)
-texture = ExtResource("2_d23ys")
-
-[node name="StaticBody2D" type="StaticBody2D" parent="Sprite2D_block_Left"]
-scale = Vector2(0.501961, 0.501961)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D_block_Left/StaticBody2D"]
-shape = SubResource("RectangleShape2D_76k2i")
-
-[node name="Sprite2D_block_Right" type="Sprite2D" parent="."]
-position = Vector2(1402.5, 0.249924)
-scale = Vector2(1.99219, 2.65235)
-texture = ExtResource("2_d23ys")
-
-[node name="StaticBody2D" type="StaticBody2D" parent="Sprite2D_block_Right"]
-scale = Vector2(0.501961, 0.501961)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D_block_Right/StaticBody2D"]
-position = Vector2(0.499939, -0.187717)
-shape = SubResource("RectangleShape2D_76k2i")
-
-[node name="Sprite2D_block_Top" type="Sprite2D" parent="."]
-position = Vector2(2.86102e-06, -807.5)
-scale = Vector2(2.65625, 1.99219)
-texture = ExtResource("2_d23ys")
-
-[node name="StaticBody2D" type="StaticBody2D" parent="Sprite2D_block_Top"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D_block_Top/StaticBody2D"]
-position = Vector2(3.8147e-06, 0)
-shape = SubResource("RectangleShape2D_sa4x6")
-
-[node name="Sprite2D_block_Bottom" type="Sprite2D" parent="."]
-position = Vector2(9.53674e-07, 807.5)
-scale = Vector2(2.65625, 1.99219)
-texture = ExtResource("2_d23ys")
-
-[node name="StaticBody2D" type="StaticBody2D" parent="Sprite2D_block_Bottom"]
-position = Vector2(0, 0.558746)
-scale = Vector2(0.501961, 0.497579)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D_block_Bottom/StaticBody2D"]
-position = Vector2(-7.42077e-06, -1.12292)
-shape = SubResource("RectangleShape2D_lqj60")
 
 [node name="Area2D_cameraRoom" parent="." instance=ExtResource("3_squgs")]
 visible = false
@@ -224,12 +155,6 @@ collision_mask = 15
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_enemyCounter"]
 shape = SubResource("RectangleShape2D_h7v0u")
-
-[node name="Area2D_reblock" type="Area2D" parent="."]
-visible = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_reblock"]
-shape = SubResource("RectangleShape2D_w5ji6")
 
 [node name="Area2D_acid" parent="." instance=ExtResource("6_h1vsg")]
 z_index = 100
@@ -296,18 +221,81 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(-1377, 697)
 polygon = PackedVector2Array(136, -119, 561, -119, 561, 255, 136, 255)
 
-[node name="Termite_shroom_containter" type="Node2D" parent="."]
-
-[node name="Termite_shroom2" parent="Termite_shroom_containter" instance=ExtResource("8_mc7is")]
-position = Vector2(2, 34)
-
-[node name="Area2D" type="Area2D" parent="Termite_shroom_containter/Termite_shroom2"]
+[node name="Area2D_reblock" type="Area2D" parent="."]
 visible = false
-metadata/_edit_lock_ = true
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Termite_shroom_containter/Termite_shroom2/Area2D"]
-position = Vector2(-2, -51)
-polygon = PackedVector2Array(-1224, 629, -1224, -629, 1224, -646, 1224, 629)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_reblock"]
+shape = SubResource("RectangleShape2D_w5ji6")
+
+[node name="Area2D_bottom" type="Area2D" parent="."]
+position = Vector2(2, 800)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_bottom"]
+position = Vector2(-2, 92.5)
+shape = SubResource("RectangleShape2D_udrhv")
+
+[node name="Area2D_left" type="Area2D" parent="."]
+position = Vector2(-1408, -32)
+scale = Vector2(5, 5)
+
+[node name="CollisionPolygon2D" type="CollisionShape2D" parent="Area2D_left"]
+position = Vector2(-26.1, 6.4)
+shape = SubResource("RectangleShape2D_apkow")
+
+[node name="Area2D_right" type="Area2D" parent="."]
+position = Vector2(-1408, -32)
+scale = Vector2(5, 5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_right"]
+position = Vector2(589.3, 6.4)
+shape = SubResource("RectangleShape2D_76k2i")
+
+[node name="Sprite2D_block_Left" type="Sprite2D" parent="."]
+position = Vector2(-1402.5, -8.01086e-05)
+scale = Vector2(1.99219, 2.65625)
+texture = ExtResource("2_d23ys")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Sprite2D_block_Left"]
+scale = Vector2(0.501961, 0.501961)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D_block_Left/StaticBody2D"]
+shape = SubResource("RectangleShape2D_sa4x6")
+
+[node name="Sprite2D_block_Right" type="Sprite2D" parent="."]
+position = Vector2(1402.5, 0.249924)
+scale = Vector2(1.99219, 2.65235)
+texture = ExtResource("2_d23ys")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Sprite2D_block_Right"]
+scale = Vector2(0.501961, 0.501961)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D_block_Right/StaticBody2D"]
+position = Vector2(0.499939, -0.187717)
+shape = SubResource("RectangleShape2D_sa4x6")
+
+[node name="Sprite2D_block_Top" type="Sprite2D" parent="."]
+position = Vector2(2.86102e-06, -807.5)
+scale = Vector2(2.65625, 1.99219)
+texture = ExtResource("2_d23ys")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Sprite2D_block_Top"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D_block_Top/StaticBody2D"]
+position = Vector2(3.8147e-06, 0)
+shape = SubResource("RectangleShape2D_lqj60")
+
+[node name="Sprite2D_block_Bottom" type="Sprite2D" parent="."]
+position = Vector2(9.53674e-07, 807.5)
+scale = Vector2(2.65625, 1.99219)
+texture = ExtResource("2_d23ys")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Sprite2D_block_Bottom"]
+position = Vector2(0, 0.558746)
+scale = Vector2(0.501961, 0.497579)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D_block_Bottom/StaticBody2D"]
+position = Vector2(-7.42077e-06, -1.12292)
+shape = SubResource("RectangleShape2D_hloit")
 
 [node name="Wasp_spawner" type="Node2D" parent="."]
 position = Vector2(459, -629)
@@ -320,6 +308,7 @@ spawn_ammount = 1
 position = Vector2(-1054, -510)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Wasp_spawner/wasp_spawner"]
+visible = false
 position = Vector2(2, 0)
 polygon = PackedVector2Array(-1224, 629, -1224, -629, 1224, -646, 1224, 629)
 
@@ -331,6 +320,7 @@ spawn_ammount = 1
 position = Vector2(1054, -510)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Wasp_spawner/wasp_spawner2"]
+visible = false
 polygon = PackedVector2Array(-1224, 629, -1224, -629, 1224, -646, 1224, 629)
 
 [node name="wasp_spawner3" parent="Wasp_spawner" instance=ExtResource("9_udrhv")]
@@ -338,9 +328,10 @@ position = Vector2(-459, 629)
 spawn_ammount = 1
 
 [node name="Marker2D" type="Marker2D" parent="Wasp_spawner/wasp_spawner3"]
-position = Vector2(-425, 0)
+position = Vector2(-578, 0)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Wasp_spawner/wasp_spawner3"]
+visible = false
 position = Vector2(2, 0)
 polygon = PackedVector2Array(-1224, 629, -1224, -629, 1224, -646, 1224, 629)
 
@@ -349,8 +340,47 @@ position = Vector2(-459, 629)
 spawn_ammount = 1
 
 [node name="Marker2D" type="Marker2D" parent="Wasp_spawner/wasp_spawner4"]
-position = Vector2(425, 0)
+position = Vector2(578, 0)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Wasp_spawner/wasp_spawner4"]
+visible = false
 position = Vector2(2, 0)
 polygon = PackedVector2Array(-1224, 629, -1224, -629, 1224, -646, 1224, 629)
+
+[node name="Termite_shroom_containter" type="Node2D" parent="."]
+
+[node name="Termite_shroom2" parent="Termite_shroom_containter" instance=ExtResource("8_mc7is")]
+position = Vector2(2, 34)
+
+[node name="Area2D" type="Area2D" parent="Termite_shroom_containter/Termite_shroom2"]
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Termite_shroom_containter/Termite_shroom2/Area2D"]
+visible = false
+position = Vector2(-2, -51)
+polygon = PackedVector2Array(-1224, 629, -1224, -629, 1224, -646, 1224, 629)
+
+[node name="Beetle_container" type="Node2D" parent="."]
+position = Vector2(459, -629)
+
+[node name="beetle_spawner" parent="Beetle_container" instance=ExtResource("10_apkow")]
+spawn_ammount = 1
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Beetle_container/beetle_spawner"]
+visible = false
+position = Vector2(-459, 629)
+polygon = PackedVector2Array(-1224, 629, -1224, -629, 1224, -629, 1224, 629)
+
+[node name="Marker2D" type="Marker2D" parent="Beetle_container/beetle_spawner"]
+position = Vector2(-884, 289)
+
+[node name="beetle_spawner2" parent="Beetle_container" instance=ExtResource("10_apkow")]
+spawn_ammount = 1
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Beetle_container/beetle_spawner2"]
+visible = false
+position = Vector2(-459, 629)
+polygon = PackedVector2Array(-1224, 629, -1224, -629, 1224, -629, 1224, 629)
+
+[node name="Marker2D" type="Marker2D" parent="Beetle_container/beetle_spawner2"]
+position = Vector2(-34, 969)

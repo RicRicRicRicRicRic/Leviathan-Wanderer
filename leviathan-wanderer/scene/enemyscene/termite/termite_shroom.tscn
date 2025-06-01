@@ -311,7 +311,7 @@ explosiveness = 0.9
 process_material = SubResource("ParticleProcessMaterial_nid8c")
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 3.0
+wait_time = 3.25
 one_shot = true
 
 [node name="Control" parent="." instance=ExtResource("3_nid8c")]

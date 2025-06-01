@@ -31,7 +31,7 @@ var _last_avoidance_turn_direction_factor: float = 0.0
 var _was_detecting_side_obstacles_last_frame: bool = false
 var is_dying: bool = false
 var direction: int = -1
-var damage: int = 30
+var damage: int = 35
 
 var _explosion_collision_shape: CollisionShape2D = null
 var _initial_explosion_scale: Vector2 = Vector2.ONE
@@ -39,18 +39,18 @@ var _explosion_tween_duration: float = 0.225
 
 signal died
 
-func _ready():
+func _ready() -> void:
 	interp_visuals = visuals
 	previous_position = global_position
 	add_to_group("enemy")
 	health = max_health
-	player_node = get_tree().get_first_node_in_group("player")
+	player_node = get_tree().get_first_node_in_group("player") as Node2D
 	ray_left.enabled = true
 	ray_right.enabled = true
 	ray_forward.enabled = true
 	if player_node:
 		ray_forward.add_exception(player_node)
-	for node in get_tree().get_nodes_in_group("enemy"):
+	for node: Node in get_tree().get_nodes_in_group("enemy"):
 		ray_forward.add_exception(node)
 	explostion_area.body_entered.connect(_on_DamageArea_body_entered)
 	suicide_area.body_entered.connect(_on_SuicideArea_body_entered)
@@ -59,13 +59,13 @@ func _ready():
 	suicide_area.set_deferred("disabled", true)
 	suicide_area.monitoring = false
 	time_to_delete.timeout.connect(_on_time_to_delete_timeout)
-	for child in explostion_area.get_children():
+	for child: Node in explostion_area.get_children():
 		if child is CollisionShape2D:
 			_explosion_collision_shape = child
 			_initial_explosion_scale = child.scale
 			break
 
-func _physics_process(delta: float):
+func _physics_process(delta: float) -> void:
 	previous_position = global_position
 	if is_dying:
 		velocity = Vector2.ZERO
@@ -79,15 +79,15 @@ func _physics_process(delta: float):
 		ray_forward.target_position = player_node.global_position - ray_forward.global_position
 		ray_forward.force_raycast_update()
 
-		var current_visual_rotation = visuals.rotation
+		var current_visual_rotation: float = visuals.rotation
 		var final_target_angle: float
-		var current_movement_speed = movement_speed
+		var current_movement_speed: float = movement_speed
 		var movement_direction: Vector2
-		var current_rotation_speed_applied = rotation_speed
-		var left_colliding = ray_left.is_colliding()
-		var right_colliding = ray_right.is_colliding()
-		var forward_colliding = ray_forward.is_colliding()
-		var is_currently_detecting_side_obstacles = left_colliding or right_colliding
+		var current_rotation_speed_applied: float = rotation_speed
+		var left_colliding: bool = ray_left.is_colliding()
+		var right_colliding: bool = ray_right.is_colliding()
+		var forward_colliding: bool = ray_forward.is_colliding()
+		var is_currently_detecting_side_obstacles: bool = left_colliding or right_colliding
 
 		if forward_colliding:
 			suicide_area.set_deferred("disabled", true)
@@ -99,9 +99,9 @@ func _physics_process(delta: float):
 		var determined_turn_direction_factor: float = 0.0
 		if is_currently_detecting_side_obstacles:
 			if left_colliding and right_colliding:
-				var dist_left = INF
+				var dist_left: float = INF
 				if ray_left.get_collider(): dist_left = (ray_left.get_collision_point() - ray_left.global_position).length()
-				var dist_right = INF
+				var dist_right: float = INF
 				if ray_right.get_collider(): dist_right = (ray_right.get_collision_point() - ray_right.global_position).length()
 				determined_turn_direction_factor = 1.0 if dist_left < dist_right else -1.0
 			elif left_colliding:
@@ -122,13 +122,13 @@ func _physics_process(delta: float):
 				_last_avoidance_turn_direction_factor = determined_turn_direction_factor
 
 		elif _is_committing_avoidance_turn:
-			var angular_deviation_from_avoidance_target = wrapf(_avoidance_target_angle - current_visual_rotation, -PI, PI)
+			var angular_deviation_from_avoidance_target: float = wrapf(_avoidance_target_angle - current_visual_rotation, -PI, PI)
 			if abs(angular_deviation_from_avoidance_target) < deg_to_rad(2.0):
 				_is_committing_avoidance_turn = false
 				movement_direction = direction_to_player
 				current_movement_speed = movement_speed
 				current_rotation_speed_applied = rotation_speed
-				var angular_deviation_to_player = wrapf(target_angle_to_player - current_visual_rotation, -PI, PI)
+				var angular_deviation_to_player: float = wrapf(target_angle_to_player - current_visual_rotation, -PI, PI)
 				if abs(angular_deviation_to_player) > deg_to_rad(rotation_stop_threshold_degrees):
 					current_movement_speed = 0.0
 				final_target_angle = target_angle_to_player
@@ -157,8 +157,8 @@ func _physics_process(delta: float):
 				movement_direction = direction_to_player
 				current_movement_speed = movement_speed
 				current_rotation_speed_applied = rotation_speed
-				var angular_deviation_to_player = wrapf(target_angle_to_player - current_visual_rotation, -PI, PI)
-				var rotation_threshold_radians = deg_to_rad(rotation_stop_threshold_degrees)
+				var angular_deviation_to_player: float = wrapf(target_angle_to_player - current_visual_rotation, -PI, PI)
+				var rotation_threshold_radians: float = deg_to_rad(rotation_stop_threshold_degrees)
 				if abs(angular_deviation_to_player) > rotation_threshold_radians:
 					current_movement_speed = 0.0
 				final_target_angle = target_angle_to_player
@@ -179,7 +179,8 @@ func take_damage(amount: float) -> void:
 		tail_anim.visible = false
 		death_particles.emitting = true
 		death_particles_circle.emitting = true
-		hp_bar.queue_free()
+		if is_instance_valid(hp_bar):
+			hp_bar.queue_free()
 
 		emit_signal("died")
 
@@ -187,7 +188,7 @@ func take_damage(amount: float) -> void:
 			_explosion_collision_shape.scale = Vector2(0.1, 0.1)
 			explostion_area.monitoring = true
 			explostion_area.set_deferred("disabled", false)
-			var tween = create_tween()
+			var tween: Tween = create_tween()
 			tween.set_ease(Tween.EASE_OUT)
 			tween.set_trans(Tween.TRANS_QUAD)
 			tween.tween_property(_explosion_collision_shape, "scale", _initial_explosion_scale, _explosion_tween_duration)
@@ -195,7 +196,7 @@ func take_damage(amount: float) -> void:
 		else:
 			queue_free()
 
-func _on_DamageArea_body_entered(body) -> void:
+func _on_DamageArea_body_entered(body: Node) -> void:
 	if body.is_in_group("player") and explostion_area.monitoring:
 		var diff: Vector2 = body.global_position - global_position
 		var knock_dir: Vector2
@@ -204,18 +205,22 @@ func _on_DamageArea_body_entered(body) -> void:
 		else:
 			knock_dir = Vector2(-direction, 0)
 		var knockback_force: Vector2 = knock_dir * knockback_strength
-		body.take_damage(damage)
-		body.knockback(knockback_force)
+		if body.has_method("take_damage"):
+			body.take_damage(damage)
+		if body.has_method("knockback"):
+			body.knockback(knockback_force)
 		explostion_area.set_deferred("monitoring", false)
 		explostion_area.set_deferred("disabled", true)
 
-func _on_SuicideArea_body_entered(body) -> void:
+func _on_SuicideArea_body_entered(body: Node) -> void:
 	if body.is_in_group("player"):
 		take_damage(max_health)
-		suicide_area.queue_free()
-		
+		if is_instance_valid(suicide_area):
+			suicide_area.queue_free()
+
 func _on_explosion_scale_finished() -> void:
-	explostion_area.queue_free()
+	if is_instance_valid(explostion_area):
+		explostion_area.queue_free()
 	time_to_delete.start()
 
 func _on_time_to_delete_timeout() -> void:

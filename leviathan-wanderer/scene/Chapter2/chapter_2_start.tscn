@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=4 uid="uid://dsdl7ayo5cc26"]
+[gd_scene load_steps=25 format=4 uid="uid://dsdl7ayo5cc26"]
 
 [ext_resource type="Script" uid="uid://tths1h6momhh" path="res://scripts/Chapter2/chapter_2_start.gd" id="1_2alri"]
 [ext_resource type="PackedScene" uid="uid://2po5m5mgtl38" path="res://scene/Utility/world_environment_gloweffect.tscn" id="1_xxxbt"]
@@ -11,7 +11,6 @@
 [ext_resource type="Texture2D" uid="uid://c17lu264e832b" path="res://icon.svg" id="8_drhim"]
 [ext_resource type="Shader" uid="uid://wag0rlsi12u4" path="res://scripts/Chapter2/acid.gdshader" id="10_lfmth"]
 [ext_resource type="PackedScene" uid="uid://ci4db1u0umgpa" path="res://scene/Chapter2/area_2d_acid.tscn" id="11_jrxse"]
-[ext_resource type="PackedScene" uid="uid://d0ed1b0o01ad2" path="res://scene/enemyscene/wasp/wasp.tscn" id="12_3yujv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jrxse"]
 texture = ExtResource("2_2alri")
@@ -267,6 +266,3 @@ metadata/_edit_use_anchors_ = true
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D_acid2"]
 position = Vector2(-1377, 697)
 polygon = PackedVector2Array(-204, 34, 561, 34, 561, 255, -204, 255)
-
-[node name="Wasp" parent="." instance=ExtResource("12_3yujv")]
-position = Vector2(-428, -391)
