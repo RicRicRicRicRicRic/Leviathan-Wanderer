@@ -1,0 +1,85 @@
+[gd_scene load_steps=10 format=3 uid="uid://c1p3lkuobh33a"]
+
+[ext_resource type="Script" uid="uid://vhq48xvhgnpp" path="res://scripts/enemy-scripts/VespulaRegin_boss/larvae_egg.gd" id="1_31lsd"]
+[ext_resource type="Texture2D" uid="uid://cad5ycgdisjy5" path="res://assets/sprites/enemy-sprites/VespulaRegina-boss.svg" id="1_vvum4"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_31lsd"]
+radius = 70.1783
+
+[sub_resource type="Curve" id="Curve_31lsd"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.988024, 0.494382), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_b34hy"]
+curve = SubResource("Curve_31lsd")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_31lsd"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 75.0
+initial_velocity_max = 125.0
+gravity = Vector3(0, 0, 0)
+scale_min = 10.0
+scale_max = 15.0
+scale_curve = SubResource("CurveTexture_b34hy")
+color = Color(0.596078, 0.643137, 0.360784, 1)
+
+[sub_resource type="Curve" id="Curve_2grwx"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.988024, 0.494382), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_x83cj"]
+curve = SubResource("Curve_2grwx")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mmyp4"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 75.0
+initial_velocity_max = 125.0
+gravity = Vector3(0, 0, 0)
+scale_min = 15.0
+scale_max = 30.0
+scale_curve = SubResource("CurveTexture_x83cj")
+color = Color(0.596078, 0.643137, 0.360784, 1)
+
+[node name="Larvae_egg" type="RigidBody2D"]
+script = ExtResource("1_31lsd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.8, 0.8)
+shape = SubResource("CircleShape2D_31lsd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(1.75, 1.75, 1.75, 1)
+texture_filter = 4
+position = Vector2(9.53674e-07, 9.53674e-07)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("1_vvum4")
+region_enabled = true
+region_rect = Rect2(11, 977, 139, 139)
+
+[node name="hatch_timer" type="Timer" parent="."]
+wait_time = 3.5
+one_shot = true
+
+[node name="GPUParticles2D_spawn" type="GPUParticles2D" parent="."]
+self_modulate = Color(1.75, 1.75, 1.75, 1)
+rotation = -1.57079
+emitting = false
+amount = 16
+lifetime = 1.5
+one_shot = true
+explosiveness = 0.9
+process_material = SubResource("ParticleProcessMaterial_31lsd")
+
+[node name="GPUParticles2D_death" type="GPUParticles2D" parent="."]
+self_modulate = Color(1.75, 1.75, 1.75, 1)
+rotation = -1.57079
+emitting = false
+amount = 24
+lifetime = 1.5
+one_shot = true
+explosiveness = 0.9
+process_material = SubResource("ParticleProcessMaterial_mmyp4")

@@ -34,7 +34,7 @@ var hover_speed: float = 0.75
 @export var enraged_cooldown_duration: float = 0.1
 @export var enraged_fire_rate_interval: float = 0.05
 
-var max_health: float = 50000.0
+var max_health: float = 40000.0
 var current_health: float = max_health
 var is_enraged: bool = false
 

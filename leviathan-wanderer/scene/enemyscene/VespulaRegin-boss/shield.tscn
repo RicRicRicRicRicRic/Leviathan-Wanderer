@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://dsk7w4mh8uyb1"]
+
+[ext_resource type="Texture2D" uid="uid://cad5ycgdisjy5" path="res://assets/sprites/enemy-sprites/VespulaRegina-boss.svg" id="1_mhgk7"]
+[ext_resource type="Script" uid="uid://bv0lntfh53ecl" path="res://scripts/enemy-scripts/VespulaRegin_boss/shield.gd" id="1_th662"]
+
+[node name="Shield" type="StaticBody2D"]
+collision_layer = 16
+collision_mask = 16
+script = ExtResource("1_th662")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.5)
+self_modulate = Color(3, 3, 3, 1)
+z_index = 100
+texture_filter = 6
+position = Vector2(0, -223)
+scale = Vector2(1, 1.007)
+texture = ExtResource("1_mhgk7")
+offset = Vector2(0, 0.614105)
+region_enabled = true
+region_rect = Rect2(1032, 1433, 275, 68)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(0, -220)
+scale = Vector2(1, 1.007)
+polygon = PackedVector2Array(0, -35.7498, -48, -31.7776, -80, -19.861, -100, -7.9444, -122, 7.94439, -140, 31.7776, 140, 31.7776, 122, 7.94439, 100, -7.9444, 80, -19.861, 48, -31.7776)

@@ -1,0 +1,80 @@
+[gd_scene load_steps=6 format=3 uid="uid://5t43r2wibbk5"]
+
+[ext_resource type="Texture2D" uid="uid://cad5ycgdisjy5" path="res://assets/sprites/enemy-sprites/VespulaRegina-boss.svg" id="1_bcq54"]
+[ext_resource type="Script" uid="uid://cukpsdsnsd3cv" path="res://scripts/enemy-scripts/VespulaRegin_boss/vespula_stinger.gd" id="1_ludmi"]
+
+[sub_resource type="Curve" id="Curve_ludmi"]
+_limits = [0.393258, 1.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.393258), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ludmi"]
+curve = SubResource("Curve_ludmi")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_agxgd"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+spread = 15.0
+initial_velocity_min = 200.0
+initial_velocity_max = 250.0
+gravity = Vector3(0, 0, 0)
+scale_min = 7.0
+scale_max = 7.0
+scale_curve = SubResource("CurveTexture_ludmi")
+color = Color(0.596078, 0.643137, 0.360784, 1)
+
+[node name="vespula_stinger" type="RigidBody2D"]
+collision_layer = 4
+collision_mask = 9
+script = ExtResource("1_ludmi")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 4
+scale = Vector2(0.45, 0.45)
+texture = ExtResource("1_bcq54")
+offset = Vector2(0, -3.76794)
+region_enabled = true
+region_rect = Rect2(7, 833, 147, 105)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+self_modulate = Color(2, 2, 2, 1)
+z_index = -1
+position = Vector2(-24, 0)
+rotation = 3.14159
+amount = 5
+lifetime = 0.3
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_agxgd")
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="."]
+self_modulate = Color(2, 2, 2, 1)
+z_index = -1
+position = Vector2(-24, 0)
+rotation = 3.40339
+amount = 5
+lifetime = 0.3
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_agxgd")
+
+[node name="GPUParticles2D3" type="GPUParticles2D" parent="."]
+self_modulate = Color(2, 2, 2, 1)
+z_index = -1
+position = Vector2(-24, 0)
+rotation = 2.87979
+amount = 5
+lifetime = 0.3
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_agxgd")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(0, -1)
+scale = Vector2(0.45, 0.45)
+polygon = PackedVector2Array(-62.2222, 2.22222, -71.1111, -46.6667, 71.1111, 2.22222, -71.1111, 51.1111)
+
+[node name="Timer_despawn" type="Timer" parent="."]
+wait_time = 0.35
+one_shot = true
+
+[node name="Timer_homing" type="Timer" parent="."]
+wait_time = 0.75
+one_shot = true

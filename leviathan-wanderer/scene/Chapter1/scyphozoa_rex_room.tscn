@@ -13,7 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://c17lu264e832b" path="res://icon.svg" id="11_s0j7e"]
 [ext_resource type="PackedScene" uid="uid://cmkg0mghk4p0b" path="res://scene/Utility/boss_hp.tscn" id="13_fpjfx"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w4sh5"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rw5am"]
 texture = ExtResource("1_y1uan")
 texture_region_size = Vector2i(17, 17)
 0:0/0 = 0
@@ -47,7 +47,7 @@ texture_region_size = Vector2i(17, 17)
 [sub_resource type="TileSet" id="TileSet_w4sh5"]
 tile_size = Vector2i(17, 17)
 physics_layer_0/collision_layer = 1
-sources/0 = SubResource("TileSetAtlasSource_w4sh5")
+sources/0 = SubResource("TileSetAtlasSource_rw5am")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lg68n"]
 size = Vector2(5780, 510)

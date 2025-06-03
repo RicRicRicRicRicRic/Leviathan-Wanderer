@@ -1,0 +1,57 @@
+[gd_scene load_steps=7 format=3 uid="uid://dk7vjs1c6yogq"]
+
+[ext_resource type="Script" uid="uid://bwpbh2mayv4e2" path="res://scripts/enemy-scripts/VespulaRegin_boss/larvae_proj.gd" id="1_h04bm"]
+[ext_resource type="Texture2D" uid="uid://cad5ycgdisjy5" path="res://assets/sprites/enemy-sprites/VespulaRegina-boss.svg" id="2_c33sw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1s70k"]
+radius = 25.7143
+
+[sub_resource type="Curve" id="Curve_i8gdx"]
+_limits = [0.393258, 1.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.393258), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_c33sw"]
+curve = SubResource("Curve_i8gdx")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_uvsf1"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+spread = 15.0
+initial_velocity_min = 200.0
+initial_velocity_max = 250.0
+gravity = Vector3(0, 0, 0)
+scale_min = 5.0
+scale_max = 5.0
+scale_curve = SubResource("CurveTexture_c33sw")
+color = Color(0.596078, 0.643137, 0.360784, 1)
+
+[node name="Larvae_proj" type="RigidBody2D"]
+collision_layer = 4
+collision_mask = 9
+script = ExtResource("1_h04bm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(3, 3, 3, 1)
+texture_filter = 4
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("2_c33sw")
+region_enabled = true
+region_rect = Rect2(376, 1020, 53, 52)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.35, 0.35)
+shape = SubResource("CircleShape2D_1s70k")
+
+[node name="Timer_despawn" type="Timer" parent="."]
+wait_time = 0.35
+one_shot = true
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+self_modulate = Color(2, 2, 2, 1)
+z_index = -1
+rotation = 3.14159
+amount = 5
+lifetime = 0.3
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_uvsf1")

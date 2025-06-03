@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://8n2hjoa65vji"]
+
+[ext_resource type="Texture2D" uid="uid://cad5ycgdisjy5" path="res://assets/sprites/enemy-sprites/VespulaRegina-boss.svg" id="1_t7a51"]
+
+[node name="VespulaRegin_carcass" type="RigidBody2D"]
+mass = 100.0
+gravity_scale = 0.35
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 4
+texture = ExtResource("1_t7a51")
+offset = Vector2(2, 94)
+region_enabled = true
+region_rect = Rect2(889, 1618, 561, 269)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(0, -32, -16, -32, -32, -28, -48, -16, -64, 0, -76, 16, -80, 44, -96, 48, -112, 64, -124, 80, -128, 112, -120, 160, -80, 200, -24, 228, -16, 224, -8, 196, -8, 156, -8, 136, 8, 148, 8, 128, 16, 128, 12, 148, 32, 136, 28, 156, 56, 144, 64, 128, 64, 100, 80, 104, 100, 116, 116, 116, 128, 88, 128, 64, 104, 32, 100, 24, 100, 0, 84, -24, 72, -36, 44, -40, 32, -32)

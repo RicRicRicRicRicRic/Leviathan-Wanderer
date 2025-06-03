@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://cyvaw008gmc5j"]
+[gd_scene load_steps=43 format=3 uid="uid://cyvaw008gmc5j"]
 
 [ext_resource type="Script" uid="uid://cng1lxdn6y20w" path="res://scripts/enemy-scripts/termite/termite_shroom.gd" id="1_2aylh"]
 [ext_resource type="Texture2D" uid="uid://xn6msbjqfr7m" path="res://assets/sprites/enemy-sprites/Termite-enemy.svg" id="2_nid8c"]
@@ -245,7 +245,7 @@ animations = [{
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.988024, 0.494382), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_b34hy"]
+[sub_resource type="CurveTexture" id="CurveTexture_nid8c"]
 curve = SubResource("Curve_nid8c")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ecf52"]
@@ -257,8 +257,15 @@ initial_velocity_max = 125.0
 gravity = Vector3(0, 0, 0)
 scale_min = 10.0
 scale_max = 15.0
-scale_curve = SubResource("CurveTexture_b34hy")
+scale_curve = SubResource("CurveTexture_nid8c")
 color = Color(0.741176, 1, 0.368627, 1)
+
+[sub_resource type="Curve" id="Curve_31lsd"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.988024, 0.494382), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_b34hy"]
+curve = SubResource("Curve_31lsd")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nid8c"]
 lifetime_randomness = 1.0

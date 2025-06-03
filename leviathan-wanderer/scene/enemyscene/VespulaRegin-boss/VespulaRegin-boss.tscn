@@ -1,0 +1,268 @@
+[gd_scene load_steps=28 format=3 uid="uid://cmflh66vedaa2"]
+
+[ext_resource type="Texture2D" uid="uid://cad5ycgdisjy5" path="res://assets/sprites/enemy-sprites/VespulaRegina-boss.svg" id="1_i80l6"]
+[ext_resource type="Script" uid="uid://cb70otugny4rg" path="res://scripts/enemy-scripts/VespulaRegin_boss/VespulaRegin-boss.gd" id="1_lumdb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uylxp"]
+atlas = ExtResource("1_i80l6")
+region = Rect2(1610, 322, 322, 322)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0cu5n"]
+atlas = ExtResource("1_i80l6")
+region = Rect2(1288, 322, 322, 322)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ct73a"]
+atlas = ExtResource("1_i80l6")
+region = Rect2(966, 322, 322, 322)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g6wsj"]
+atlas = ExtResource("1_i80l6")
+region = Rect2(644, 322, 322, 322)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2a3o0"]
+atlas = ExtResource("1_i80l6")
+region = Rect2(322, 322, 322, 322)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5nq0n"]
+atlas = ExtResource("1_i80l6")
+region = Rect2(0, 322, 322, 322)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o8eo0"]
+atlas = ExtResource("1_i80l6")
+region = Rect2(322, 322, 322, 322)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4wykm"]
+atlas = ExtResource("1_i80l6")
+region = Rect2(644, 322, 322, 322)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gy7kq"]
+atlas = ExtResource("1_i80l6")
+region = Rect2(966, 322, 322, 322)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_esa0f"]
+atlas = ExtResource("1_i80l6")
+region = Rect2(1288, 322, 322, 322)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hokhg"]
+atlas = ExtResource("1_i80l6")
+region = Rect2(1610, 322, 322, 322)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hokhg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uylxp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0cu5n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ct73a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g6wsj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2a3o0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5nq0n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o8eo0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4wykm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gy7kq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_esa0f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hokhg")
+}],
+"loop": true,
+"name": &"default",
+"speed": 60.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jhp5o"]
+atlas = ExtResource("1_i80l6")
+region = Rect2(0, 0, 322, 322)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hydy5"]
+atlas = ExtResource("1_i80l6")
+region = Rect2(322, 0, 322, 322)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q81a7"]
+atlas = ExtResource("1_i80l6")
+region = Rect2(644, 0, 322, 322)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lnffx"]
+atlas = ExtResource("1_i80l6")
+region = Rect2(966, 0, 322, 322)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iv24x"]
+atlas = ExtResource("1_i80l6")
+region = Rect2(1288, 0, 322, 322)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pwrqh"]
+atlas = ExtResource("1_i80l6")
+region = Rect2(1610, 0, 322, 322)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x1w1y"]
+atlas = ExtResource("1_i80l6")
+region = Rect2(1610, 0, 322, 322)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2taun"]
+atlas = ExtResource("1_i80l6")
+region = Rect2(1288, 0, 322, 322)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_41ly7"]
+atlas = ExtResource("1_i80l6")
+region = Rect2(966, 0, 322, 322)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o66ed"]
+atlas = ExtResource("1_i80l6")
+region = Rect2(644, 0, 322, 322)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k3n6a"]
+atlas = ExtResource("1_i80l6")
+region = Rect2(322, 0, 322, 322)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4ud06"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jhp5o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hydy5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q81a7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lnffx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iv24x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pwrqh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x1w1y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2taun")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_41ly7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o66ed")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k3n6a")
+}],
+"loop": true,
+"name": &"default",
+"speed": 80.0
+}]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_lumdb"]
+load_path = "res://.godot/imported/VespulaRegina-boss.svg-5baa22ded490b3b4036c09cb22aef169.ctex"
+
+[node name="VespulaRegina_b0ss" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 11
+script = ExtResource("1_lumdb")
+
+[node name="Node2D_visuals" type="Node2D" parent="."]
+
+[node name="Marker2D" type="Marker2D" parent="Node2D_visuals"]
+position = Vector2(-18, 198)
+
+[node name="Node2D_wings_left" type="Node2D" parent="Node2D_visuals"]
+position = Vector2(-136, -102)
+metadata/_edit_lock_ = true
+
+[node name="AnimatedSprite2D_bottom" type="AnimatedSprite2D" parent="Node2D_visuals/Node2D_wings_left"]
+self_modulate = Color(1.5, 1.5, 1.7, 1)
+texture_filter = 4
+position = Vector2(-51, 84)
+sprite_frames = SubResource("SpriteFrames_hokhg")
+autoplay = "default"
+speed_scale = 1.5
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Node2D_visuals/Node2D_wings_left"]
+self_modulate = Color(1.5, 1.5, 1.7, 1)
+texture_filter = 4
+sprite_frames = SubResource("SpriteFrames_4ud06")
+autoplay = "default"
+speed_scale = 1.5
+
+[node name="Node2D_wings_right" type="Node2D" parent="Node2D_visuals"]
+position = Vector2(-153, -102)
+metadata/_edit_lock_ = true
+
+[node name="AnimatedSprite2D_bottom" type="AnimatedSprite2D" parent="Node2D_visuals/Node2D_wings_right"]
+self_modulate = Color(1.5, 1.5, 1.7, 1)
+texture_filter = 4
+position = Vector2(340, 83)
+sprite_frames = SubResource("SpriteFrames_hokhg")
+autoplay = "default"
+speed_scale = 1.5
+flip_h = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Node2D_visuals/Node2D_wings_right"]
+self_modulate = Color(1.5, 1.5, 1.7, 1)
+texture_filter = 4
+position = Vector2(289, 0)
+sprite_frames = SubResource("SpriteFrames_4ud06")
+autoplay = "default"
+speed_scale = 1.5
+flip_h = true
+
+[node name="Sprite2D_body" type="Sprite2D" parent="Node2D_visuals"]
+texture_filter = 4
+texture = ExtResource("1_i80l6")
+region_enabled = true
+region_rect = Rect2(73, 1475, 638, 424)
+
+[node name="Sprite2D_eyes" type="Sprite2D" parent="Node2D_visuals"]
+self_modulate = Color(1.75, 1.75, 1.75, 1)
+texture_filter = 4
+position = Vector2(95, 58)
+texture = SubResource("CompressedTexture2D_lumdb")
+region_enabled = true
+region_rect = Rect2(0, 644, 161, 161)
+
+[node name="Node2D_abdomen" type="Node2D" parent="Node2D_visuals"]
+z_index = -1
+position = Vector2(-68, 119)
+
+[node name="Sprite2D_abdomen" type="Sprite2D" parent="Node2D_visuals/Node2D_abdomen"]
+self_modulate = Color(1.75, 1.75, 1.75, 1)
+texture_filter = 4
+texture = ExtResource("1_i80l6")
+region_enabled = true
+region_rect = Rect2(586, 715, 116, 180)
+
+[node name="Sprite2D_abdo_shell" type="Sprite2D" parent="Node2D_visuals/Node2D_abdomen"]
+texture_filter = 4
+position = Vector2(1, -1)
+texture = ExtResource("1_i80l6")
+region_enabled = true
+region_rect = Rect2(262, 711, 120, 188)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+visible = false
+polygon = PackedVector2Array(-18, 207, -36, 207, -90, 180, -117, 153, -126, 135, -126, 81, -117, 54, -90, 27, -81, 27, -81, 9, -72, -9, -54, -27, -27, -45, 18, -45, 36, -54, 72, -54, 90, -36, 99, -18, 99, 9, 126, 36, 135, 54, 126, 81, 117, 99, 99, 99, 63, 81, 54, 126, -9, 126, -9, 198)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.5
+one_shot = true
