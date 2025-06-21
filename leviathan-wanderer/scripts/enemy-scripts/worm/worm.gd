@@ -3,12 +3,12 @@ extends "res://scripts/Utility/Interpolate.gd"
 
 @export var max_health: int = 900
 @export var scan_radius: float = 3000.0
-@export var noturn_radius: float = 300.0
-@export var move_speed: float = 900.0
+@export var noturn_radius: float = 200.0
+@export var move_speed: float = 700.0
 @export var move_speed_noturn: float = 700.0
 @export var max_turn_angle: float = 200.0
 @export var decel_rate: float = 1000.0
-@export var spacing_frames: float = 3.5
+@export var spacing_frames: float = 4.5
 @export var knockback_strength: float = 1500.0
 @export var death_gravity: float = 600.0
 @export var death_kick_min: float = 200.0

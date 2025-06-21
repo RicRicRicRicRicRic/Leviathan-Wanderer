@@ -509,9 +509,19 @@ position = Vector2(-459, 629)
 spawn_ammount = 1
 
 [node name="Marker2D" type="Marker2D" parent="Wasp_spawner/wasp_spawner"]
-position = Vector2(0, 493)
+position = Vector2(-799, -323)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Wasp_spawner/wasp_spawner"]
-visible = false
+position = Vector2(2, 0)
+polygon = PackedVector2Array(-1224, 629, -1224, -629, 1224, -646, 1224, 629)
+
+[node name="wasp_spawner2" parent="Wasp_spawner" instance=ExtResource("9_iploo")]
+position = Vector2(-459, 629)
+spawn_ammount = 1
+
+[node name="Marker2D" type="Marker2D" parent="Wasp_spawner/wasp_spawner2"]
+position = Vector2(799, -323)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Wasp_spawner/wasp_spawner2"]
 position = Vector2(2, 0)
 polygon = PackedVector2Array(-1224, 629, -1224, -629, 1224, -646, 1224, 629)

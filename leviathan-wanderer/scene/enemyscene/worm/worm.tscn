@@ -537,7 +537,8 @@ region_enabled = true
 region_rect = Rect2(346, 27, 113, 107)
 
 [node name="Control" parent="." instance=ExtResource("3_gq3k5")]
-offset_left = -100.0
-offset_top = -200.0
-offset_right = 100.0
-offset_bottom = -195.0
+offset_left = -150.0
+offset_top = -182.857
+offset_right = 150.0
+offset_bottom = -172.857
+pivot_offset = Vector2(50, 0)
