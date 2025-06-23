@@ -5,14 +5,14 @@
 [ext_resource type="PackedScene" uid="uid://ga1kg4j0ek8b" path="res://scene/Utility/Enemy_healthbar.tscn" id="3_gq3k5"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gq3k5"]
-radius = 64.3016
+radius = 45.7366
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_21rt2"]
-radius = 34.2857
-height = 68.5714
+radius = 24.0
+height = 48.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_gq3k5"]
-size = Vector2(102.857, 55.7143)
+[sub_resource type="CircleShape2D" id="CircleShape2D_f1k2n"]
+radius = 24.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gq3k5"]
 atlas = ExtResource("1_flnh8")
@@ -387,66 +387,69 @@ animations = [{
 
 [node name="worm" type="CharacterBody2D"]
 texture_filter = 2
-scale = Vector2(0.7, 0.7)
+collision_layer = 10
+collision_mask = 10
 script = ExtResource("1_q6oae")
 
 [node name="Area2D_Damage" type="Area2D" parent="."]
 z_index = -10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_Damage"]
-position = Vector2(34.2857, 1.42857)
+position = Vector2(16, 1)
 shape = SubResource("CircleShape2D_gq3k5")
 
 [node name="CollisionShape2D_head" type="CollisionShape2D" parent="."]
-z_index = -10
+z_index = 10
 shape = SubResource("CapsuleShape2D_21rt2")
 
 [node name="CollisionShape2D_body_main" type="CollisionShape2D" parent="."]
-position = Vector2(-68.5714, 9.09495e-13)
+z_index = 10
+position = Vector2(-40, 1)
 shape = SubResource("CapsuleShape2D_21rt2")
 
 [node name="CollisionShape2D_body1" type="CollisionShape2D" parent="."]
-z_index = -1
-position = Vector2(-148.571, 1.52588e-05)
+z_index = 10
+position = Vector2(-88, 0)
 shape = SubResource("CapsuleShape2D_21rt2")
 
 [node name="CollisionShape2D_body2" type="CollisionShape2D" parent="."]
-z_index = -1
-position = Vector2(-228.571, 1.52588e-05)
+z_index = 10
+position = Vector2(-136, 0)
 shape = SubResource("CapsuleShape2D_21rt2")
 
 [node name="CollisionShape2D_body4" type="CollisionShape2D" parent="."]
-z_index = -1
-position = Vector2(-388.571, 1.52588e-05)
+z_index = 10
+position = Vector2(-232, 1)
 shape = SubResource("CapsuleShape2D_21rt2")
 
 [node name="CollisionShape2D_body3" type="CollisionShape2D" parent="."]
-z_index = -1
-position = Vector2(-308.571, 1.52588e-05)
+z_index = 10
+position = Vector2(-184, 1)
 shape = SubResource("CapsuleShape2D_21rt2")
 
 [node name="CollisionShape2D_body5" type="CollisionShape2D" parent="."]
-z_index = -1
-position = Vector2(-468.571, 1.52588e-05)
+z_index = 10
+position = Vector2(-280, 0)
 shape = SubResource("CapsuleShape2D_21rt2")
 
 [node name="CollisionShape2D_body6" type="CollisionShape2D" parent="."]
-z_index = -1
-position = Vector2(-548.571, 1.52588e-05)
+z_index = 10
+position = Vector2(-328, 0)
 shape = SubResource("CapsuleShape2D_21rt2")
 
 [node name="CollisionShape2D_body7" type="CollisionShape2D" parent="."]
-z_index = -1
-position = Vector2(-628.571, 1.52588e-05)
+z_index = 10
+position = Vector2(-376, 0)
 shape = SubResource("CapsuleShape2D_21rt2")
 
 [node name="CollisionShape2D_tail" type="CollisionShape2D" parent="."]
-z_index = -1
-position = Vector2(-722.857, 0.714287)
-shape = SubResource("RectangleShape2D_gq3k5")
+z_index = 10
+position = Vector2(-424, 0)
+shape = SubResource("CircleShape2D_f1k2n")
 
 [node name="Node2D" type="Node2D" parent="."]
 z_index = 5
+scale = Vector2(0.6, 0.6)
 
 [node name="AnimatedSprite2D_head" type="AnimatedSprite2D" parent="Node2D"]
 light_mask = 0
@@ -458,17 +461,15 @@ frame = 19
 frame_progress = 1.0
 offset = Vector2(22, 0)
 flip_h = true
-metadata/_edit_lock_ = true
 
 [node name="RayCast2D" type="RayCast2D" parent="Node2D/AnimatedSprite2D_head"]
-position = Vector2(107.143, 1.42857)
+position = Vector2(53.3333, 5.04871e-29)
 scale = Vector2(1, 50)
 target_position = Vector2(685.714, 0)
 hit_from_inside = true
 
 [node name="Node2D_segments" type="Node2D" parent="Node2D"]
 scale = Vector2(1.4, 1.4)
-metadata/_edit_lock_ = true
 
 [node name="Sprite2D_body_main" type="Sprite2D" parent="Node2D/Node2D_segments"]
 position = Vector2(-48.9796, 0)
@@ -537,8 +538,8 @@ region_enabled = true
 region_rect = Rect2(346, 27, 113, 107)
 
 [node name="Control" parent="." instance=ExtResource("3_gq3k5")]
-offset_left = -150.0
-offset_top = -182.857
-offset_right = 150.0
-offset_bottom = -172.857
+offset_left = -75.0
+offset_top = -100.0
+offset_right = 75.0
+offset_bottom = -95.0
 pivot_offset = Vector2(50, 0)

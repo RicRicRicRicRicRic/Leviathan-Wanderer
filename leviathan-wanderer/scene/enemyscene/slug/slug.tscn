@@ -290,7 +290,6 @@ position = Vector2(0, 1.90476)
 scale = Vector2(1.05, 1.05)
 sprite_frames = SubResource("SpriteFrames_tk01l")
 animation = &"walk"
-frame_progress = 0.70141
 
 [node name="RayCast2D_height" type="RayCast2D" parent="Node2D"]
 position = Vector2(-93.6667, 28.3333)
