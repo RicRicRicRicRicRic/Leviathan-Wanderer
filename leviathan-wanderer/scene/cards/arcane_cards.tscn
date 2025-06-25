@@ -1,0 +1,365 @@
+[gd_scene load_steps=18 format=3 uid="uid://chotcsd2f4fnx"]
+
+[ext_resource type="Script" uid="uid://v1urha22nnxq" path="res://scripts/cards/arcane_cards.gd" id="1_rte1m"]
+[ext_resource type="Texture2D" uid="uid://3pon3mtoo5ue" path="res://assets/sprites/player-sprites/arcane_cards.svg" id="1_umk0w"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ww1h6"]
+atlas = ExtResource("1_umk0w")
+region = Rect2(576, 810, 576, 810)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rte1m"]
+atlas = ExtResource("1_umk0w")
+region = Rect2(1728, 0, 576, 810)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lhxnk"]
+atlas = ExtResource("1_umk0w")
+region = Rect2(2880, 0, 576, 810)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bpjsi"]
+atlas = ExtResource("1_umk0w")
+region = Rect2(2304, 0, 576, 810)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ie2n"]
+atlas = ExtResource("1_umk0w")
+region = Rect2(4032, 0, 576, 810)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ue8t"]
+atlas = ExtResource("1_umk0w")
+region = Rect2(5184, 0, 576, 810)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_st1dp"]
+atlas = ExtResource("1_umk0w")
+region = Rect2(4608, 0, 576, 810)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f4kgy"]
+atlas = ExtResource("1_umk0w")
+region = Rect2(5760, 0, 576, 810)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uf7cb"]
+atlas = ExtResource("1_umk0w")
+region = Rect2(3456, 0, 576, 810)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rbdhu"]
+atlas = ExtResource("1_umk0w")
+region = Rect2(576, 0, 576, 810)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yc2ol"]
+atlas = ExtResource("1_umk0w")
+region = Rect2(1152, 0, 576, 810)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ww1h6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ww1h6")
+}],
+"loop": true,
+"name": &"ascendant_leap",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rte1m")
+}],
+"loop": true,
+"name": &"blink_efficiency",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lhxnk")
+}],
+"loop": false,
+"name": &"daredevil_agility",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bpjsi")
+}],
+"loop": true,
+"name": &"fortitude",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0ie2n")
+}],
+"loop": true,
+"name": &"heavy_impact_rounds",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ue8t")
+}],
+"loop": true,
+"name": &"limitless_technique",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_st1dp")
+}],
+"loop": false,
+"name": &"mana_overdrive",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f4kgy")
+}],
+"loop": true,
+"name": &"orbs_retribution",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uf7cb")
+}],
+"loop": false,
+"name": &"pheonix_renewal",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rbdhu")
+}],
+"loop": true,
+"name": &"pulse_accelerator",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yc2ol")
+}],
+"loop": false,
+"name": &"scatter_shot",
+"speed": 1.0
+}]
+
+[sub_resource type="Animation" id="Animation_umk0w"]
+resource_name = "card_flip"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D_card1:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.5, 1.26667, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.0467626, 1), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D_card2:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5, 1.26667, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.047, 1), Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D_card3:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.5, 1.26667, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.047, 1), Vector2(1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D_card1/AnimatedSprite2D:z_index")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.5, 1.26667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [-1, 0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sprite2D_card2/AnimatedSprite2D:z_index")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.5, 1.26667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [-1, 0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Sprite2D_card3/AnimatedSprite2D:z_index")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.491667, 1.26667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [-1, 0]
+}
+
+[sub_resource type="Animation" id="Animation_rte1m"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D_card1:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.0467626, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D_card2:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.047, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D_card3:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.047, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D_card1/AnimatedSprite2D:z_index")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [-1]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sprite2D_card2/AnimatedSprite2D:z_index")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [-1]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Sprite2D_card3/AnimatedSprite2D:z_index")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [-1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bpjsi"]
+_data = {
+&"RESET": SubResource("Animation_rte1m"),
+&"card_flip": SubResource("Animation_umk0w")
+}
+
+[node name="arcane_cards" type="CanvasLayer"]
+script = ExtResource("1_rte1m")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -528.0
+offset_top = -234.0
+offset_right = 528.0
+offset_bottom = 234.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Node2D_cards" type="Node2D" parent="MarginContainer"]
+position = Vector2(528, 240)
+scale = Vector2(0.5, 0.5)
+
+[node name="Sprite2D_card1" type="Sprite2D" parent="MarginContainer/Node2D_cards"]
+texture_filter = 2
+position = Vector2(-664, -12)
+scale = Vector2(0.0467626, 1)
+texture = ExtResource("1_umk0w")
+region_enabled = true
+region_rect = Rect2(10, 13, 556, 784)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MarginContainer/Node2D_cards/Sprite2D_card1"]
+z_index = -1
+z_as_relative = false
+texture_filter = 2
+sprite_frames = SubResource("SpriteFrames_ww1h6")
+animation = &"ascendant_leap"
+
+[node name="Sprite2D_card2" type="Sprite2D" parent="MarginContainer/Node2D_cards"]
+texture_filter = 2
+position = Vector2(0, -12)
+scale = Vector2(0.047, 1)
+texture = ExtResource("1_umk0w")
+region_enabled = true
+region_rect = Rect2(10, 13, 556, 784)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MarginContainer/Node2D_cards/Sprite2D_card2"]
+z_index = -1
+texture_filter = 2
+sprite_frames = SubResource("SpriteFrames_ww1h6")
+animation = &"ascendant_leap"
+
+[node name="Sprite2D_card3" type="Sprite2D" parent="MarginContainer/Node2D_cards"]
+texture_filter = 2
+position = Vector2(668, -12)
+scale = Vector2(0.047, 1)
+texture = ExtResource("1_umk0w")
+region_enabled = true
+region_rect = Rect2(10, 13, 556, 784)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MarginContainer/Node2D_cards/Sprite2D_card3"]
+z_index = -1
+texture_filter = 2
+sprite_frames = SubResource("SpriteFrames_ww1h6")
+animation = &"scatter_shot"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MarginContainer/Node2D_cards"]
+libraries = {
+&"": SubResource("AnimationLibrary_bpjsi")
+}
+autoplay = "card_flip"

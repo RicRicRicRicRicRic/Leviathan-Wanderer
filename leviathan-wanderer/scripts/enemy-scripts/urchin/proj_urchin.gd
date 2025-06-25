@@ -1,7 +1,7 @@
 extends RigidBody2D
 
 @export var speed: float = 1500.0
-@export var damage_amount: int = 35
+@export var damage_amount: int = 25
 @export var max_contacts: int = 1
 
 var contacts_made: int = 0

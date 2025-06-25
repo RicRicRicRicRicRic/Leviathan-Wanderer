@@ -1,10 +1,13 @@
-[gd_scene load_steps=23 format=4 uid="uid://gij4mwjiyobo"]
+[gd_scene load_steps=26 format=4 uid="uid://gij4mwjiyobo"]
 
 [ext_resource type="Script" uid="uid://cvwd4e1tt3aqd" path="res://scripts/Chapter3/chap3_roomscripts.gd" id="1_cx8r8"]
 [ext_resource type="PackedScene" uid="uid://2po5m5mgtl38" path="res://scene/Utility/world_environment_gloweffect.tscn" id="2_ql4h4"]
 [ext_resource type="Texture2D" uid="uid://cvm1xsprhoww8" path="res://assets/sprites/prototype graphics.svg" id="3_wpogq"]
 [ext_resource type="PackedScene" uid="uid://cfqff4kheixm" path="res://scene/Utility/area_2d_camera_room.tscn" id="4_16owc"]
 [ext_resource type="Texture2D" uid="uid://c17lu264e832b" path="res://icon.svg" id="5_fsg3f"]
+[ext_resource type="PackedScene" uid="uid://i6badr4nl3nv" path="res://scene/enemyscene/nudibranch/nudibranch_spawner.tscn" id="6_16owc"]
+[ext_resource type="PackedScene" uid="uid://sd1tlq7gn5ov" path="res://scene/enemyscene/urchin/urchin_spawner.tscn" id="7_fsg3f"]
+[ext_resource type="PackedScene" uid="uid://cqs0xed8whfw5" path="res://scene/enemyscene/worm/worm_spawner.tscn" id="8_h0751"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2mqor"]
 texture = ExtResource("3_wpogq")
@@ -283,4 +286,77 @@ shape = SubResource("RectangleShape2D_ql4h4")
 libraries = {
 &"": SubResource("AnimationLibrary_lm0ua")
 }
-autoplay = "new_animation"
+autoplay = "RESET"
+
+[node name="nudibranch_spawner_container" type="Node2D" parent="."]
+position = Vector2(-1530, -425)
+
+[node name="nudibranch_spawner" parent="nudibranch_spawner_container" instance=ExtResource("6_16owc")]
+spawn_ammount = 1
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="nudibranch_spawner_container/nudibranch_spawner"]
+visible = false
+position = Vector2(1533, 425)
+polygon = PackedVector2Array(-1224, 629, -1224, -629, 1224, -629, 1224, 629)
+
+[node name="Marker2D" type="Marker2D" parent="nudibranch_spawner_container/nudibranch_spawner"]
+position = Vector2(765, 0)
+
+[node name="nudibranch_spawner2" parent="nudibranch_spawner_container" instance=ExtResource("6_16owc")]
+spawn_ammount = 1
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="nudibranch_spawner_container/nudibranch_spawner2"]
+visible = false
+position = Vector2(1533, 425)
+polygon = PackedVector2Array(-1224, 629, -1224, -629, 1224, -629, 1224, 629)
+
+[node name="Marker2D" type="Marker2D" parent="nudibranch_spawner_container/nudibranch_spawner2"]
+position = Vector2(2295, 595)
+
+[node name="urchin_spawner_container" type="Node2D" parent="."]
+position = Vector2(3, 0)
+
+[node name="urchin_spawner" parent="urchin_spawner_container" instance=ExtResource("7_fsg3f")]
+position = Vector2(-3, 0)
+spawn_ammount = 3
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="urchin_spawner_container/urchin_spawner"]
+visible = false
+polygon = PackedVector2Array(-1224, 629, -1224, -629, 1224, -629, 1224, 629)
+
+[node name="Marker2D" type="Marker2D" parent="urchin_spawner_container/urchin_spawner"]
+position = Vector2(765, -425)
+
+[node name="urchin_spawner2" parent="urchin_spawner_container" instance=ExtResource("7_fsg3f")]
+position = Vector2(-3, 0)
+spawn_ammount = 3
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="urchin_spawner_container/urchin_spawner2"]
+visible = false
+polygon = PackedVector2Array(-1224, 629, -1224, -629, 1224, -629, 1224, 629)
+
+[node name="Marker2D" type="Marker2D" parent="urchin_spawner_container/urchin_spawner2"]
+position = Vector2(-765, 170)
+
+[node name="urchin_spawner3" parent="urchin_spawner_container" instance=ExtResource("7_fsg3f")]
+position = Vector2(-3, 0)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="urchin_spawner_container/urchin_spawner3"]
+visible = false
+polygon = PackedVector2Array(-1224, 629, -1224, -629, 1224, -629, 1224, 629)
+
+[node name="Marker2D" type="Marker2D" parent="urchin_spawner_container/urchin_spawner3"]
+position = Vector2(0, 510)
+
+[node name="worm_spawner_container" type="Node2D" parent="."]
+
+[node name="worm_spawner" parent="worm_spawner_container" instance=ExtResource("8_h0751")]
+spawn_ammount = 1
+
+[node name="Marker2D" type="Marker2D" parent="worm_spawner_container/worm_spawner"]
+position = Vector2(0, 850)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="worm_spawner_container/worm_spawner"]
+visible = false
+position = Vector2(3, 0)
+polygon = PackedVector2Array(-1224, 629, -1224, -629, 1224, -629, 1224, 629)

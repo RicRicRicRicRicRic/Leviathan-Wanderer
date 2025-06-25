@@ -8,15 +8,15 @@ extends CharacterBody2D
 @onready var visuals: Node2D = $Node2D
 
 @export var urchin_projectile: PackedScene = preload("res://scene/enemyscene/urchin/proj_urchin.tscn")
-@export var max_health: int = 450
-@export var follow_speed: float = 80.0
+@export var max_health: int = 275
+@export var follow_speed: float = 180.0
 @export var dash_speed: float = 1000.0
-@export var dash_total_duration: float = 0.2
+@export var dash_total_duration: float = 0.35
 @export var dash_detection_range: float = 350.0
 @export var normal_damage: int = 15
-@export var dash_damage: int = 55
+@export var dash_damage: int = 45
 @export var normal_knockback: float = 300.0
-@export var dash_knockback: float = 1500.0
+@export var dash_knockback: float = 1000.0
 @export var dash_rotation_speed: float = 1000.0
 @export var rotation_lerp_speed: float = 10.0
 @export var throb_scale_min: float = 0.9
@@ -105,21 +105,24 @@ func take_damage(amount: int) -> void:
 func _die() -> void:
 	current_state = State.DYING
 	velocity = Vector2.ZERO
-	set_physics_process(false)
+	
+	set_physics_process(false) 
 	
 	if get_node_or_null("Collider") != null:
 		var collider_node = get_node("Collider")
 		if collider_node is CollisionShape2D or collider_node is CollisionPolygon2D:
-			collider_node.set_deferred("disabled", true)
+			collider_node.set_deferred("disabled", true) 
 	
 	if damage_area:
 		damage_area.set_deferred("monitoring", false)
 		damage_area.set_deferred("monitorable", false)
 	
-	visuals.scale = Vector2(1.0, 1.0)
+	visuals.scale = Vector2(1.0, 1.0) 
 	
-	_shoot_projectiles_on_death()
+	var death_position_for_projectiles = global_position 
 
+	call_deferred("_shoot_projectiles_on_death", death_position_for_projectiles)
+	
 	queue_free()
 
 
@@ -149,7 +152,7 @@ func _on_DamageArea_body_entered(body: Node) -> void:
 		if diff.length() > 0:
 			knock_dir = diff.normalized()
 		else:
-			knock_dir = Vector2(1, 0)
+			knock_dir = Vector2(1, 0) 
 		
 		var knockback_force: Vector2 = knock_dir * knockback_strength_value
 		
@@ -158,7 +161,7 @@ func _on_DamageArea_body_entered(body: Node) -> void:
 		if body.has_method("knockback"):
 			body.knockback(knockback_force)
 
-func _shoot_projectiles_on_death() -> void:
+func _shoot_projectiles_on_death(spawn_position: Vector2) -> void:
 	if not urchin_projectile or projectiles_on_death <= 0:
 		return
 
@@ -172,8 +175,9 @@ func _shoot_projectiles_on_death() -> void:
 		if not projectile_instance:
 			continue
 
-		get_parent().call_deferred("add_child", projectile_instance)
-		projectile_instance.global_position = global_position
+		get_tree().get_root().add_child(projectile_instance)
+		
+		projectile_instance.global_position = spawn_position
 
 		var current_angle_degrees = angles_degrees[i]
 		var direction_vector = Vector2.RIGHT.rotated(deg_to_rad(current_angle_degrees))

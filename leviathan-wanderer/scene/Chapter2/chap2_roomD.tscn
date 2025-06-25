@@ -512,6 +512,7 @@ spawn_ammount = 1
 position = Vector2(-799, -323)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Wasp_spawner/wasp_spawner"]
+visible = false
 position = Vector2(2, 0)
 polygon = PackedVector2Array(-1224, 629, -1224, -629, 1224, -646, 1224, 629)
 
@@ -523,5 +524,6 @@ spawn_ammount = 1
 position = Vector2(799, -323)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Wasp_spawner/wasp_spawner2"]
+visible = false
 position = Vector2(2, 0)
 polygon = PackedVector2Array(-1224, 629, -1224, -629, 1224, -646, 1224, 629)

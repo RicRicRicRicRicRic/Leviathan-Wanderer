@@ -13,7 +13,7 @@ extends "res://scripts/Utility/Interpolate.gd"
 @onready var health_bar: Control = $Control
 
 @export var speed: float = 200.0
-@export var max_health: int = 900
+@export var max_health: int = 500
 @export var knockback_strength: float = 1200.0
 @export var detection_range: float = 400.0
 @export var full_visibility_range: float = 150
@@ -45,8 +45,9 @@ func _ready() -> void:
 	if player:
 		ray_wall.add_exception(player)
 		ray_fall.add_exception(player)
+
 	
-	visuals.modulate.a = 0.0
+	anim.modulate.a = 0.0
 	health_bar.modulate.a = 0.0
 	current_alpha = 0.0
 
@@ -64,14 +65,13 @@ func _physics_process(delta: float) -> void:
 		var wall_ahead: bool = ray_wall.is_colliding()
 		var falling_edge: bool = not ray_fall.is_colliding()
 		var new_turning_condition_met: bool = wall_ahead or falling_edge
-
-		if new_turning_condition_met and not is_turning_condition_met and turn_timer.is_stopped():
+		if new_turning_condition_met and not is_turning_condition_met:
 			velocity.x = 0
 			anim.play("iddle")
 			turn_timer.start()
 			is_currently_turning = true
-		elif not new_turning_condition_met and is_currently_turning:
-			pass
+		elif not new_turning_condition_met and is_currently_turning :
+			is_currently_turning = false
 
 		is_turning_condition_met = new_turning_condition_met
 
@@ -107,7 +107,7 @@ func _physics_process(delta: float) -> void:
 			else:
 				current_alpha = lerp(current_alpha, target_alpha_from_proximity, delta * visibility_lerp_speed)
 			
-			visuals.modulate.a = current_alpha
+			anim.modulate.a = current_alpha
 			health_bar.modulate.a = current_alpha
 	else:
 		velocity.y = 0.0
@@ -136,10 +136,9 @@ func _physics_process(delta: float) -> void:
 	if is_dying and death_animation_completed and poisoned_players.is_empty():
 		queue_free()
 
-
 func _on_turn_timer_timeout() -> void:
 	direction *= -1
-	is_currently_turning = false
+	is_currently_turning = false 
 
 func take_damage(amount: int) -> void:
 	health = max(health - amount, 0)
@@ -151,13 +150,12 @@ func take_damage(amount: int) -> void:
 		velocity = Vector2.ZERO
 		collider.set_deferred("disabled", true)
 		damage_area.set_deferred("monitoring", false)
-		visuals.modulate.a = 1.0
+		anim.modulate.a = 1.0
 		health_bar.modulate.a = 1.0
 		
 		death_animation_completed = false
 		
 		anim.play("death")
-
 
 func _on_animation_finished() -> void:
 	if is_dying and anim.animation == "death":
@@ -178,7 +176,7 @@ func _on_DamageArea_body_entered(body: Node) -> void:
 		var knockback_force: Vector2 = knock_dir * knockback_strength
 		
 		if body.has_method("take_damage"):
-			body.take_damage(45)
+			body.take_damage(35)
 		if body.has_method("knockback"):
 			body.knockback(knockback_force)
 		

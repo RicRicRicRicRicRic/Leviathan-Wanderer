@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://i6badr4nl3nv"]
+
+[ext_resource type="Script" uid="uid://dd1wtk4dc8m11" path="res://scripts/enemy-scripts/nudibranch/nudibranch_spawner.gd" id="1_toj08"]
+
+[node name="nudibranch_spawner" type="Area2D"]
+script = ExtResource("1_toj08")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
