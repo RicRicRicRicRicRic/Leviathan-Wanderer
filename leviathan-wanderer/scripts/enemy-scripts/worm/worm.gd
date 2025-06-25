@@ -1,7 +1,7 @@
 #worm.gd
 extends "res://scripts/Utility/Interpolate.gd"
 
-@export var max_health: int = 600
+@export var max_health: int = 750
 @export var scan_radius: float = 3000.0
 @export var noturn_radius: float = 200.0
 @export var move_speed: float = 450.0
@@ -183,7 +183,7 @@ func _on_DamageArea_body_entered(body: Node) -> void:
 	skip_bite_exit = true
 	was_hitting_player = true
 
-	body.take_damage(55)
+	body.take_damage(65)
 	var diff: Vector2 = body.global_position - global_position
 	var knock_dir: Vector2 = Vector2.ZERO
 	if diff.length() > 0.0:

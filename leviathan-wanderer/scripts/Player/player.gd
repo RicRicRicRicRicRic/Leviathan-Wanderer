@@ -11,6 +11,7 @@ extends "res://scripts/Utility/Interpolate.gd"
 
 @export var mana_regen_value: int = 3
 @export var mana_regen_speed: float = 0.01
+@export var TOP_SPEED: float = 600.0
 
 @onready var visuals: Node2D = $Node2D
 @onready var main: AnimatedSprite2D = visuals.get_node("CharacterSprite2D")
@@ -19,13 +20,11 @@ extends "res://scripts/Utility/Interpolate.gd"
 @onready var laser_marker: Marker2D = wep.get_node("Marker2D_laser")
 @onready var cayote_timer: Timer = $CayoteTimer
 @onready var jumpbuffer_timer: Timer = $JumpBufferTimer
-@onready var teleport_cooldown: Timer = $TeleportCDTimer
 @onready var JumpHang_Timer: Timer = $JumpHangTimer
 @onready var NoDamage_Timer: Timer = $NoDamageTimer
 @onready var start_mana_regen: Timer = $Timer_mana_regen
 
 const JUMP_VELOCITY: float = -700.0
-const TOP_SPEED: float = 600.0
 const ACCELERATION: float = 3000.0
 const DECELERATION: float = 3000.0
 
@@ -45,7 +44,7 @@ var current_mana: int = max_mana
 var combo_meter: int = 0
 @export var max_combo_meter: int = 1000 
 var teleport_cancelled: bool = false
-var teleport_indicator_instance: Node2D = null
+var teleport_indicator_instance: Node2D = null 
 var is_laser_active: bool = false
 
 var is_mana_regen_active: bool = false
@@ -95,26 +94,40 @@ func _physics_process(delta: float) -> void:
 
 	if Input.is_action_just_pressed("Teleport"):
 		teleport_cancelled = false
-		if teleport_indicator_scene and teleport_indicator_instance == null:
+		if teleport_indicator_instance == null:
 			teleport_indicator_instance = teleport_indicator_scene.instantiate()
 			get_parent().add_child(teleport_indicator_instance)
 			if teleport_indicator_instance.has_method("set_teleport_data"):
-				teleport_indicator_instance.set_teleport_data(self, teleport_cooldown)
+				teleport_indicator_instance.set_teleport_data(self)
+		else:
+			if teleport_indicator_instance.has_method("reset_indicator"):
+				teleport_indicator_instance.reset_indicator()
+			else:
+				teleport_indicator_instance.visible = true
+				teleport_indicator_instance.set_process(true)
+				if teleport_indicator_instance.has_method("set_teleport_data"):
+					teleport_indicator_instance.set_teleport_data(self)
+
 	if Input.is_action_pressed("Teleport"):
-		if teleport_indicator_instance:
+		if teleport_indicator_instance and teleport_indicator_instance.visible:
 			var mouse_position = get_global_mouse_position()
 			teleport_indicator_instance.update_position(mouse_position)
+
 	if Input.is_action_just_pressed("Cancel_input") and Input.is_action_pressed("Teleport"):
 		teleport_cancelled = true
 		if teleport_indicator_instance:
-			teleport_indicator_instance.queue_free()
-			teleport_indicator_instance = null
+			if teleport_indicator_instance.has_method("cancel_teleport"):
+				teleport_indicator_instance.cancel_teleport()
+
 	if Input.is_action_just_released("Teleport"):
-		if teleport_indicator_instance:
+		if teleport_indicator_instance and teleport_indicator_instance.visible:
 			var mouse_position = get_global_mouse_position()
 			teleport_indicator_instance.update_position(mouse_position)
-			teleport_indicator_instance.perform_teleport()
-			teleport_indicator_instance = null
+			if teleport_indicator_instance.has_method("perform_teleport"):
+				teleport_indicator_instance.perform_teleport()
+		elif teleport_indicator_instance and not teleport_indicator_instance.visible:
+			if teleport_indicator_instance.has_method("cancel_teleport"):
+				teleport_indicator_instance.cancel_teleport()
 
 	if Input.is_action_just_pressed("Ultimate"):
 		if combo_meter == max_combo_meter and not is_laser_active:
@@ -235,7 +248,8 @@ func update_mana_bar() -> void:
 		var mana_bar_main: ProgressBar = mana_bar_node.get_node("ProgressBar_mana")
 
 		if mana_bar_main:
-			pass
+			mana_bar_main.value = float(current_mana) / float(max_mana) * 100.0
+
 
 func add_combo(amount: int) -> void:
 	combo_meter = min(combo_meter + amount, max_combo_meter)

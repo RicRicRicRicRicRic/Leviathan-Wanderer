@@ -446,10 +446,6 @@ one_shot = true
 wait_time = 0.15
 one_shot = true
 
-[node name="TeleportCDTimer" type="Timer" parent="."]
-wait_time = 2.5
-one_shot = true
-
 [node name="Timer_mana_regen" type="Timer" parent="."]
 wait_time = 0.75
 one_shot = true

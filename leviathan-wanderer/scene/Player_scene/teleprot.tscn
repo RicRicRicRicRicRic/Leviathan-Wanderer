@@ -103,3 +103,7 @@ width = 48.0
 texture = ExtResource("5_k1vm7")
 texture_mode = 1
 joint_mode = 2
+
+[node name="TeleportCDTimer" type="Timer" parent="."]
+wait_time = 2.5
+one_shot = true

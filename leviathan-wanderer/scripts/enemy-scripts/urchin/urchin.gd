@@ -8,10 +8,10 @@ extends CharacterBody2D
 @onready var visuals: Node2D = $Node2D
 
 @export var urchin_projectile: PackedScene = preload("res://scene/enemyscene/urchin/proj_urchin.tscn")
-@export var max_health: int = 275
+@export var max_health: int = 325
 @export var follow_speed: float = 180.0
 @export var dash_speed: float = 1000.0
-@export var dash_total_duration: float = 0.35
+@export var dash_total_duration: float = 0.4
 @export var dash_detection_range: float = 350.0
 @export var normal_damage: int = 15
 @export var dash_damage: int = 45

@@ -1,3 +1,4 @@
+# teleport.gd
 extends Node2D
 
 @onready var animated_sprite = $AnimatedSprite2D
@@ -5,39 +6,31 @@ extends Node2D
 @onready var line_tp_ready = $Line2D_tp_ready
 @onready var line_tp_cd = $Line2D2_tp_cd
 @onready var line_tp_wall = $Line2D2_tp_wall
+@onready var teleport_cooldown_timer: Timer = $TeleportCDTimer 
 
 var _player_ref: CharacterBody2D = null
-var _player_teleport_cooldown_ref: Timer = null
-var _player_max_teleport_range: float = 1000.0
+@export var _player_max_teleport_range: float = 1000.0
 var target_position: Vector2 = Vector2.ZERO
 var lerp_speed: float = 20.0
 var teleport_mana_cost: int = 100
 
 func _ready() -> void:
 	add_to_group("teleport")
+	visible = false
+	set_process(false)
 
-func set_teleport_data(player_node: CharacterBody2D, cooldown_timer: Timer) -> void:
+func set_teleport_data(player_node: CharacterBody2D) -> void:
 	_player_ref = player_node
-	_player_teleport_cooldown_ref = cooldown_timer
 	global_position = _player_ref.global_position
 	target_position = _player_ref.global_position
+	visible = true
+	set_process(true)
 
 func _process(delta: float) -> void:
-	if _player_ref and _player_teleport_cooldown_ref:
+	if _player_ref:
 		global_position = global_position.lerp(target_position, lerp_speed * delta)
-
-		var has_enough_mana: bool = false
-		if _player_ref.has_method("get_current_mana"): 
-			has_enough_mana = _player_ref.get_current_mana() >= teleport_mana_cost
-		elif _player_ref.has_node("current_mana"): 
-			has_enough_mana = _player_ref.current_mana.value >= teleport_mana_cost
-		elif _player_ref.has_method("get") and _player_ref.get("current_mana") != null:
-			has_enough_mana = _player_ref.current_mana >= teleport_mana_cost
-		else:
-			has_enough_mana = _player_ref.current_mana >= teleport_mana_cost
-
-
-		var is_cooldown_stopped = _player_teleport_cooldown_ref.is_stopped()
+		var has_enough_mana: bool = _player_ref.current_mana >= teleport_mana_cost
+		var is_cooldown_stopped = teleport_cooldown_timer.is_stopped()
 		var is_current_position_clear = not _is_current_target_colliding()
 
 		if not is_current_position_clear:
@@ -83,18 +76,9 @@ func _is_current_target_colliding() -> bool:
 	return not collisions.is_empty()
 
 func perform_teleport() -> void:
-	if _player_ref and _player_teleport_cooldown_ref:
-		var has_enough_mana: bool = false
-		if _player_ref.has_method("get_current_mana"):
-			has_enough_mana = _player_ref.get_current_mana() >= teleport_mana_cost
-		elif _player_ref.has_node("current_mana"):
-			has_enough_mana = _player_ref.current_mana.value >= teleport_mana_cost
-		elif _player_ref.has_method("get") and _player_ref.get("current_mana") != null:
-			has_enough_mana = _player_ref.current_mana >= teleport_mana_cost
-		else:
-			has_enough_mana = _player_ref.current_mana >= teleport_mana_cost
-
-		var can_teleport = _player_teleport_cooldown_ref.is_stopped() \
+	if _player_ref:
+		var has_enough_mana: bool = _player_ref.current_mana >= teleport_mana_cost
+		var can_teleport = teleport_cooldown_timer.is_stopped() \
 							and not _is_current_target_colliding() \
 							and has_enough_mana
 
@@ -102,21 +86,31 @@ func perform_teleport() -> void:
 			var final_position = global_position
 			_player_ref.global_position = final_position
 			_player_ref.velocity = Vector2.ZERO
-			_player_teleport_cooldown_ref.start()
+			teleport_cooldown_timer.start() 
 			_player_ref.current_mana = max(0, _player_ref.current_mana - teleport_mana_cost) 
 			_player_ref.update_mana_bar() 
 			if _player_ref.has_node("Timer_mana_regen"): 
 				_player_ref.start_mana_regen.start()
 			else:
 				print("Error: Player does not have 'Timer_mana_regen' node.")
-
-
-		queue_free() 
+		
+		hide_indicator()
 	else:
-		queue_free()
+		hide_indicator()
+
+func hide_indicator() -> void:
+	visible = false
+	set_process(false)
 
 func cancel_teleport() -> void:
-	queue_free()
+	hide_indicator()
+
+func reset_indicator() -> void:
+	visible = true
+	set_process(true)
+	if _player_ref:
+		global_position = _player_ref.global_position
+		target_position = _player_ref.global_position
 
 func _exit_tree() -> void:
 	pass

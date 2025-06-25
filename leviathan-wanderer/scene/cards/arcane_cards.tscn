@@ -138,6 +138,81 @@ animations = [{
 "speed": 1.0
 }]
 
+[sub_resource type="Animation" id="Animation_rte1m"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D_card1:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.0467626, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D_card2:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.047, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D_card3:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.047, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D_card1/AnimatedSprite2D:z_index")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [-1]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sprite2D_card2/AnimatedSprite2D:z_index")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [-1]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Sprite2D_card3/AnimatedSprite2D:z_index")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [-1]
+}
+
 [sub_resource type="Animation" id="Animation_umk0w"]
 resource_name = "card_flip"
 length = 2.0
@@ -214,81 +289,6 @@ tracks/5/keys = {
 "values": [-1, 0]
 }
 
-[sub_resource type="Animation" id="Animation_rte1m"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D_card1:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0.0467626, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D_card2:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0.047, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D_card3:scale")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0.047, 1)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Sprite2D_card1/AnimatedSprite2D:z_index")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [-1]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Sprite2D_card2/AnimatedSprite2D:z_index")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [-1]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Sprite2D_card3/AnimatedSprite2D:z_index")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [-1]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_bpjsi"]
 _data = {
 &"RESET": SubResource("Animation_rte1m"),
@@ -323,6 +323,18 @@ texture = ExtResource("1_umk0w")
 region_enabled = true
 region_rect = Rect2(10, 13, 556, 784)
 
+[node name="Button" type="Button" parent="MarginContainer/Node2D_cards/Sprite2D_card1"]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -278.0
+offset_top = -392.0
+offset_right = -278.0
+offset_bottom = -392.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MarginContainer/Node2D_cards/Sprite2D_card1"]
 z_index = -1
 z_as_relative = false
@@ -338,6 +350,18 @@ texture = ExtResource("1_umk0w")
 region_enabled = true
 region_rect = Rect2(10, 13, 556, 784)
 
+[node name="Button" type="Button" parent="MarginContainer/Node2D_cards/Sprite2D_card2"]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -278.0
+offset_top = -392.0
+offset_right = -278.0
+offset_bottom = -392.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MarginContainer/Node2D_cards/Sprite2D_card2"]
 z_index = -1
 texture_filter = 2
@@ -351,6 +375,18 @@ scale = Vector2(0.047, 1)
 texture = ExtResource("1_umk0w")
 region_enabled = true
 region_rect = Rect2(10, 13, 556, 784)
+
+[node name="Button" type="Button" parent="MarginContainer/Node2D_cards/Sprite2D_card3"]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -278.0
+offset_top = -392.0
+offset_right = -278.0
+offset_bottom = -392.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MarginContainer/Node2D_cards/Sprite2D_card3"]
 z_index = -1

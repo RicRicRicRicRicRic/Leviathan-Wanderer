@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="Leviathan-Wanderer"
-run/main_scene="uid://chotcsd2f4fnx"
+run/main_scene="uid://bbssro71sr1jn"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+GlobalGameState="*res://scripts/autoload/global_game_state.gd"
 
 [debug]
 

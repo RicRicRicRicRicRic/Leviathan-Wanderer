@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=4 uid="uid://im4f6o53tgdy"]
+[gd_scene load_steps=12 format=4 uid="uid://im4f6o53tgdy"]
 
 [ext_resource type="Texture2D" uid="uid://cvm1xsprhoww8" path="res://assets/sprites/prototype graphics.svg" id="1_3cx5i"]
 [ext_resource type="PackedScene" uid="uid://2po5m5mgtl38" path="res://scene/Utility/world_environment_gloweffect.tscn" id="1_e1xqy"]
+[ext_resource type="Script" uid="uid://ccgjjqouen1yq" path="res://scripts/Chapter1/chap1_final_room.gd" id="1_hb6ls"]
 [ext_resource type="Texture2D" uid="uid://c17lu264e832b" path="res://icon.svg" id="2_e1xqy"]
 [ext_resource type="PackedScene" uid="uid://cfqff4kheixm" path="res://scene/Utility/area_2d_camera_room.tscn" id="3_hb6ls"]
 
@@ -50,7 +51,11 @@ size = Vector2(128, 128)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bi8uc"]
 size = Vector2(255, 257.246)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7gfau"]
+size = Vector2(136, 170)
+
 [node name="Final_room" type="Node2D"]
+script = ExtResource("1_hb6ls")
 
 [node name="WorldEnvironment_gloweffect" parent="." instance=ExtResource("1_e1xqy")]
 
@@ -107,3 +112,11 @@ position = Vector2(-7.42077e-06, -1.12292)
 shape = SubResource("RectangleShape2D_bi8uc")
 
 [node name="Area2D_cameraRoom" parent="." instance=ExtResource("3_hb6ls")]
+visible = false
+
+[node name="Area2D_exit" type="Area2D" parent="."]
+position = Vector2(0, 119)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_exit"]
+position = Vector2(0, -34)
+shape = SubResource("RectangleShape2D_7gfau")

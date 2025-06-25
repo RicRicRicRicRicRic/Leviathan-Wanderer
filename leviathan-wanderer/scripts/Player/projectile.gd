@@ -3,16 +3,16 @@ extends RigidBody2D
 class_name Projectile
 
 static var SPEED: float = 1600.0
-static var FIRE_RATE: float = 0.125
-static var MANA_COST: int = 15
-static var COMBO_VALUE: int = 15
+static var BASE_FIRE_RATE: float = 0.125 
+static var MANA_COST: int = 12
+static var BASE_COMBO_VALUE: int = 15
 
 var dir: float = 0.0
 var spawnPos: Vector2 = Vector2.ZERO
 var spawnRot: float = 0.0
 var hit_count: int = 0
 @export var max_hits: int = 10
-@export var damage: float = 47
+@export var damage: float = 470 
 
 @onready var delete_timer: Timer = $Timer
 @onready var anisprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -20,9 +20,13 @@ var hit_count: int = 0
 
 static func shoot(start_pos: Vector2, target: Vector2, projectile_scene: PackedScene, shooter: Node) -> void:
 	var time_now: float = Time.get_ticks_msec() / 1000.0
-	var last_shot_time: float = shooter.get_meta("last_shot_time", -Projectile.FIRE_RATE) as float
+	
+	var fire_rate_modifier: float = shooter.get_meta("projectile_fire_rate_modifier", 1.0)
+	var effective_fire_rate = Projectile.BASE_FIRE_RATE / fire_rate_modifier
 
-	if time_now - last_shot_time < Projectile.FIRE_RATE:
+	var last_shot_time: float = shooter.get_meta("last_shot_time", -effective_fire_rate) as float
+
+	if time_now - last_shot_time < effective_fire_rate:
 		return
 
 	if shooter.current_mana < Projectile.MANA_COST:
@@ -35,6 +39,10 @@ static func shoot(start_pos: Vector2, target: Vector2, projectile_scene: PackedS
 
 	var proj: Projectile = projectile_scene.instantiate() as Projectile
 	var angle: float = (target - start_pos).angle()
+
+	var spread_angle_rad: float = shooter.get_meta("projectile_spread_angle", 0.0)
+	if spread_angle_rad != 0.0:
+		angle += randf_range(-spread_angle_rad / 2.0, spread_angle_rad / 2.0)
 
 	proj.spawnPos = start_pos
 	proj.dir = angle
@@ -67,10 +75,12 @@ func _ready() -> void:
 
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("enemy") and body.has_method("take_damage"):
-		body.take_damage(damage)
+		body.take_damage(damage) 
+		
 		var player_node = get_tree().get_first_node_in_group("player")
 		if player_node and player_node.has_method("add_combo"):
-			player_node.add_combo(Projectile.COMBO_VALUE)
+			var combo_modifier: float = player_node.get_meta("projectile_combo_modifier", 1.0)
+			player_node.add_combo(int(Projectile.BASE_COMBO_VALUE * combo_modifier))
 
 
 	anisprite.queue_free()

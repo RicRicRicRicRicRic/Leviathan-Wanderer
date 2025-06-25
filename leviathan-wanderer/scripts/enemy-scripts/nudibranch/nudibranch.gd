@@ -12,8 +12,8 @@ extends "res://scripts/Utility/Interpolate.gd"
 @onready var player: Node = null
 @onready var health_bar: Control = $Control
 
-@export var speed: float = 200.0
-@export var max_health: int = 500
+@export var speed: float = 250.0
+@export var max_health: int = 501
 @export var knockback_strength: float = 1200.0
 @export var detection_range: float = 400.0
 @export var full_visibility_range: float = 150

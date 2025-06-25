@@ -9,10 +9,10 @@ extends Node2D
 @onready var laser_collision_shape: CollisionShape2D = $Node2D/Area2D/CollisionShape2D
 
 @export var rotation_speed: float = 7.0
-@export var damage_amount: int = 325
-@export var continuous_damage_amount: int = 85
+@export var base_damage_amount: int = 325 
+@export var base_continuous_damage_amount: int = 85 
 @export var continuous_damage_interval: float = 0.1
-var laser_combo_value: int = 11 
+var base_laser_combo_value: int = 11
 
 var _player_laser_marker: Marker2D = null
 signal laser_finished_firing
@@ -41,7 +41,6 @@ func _ready() -> void:
 		if wep_node and wep_node.has_node("Marker2D_laser"):
 			_player_laser_marker = wep_node.get_node("Marker2D_laser")
 
-
 	_rotate_immediately_towards_mouse()
 	current_state = LaserState.CHARGING
 	laser_anim.play("laser_charge")
@@ -62,13 +61,16 @@ func _physics_process(delta: float) -> void:
 		_continuous_damage_timer += delta
 		if _continuous_damage_timer >= continuous_damage_interval:
 			_continuous_damage_timer = 0.0
-			var player_node = get_tree().get_first_node_in_group("player") 
-			for body in laser_area.get_overlapping_bodies():
-				if body.is_in_group("enemy") and body.has_method("take_damage"):
-					if _enemies_burst_damaged.has(body): 
-						body.take_damage(continuous_damage_amount)
-						if player_node and player_node.has_method("add_combo"):
-							player_node.add_combo(laser_combo_value)
+			var player_node = get_tree().get_first_node_in_group("player")  
+			if player_node: 
+				var damage_modifier: float = player_node.get_meta("laser_damage_modifier", 1.0)
+				var combo_modifier: float = player_node.get_meta("laser_combo_modifier", 1.0)
+				for body in laser_area.get_overlapping_bodies():
+					if body.is_in_group("enemy") and body.has_method("take_damage"):
+						if _enemies_burst_damaged.has(body):  
+							body.take_damage(int(base_continuous_damage_amount * damage_modifier))
+							if player_node.has_method("add_combo"):
+								player_node.add_combo(int(base_laser_combo_value * combo_modifier))
 
 
 func _rotate_immediately_towards_mouse() -> void:
@@ -111,12 +113,15 @@ func _on_timer_timeout() -> void:
 func _on_laser_area_body_entered(body: Node2D) -> void:
 	if current_state == LaserState.ACTIVE:
 		if body.is_in_group("enemy") and body.has_method("take_damage"):
-			if not _enemies_burst_damaged.has(body):
-				body.take_damage(damage_amount)
-				_enemies_burst_damaged.append(body)
-				var player_node = get_tree().get_first_node_in_group("player")
-				if player_node and player_node.has_method("add_combo"):
-					player_node.add_combo(laser_combo_value)
+			var player_node = get_tree().get_first_node_in_group("player")
+			if player_node:
+				var damage_modifier: float = player_node.get_meta("laser_damage_modifier", 1.0)
+				var combo_modifier: float = player_node.get_meta("laser_combo_modifier", 1.0)
+				if not _enemies_burst_damaged.has(body):
+					body.take_damage(int(base_damage_amount * damage_modifier))
+					_enemies_burst_damaged.append(body)
+					if player_node.has_method("add_combo"):
+						player_node.add_combo(int(base_laser_combo_value * combo_modifier))
 
 
 func _on_laser_area_body_exited(_body: Node2D) -> void:

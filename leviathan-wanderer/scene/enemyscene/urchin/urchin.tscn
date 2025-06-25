@@ -54,5 +54,5 @@ offset_bottom = -85.0
 pivot_offset = Vector2(50, 0)
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 0.75
+wait_time = 0.85
 one_shot = true
