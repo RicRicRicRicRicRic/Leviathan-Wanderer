@@ -1,7 +1,7 @@
 #boss_proj_urchin.gd
 extends RigidBody2D
 
-@export var speed: float = 1500.0
+@export var speed: float = 900.0
 @export var damage_amount: int = 55
 @export var max_contacts: int = 1
 

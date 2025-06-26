@@ -32,9 +32,9 @@ region_rect = Rect2(862, 1460, 280, 280)
 
 [node name="Sprite2D_thorns" type="Sprite2D" parent="Node2D_visuals"]
 texture_filter = 4
-position = Vector2(34, -0.666666)
+position = Vector2(34, -6)
 texture = ExtResource("2_bucbf")
-offset = Vector2(-40, 7.33333)
+offset = Vector2(-40, 18.6667)
 region_enabled = true
 region_rect = Rect2(1315, 1336, 568, 565)
 
@@ -51,5 +51,4 @@ position = Vector2(-192.667, -5.33333)
 position = Vector2(0, 164.667)
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 3.0
 one_shot = true
