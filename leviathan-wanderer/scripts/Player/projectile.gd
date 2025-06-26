@@ -12,7 +12,7 @@ var spawnPos: Vector2 = Vector2.ZERO
 var spawnRot: float = 0.0
 var hit_count: int = 0
 @export var max_hits: int = 10
-@export var damage: float = 47
+@export var damage: float = 470
 
 @onready var delete_timer: Timer = $Timer
 @onready var anisprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -28,10 +28,12 @@ static func shoot(start_pos: Vector2, target: Vector2, projectile_scene: PackedS
 	if time_now - last_shot_time < effective_fire_rate:
 		return
 
-	if shooter.current_mana < Projectile.MANA_COST:
+	var effective_mana_cost = int(Projectile.MANA_COST * GlobalGameState.projectile_mana_cost_multiplier)
+
+	if shooter.current_mana < effective_mana_cost:
 		return
 	else:
-		shooter.current_mana -= Projectile.MANA_COST
+		shooter.current_mana -= effective_mana_cost 
 		shooter.update_mana_bar()
 
 	shooter.set_meta("last_shot_time", time_now)
@@ -55,11 +57,10 @@ static func shoot(start_pos: Vector2, target: Vector2, projectile_scene: PackedS
 			var shape = proj.get_node("CollisionShape2D").shape as RectangleShape2D 
 			if shape:
 				shape.size = shape.size * GlobalGameState.projectile_scale_multiplier
-	  
+		
 		if proj.has_node("GPUParticles2D"):
 			var particles: GPUParticles2D = proj.get_node("GPUParticles2D") as GPUParticles2D
 			particles.scale = Vector2(1,1) * GlobalGameState.projectile_scale_multiplier
-
 
 	if target.x < start_pos.x and proj.has_node("AnimatedSprite2D"):
 		var sprite: AnimatedSprite2D = proj.get_node("AnimatedSprite2D") as AnimatedSprite2D
@@ -86,7 +87,7 @@ func _ready() -> void:
 	linear_velocity = Vector2(SPEED, 0).rotated(dir)
 
 func _on_body_entered(body: Node) -> void:
-	if body.is_in_group("enemy") and body.has_method("take_damage"):
+	if (body.is_in_group("enemy") or body.is_in_group("enemy_shield")) and body.has_method("take_damage"):
 		var effective_damage: float = damage * GlobalGameState.projectile_damage_multiplier
 		body.take_damage(effective_damage) 
 		
@@ -94,7 +95,6 @@ func _on_body_entered(body: Node) -> void:
 		if player_node and player_node.has_method("add_combo"):
 			var combo_modifier: float = GlobalGameState.projectile_combo_multiplier
 			player_node.add_combo(int(Projectile.BASE_COMBO_VALUE * combo_modifier))
-
 
 	anisprite.queue_free()
 	collider.queue_free()

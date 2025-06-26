@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://c17lu264e832b" path="res://icon.svg" id="2_e1xqy"]
 [ext_resource type="PackedScene" uid="uid://cfqff4kheixm" path="res://scene/Utility/area_2d_camera_room.tscn" id="3_hb6ls"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3cx5i"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hb6ls"]
 texture = ExtResource("1_3cx5i")
 texture_region_size = Vector2i(17, 17)
 0:0/0 = 0
@@ -40,7 +40,7 @@ texture_region_size = Vector2i(17, 17)
 [sub_resource type="TileSet" id="TileSet_7gfau"]
 tile_size = Vector2i(17, 17)
 physics_layer_0/collision_layer = 1
-sources/0 = SubResource("TileSetAtlasSource_3cx5i")
+sources/0 = SubResource("TileSetAtlasSource_hb6ls")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0cgvn"]
 size = Vector2(255, 255.349)

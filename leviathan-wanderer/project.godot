@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Leviathan-Wanderer"
-run/main_scene="uid://bbssro71sr1jn"
+run/main_scene="uid://c4fmgm2e0454g"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 

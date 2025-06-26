@@ -16,7 +16,7 @@ func _ready() -> void:
 	if players.size() > 0:
 		player_node = players[0]
 	
-	add_to_group("enemy")
+	add_to_group("enemy_shield")
 
 func _physics_process(delta: float) -> void:
 	if player_node:

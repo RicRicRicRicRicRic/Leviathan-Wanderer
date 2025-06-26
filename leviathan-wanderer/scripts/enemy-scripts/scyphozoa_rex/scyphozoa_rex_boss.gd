@@ -1,4 +1,4 @@
-# scyphozoa_rex_boss.gd
+#scyphozoa_rex_boss.gd
 extends "res://scripts/Utility/Interpolate.gd"
 
 @onready var visuals: Node2D = $Node2D_visuals
@@ -39,6 +39,7 @@ var current_health: float = max_health
 var is_enraged: bool = false
 
 signal health_changed(new_health_percent: float)
+signal boss_defeated 
 
 enum AttackState {
 	STATE_IDLE,
@@ -96,6 +97,8 @@ func take_damage(amount: float) -> void:
 		_set_state(AttackState.STATE_ENRAGED_BARRAGE_ACTIVE)
 
 func _deferred_death() -> void:
+	# Emit the boss_defeated signal before freeing the boss node
+	boss_defeated.emit() 
 	if carcass:
 		var carcass_instance = carcass.instantiate()
 		get_parent().add_child(carcass_instance)

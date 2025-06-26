@@ -65,14 +65,16 @@ func _on_body_entered(body: Node) -> void:
 			
 			for child in body.get_children():
 				if child is AnimatedSprite2D:
-					child.stop()
+					if is_instance_valid(child) and child.is_inside_tree():
+						child.stop()
 				elif child is AnimationPlayer:
-					child.stop(true) 
+					if is_instance_valid(child) and child.is_inside_tree():
+						child.stop(true) 
 				elif child is Timer:
-					child.stop()
+					pass 
 
 func _on_on_body_exited(body: Node) -> void:
-	if is_active and _original_velocities.has(body):
+	if is_instance_valid(body) and is_active and _original_velocities.has(body):
 		_resume_entity(body)
 		_original_velocities.erase(body)
 
@@ -96,12 +98,15 @@ func _on_cooldown_timer_timeout() -> void:
 
 func reset_all_paused_entities() -> void:
 	for body in _original_velocities.keys():
-		if is_instance_valid(body):
+		if is_instance_valid(body): 
 			_resume_entity(body)
 	_original_velocities.clear()
 
 
 func _resume_entity(body: Node) -> void:
+	if not is_instance_valid(body):
+		return
+
 	body.set_process(true)
 	body.set_physics_process(true)
 
@@ -121,8 +126,11 @@ func _resume_entity(body: Node) -> void:
 	
 	for child in body.get_children():
 		if child is AnimatedSprite2D:
-			child.play()
+			if is_instance_valid(child) and child.is_inside_tree():
+				child.play()
 		elif child is AnimationPlayer:
-			child.play()
+			if is_instance_valid(child) and child.is_inside_tree():
+				child.play()
 		elif child is Timer:
-			child.start()
+			if is_instance_valid(child) and child.is_inside_tree() and child.is_stopped(): 
+				child.start()

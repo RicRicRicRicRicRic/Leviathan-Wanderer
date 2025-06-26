@@ -1,11 +1,11 @@
-# chap1_final_room.gd
+# chap2_final_room.gd
 extends Node2D
 
 @onready var area2D_exit: Area2D = $Area2D_exit
 
 var card_selection_ui_scene: PackedScene = preload("res://scene/cards/arcane_cards.tscn") 
-@export var restart_level_path: String = "res://scene/Chapter1/level_1_Start.tscn" 
-@export var boss_level_path: String = "res://scene/Chapter1/scyphozoa_rex_room.tscn" 
+@export var restart_level_path: String = "res://scene/Chapter2/chapter_2_start.tscn" 
+@export var boss_level_path: String = "res://scene/Chapter2/vespula_regina_room.tscn" 
 
 var _instanced_card_ui: CanvasLayer = null
 
@@ -15,32 +15,31 @@ func _ready() -> void:
 func _on_area_2d_exit_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		area2D_exit.set_deferred("monitoring", false)
-
+		
 		_instanced_card_ui = card_selection_ui_scene.instantiate()
 		get_tree().root.add_child(_instanced_card_ui)
 		if _instanced_card_ui.has_signal("card_chosen"):
 			_instanced_card_ui.card_chosen.connect(_on_card_selection_complete)
 		else:
 			_instanced_card_ui.queue_free() 
-
 			get_tree().call_deferred("change_scene_to_file", restart_level_path)
-			GlobalGameState.chapter1_room_completion_count = 0 
+			GlobalGameState.chapter2_room_completion_count = 0 
 
 
 func _on_card_selection_complete() -> void:
-
 	if _instanced_card_ui and _instanced_card_ui.is_connected("card_chosen", Callable(self, "_on_card_selection_complete")):
 		_instanced_card_ui.card_chosen.disconnect(_on_card_selection_complete)
 
-	GlobalGameState.chapter1_final_room_visits_count += 1
+	GlobalGameState.chapter2_final_room_visits_count += 1
 
-	if GlobalGameState.chapter1_final_room_visits_count >= GlobalGameState.chapter1_final_room_visits_needed_for_boss:
+	if GlobalGameState.chapter2_final_room_visits_count >= GlobalGameState.chapter2_final_room_visits_needed_for_boss:
 		get_tree().change_scene_to_file(boss_level_path)
 
-		GlobalGameState.chapter1_room_completion_count = 0 
-		GlobalGameState.chapter1_final_room_visits_count = 0 
+		GlobalGameState.chapter2_room_completion_count = 0 
+		GlobalGameState.chapter2_final_room_visits_count = 0 
 	else:
 		get_tree().change_scene_to_file(restart_level_path)
-		GlobalGameState.chapter1_room_completion_count = 0 
+
+		GlobalGameState.chapter2_room_completion_count = 0 
 	
 	_instanced_card_ui.queue_free() 

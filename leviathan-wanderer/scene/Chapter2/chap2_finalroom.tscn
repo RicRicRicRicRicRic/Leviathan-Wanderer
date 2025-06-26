@@ -1,13 +1,14 @@
-[gd_scene load_steps=18 format=4 uid="uid://do43grhbbnye2"]
+[gd_scene load_steps=20 format=4 uid="uid://do43grhbbnye2"]
 
 [ext_resource type="PackedScene" uid="uid://2po5m5mgtl38" path="res://scene/Utility/world_environment_gloweffect.tscn" id="1_o0ufj"]
+[ext_resource type="Script" uid="uid://coaucyx3no7si" path="res://scripts/Chapter2/chap_2_finalroom.gd" id="1_y67sj"]
 [ext_resource type="Texture2D" uid="uid://cvm1xsprhoww8" path="res://assets/sprites/prototype graphics.svg" id="2_y67sj"]
 [ext_resource type="Texture2D" uid="uid://c17lu264e832b" path="res://icon.svg" id="3_hwyek"]
 [ext_resource type="PackedScene" uid="uid://cfqff4kheixm" path="res://scene/Utility/area_2d_camera_room.tscn" id="4_2qp04"]
 [ext_resource type="PackedScene" uid="uid://ci4db1u0umgpa" path="res://scene/Chapter2/area_2d_acid.tscn" id="5_xpc3q"]
 [ext_resource type="Shader" uid="uid://wag0rlsi12u4" path="res://scripts/Chapter2/acid.gdshader" id="6_ktbvt"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o0ufj"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_y67sj"]
 texture = ExtResource("2_y67sj")
 texture_region_size = Vector2i(17, 17)
 0:0/0 = 0
@@ -38,7 +39,7 @@ texture_region_size = Vector2i(17, 17)
 [sub_resource type="TileSet" id="TileSet_0l26u"]
 tile_size = Vector2i(17, 17)
 physics_layer_0/collision_layer = 1
-sources/0 = SubResource("TileSetAtlasSource_o0ufj")
+sources/0 = SubResource("TileSetAtlasSource_y67sj")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o0ufj"]
 size = Vector2(255, 255.349)
@@ -66,7 +67,7 @@ shader_parameter/top_wiggle_frequency_x = 10.0
 shader_parameter/top_wiggle_speed = 1.0
 shader_parameter/time_offset = 0.0
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_y67sj"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_hwyek"]
 seed = -40
 frequency = 0.0027
 fractal_type = 3
@@ -78,7 +79,7 @@ metadata/_preview_in_3d_space_ = true
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ll086"]
 height = 100
-noise = SubResource("FastNoiseLite_y67sj")
+noise = SubResource("FastNoiseLite_hwyek")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_atdat"]
 shader = ExtResource("6_ktbvt")
@@ -97,7 +98,7 @@ shader_parameter/top_wiggle_frequency_x = 10.0
 shader_parameter/top_wiggle_speed = 1.0
 shader_parameter/time_offset = 0.0
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_hwyek"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_2qp04"]
 noise_type = 0
 seed = 5
 frequency = 0.0027
@@ -110,9 +111,13 @@ metadata/_preview_in_3d_space_ = true
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0ewy3"]
 height = 100
-noise = SubResource("FastNoiseLite_hwyek")
+noise = SubResource("FastNoiseLite_2qp04")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2qp04"]
+size = Vector2(136, 170)
 
 [node name="chap2_Final_room" type="Node2D"]
+script = ExtResource("1_y67sj")
 
 [node name="WorldEnvironment_gloweffect" parent="." instance=ExtResource("1_o0ufj")]
 
@@ -169,6 +174,7 @@ position = Vector2(-7.42077e-06, -1.12292)
 shape = SubResource("RectangleShape2D_hwyek")
 
 [node name="Area2D_cameraRoom" parent="." instance=ExtResource("4_2qp04")]
+visible = false
 
 [node name="Area2D_acid" parent="." instance=ExtResource("5_xpc3q")]
 z_index = 100
@@ -233,3 +239,10 @@ metadata/_edit_use_anchors_ = true
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D_acid2"]
 position = Vector2(-1377, 697)
 polygon = PackedVector2Array(-204, 34, 561, 34, 561, 255, -204, 255)
+
+[node name="Area2D_exit" type="Area2D" parent="."]
+position = Vector2(0, 119)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_exit"]
+position = Vector2(0, -34)
+shape = SubResource("RectangleShape2D_2qp04")

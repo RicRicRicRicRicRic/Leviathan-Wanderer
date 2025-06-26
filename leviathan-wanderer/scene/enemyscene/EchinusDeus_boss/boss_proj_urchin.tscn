@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://d2htdp3g1hyr6"]
+
+[ext_resource type="Script" uid="uid://bx5tbqpw6vsy5" path="res://scripts/enemy-scripts/EchinusDeus_boss/boss_proj_urchin.gd" id="1_ra0h2"]
+[ext_resource type="Texture2D" uid="uid://8qlliisqkwhc" path="res://assets/sprites/enemy-sprites/EchinusDeus-boss.svg" id="2_ra0h2"]
+
+[node name="boss_proj_urchin" type="RigidBody2D"]
+collision_layer = 4
+collision_mask = 9
+gravity_scale = 0.0
+contact_monitor = true
+script = ExtResource("1_ra0h2")
+metadata/_edit_horizontal_guides_ = [-4.0]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(0, -1)
+scale = Vector2(0.5, 0.5)
+polygon = PackedVector2Array(-128, -54, 136, 2, -128, 58)
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+texture_filter = 4
+position = Vector2(-9.53674e-07, 0)
+scale = Vector2(0.99327, 1.63088)
+texture = ExtResource("2_ra0h2")
+region_enabled = true
+region_rect = Rect2(15, 386, 131, 34)

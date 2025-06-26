@@ -1,0 +1,55 @@
+[gd_scene load_steps=4 format=3 uid="uid://xsvgd7b8xebs"]
+
+[ext_resource type="Script" uid="uid://baiq8vtceiwfx" path="res://scripts/enemy-scripts/EchinusDeus_boss/EchinusDeus_boss.gd" id="1_hwo1n"]
+[ext_resource type="Texture2D" uid="uid://8qlliisqkwhc" path="res://assets/sprites/enemy-sprites/EchinusDeus-boss.svg" id="2_bucbf"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xp77p"]
+radius = 204.0
+
+[node name="EchinusDeus-boss" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 11
+script = ExtResource("1_hwo1n")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+z_index = 10
+position = Vector2(0, -17)
+shape = SubResource("CircleShape2D_xp77p")
+
+[node name="Node2D_visuals" type="Node2D" parent="."]
+position = Vector2(-51, 9)
+scale = Vector2(1.5, 1.5)
+
+[node name="Sprite2D_center" type="Sprite2D" parent="Node2D_visuals"]
+z_index = 1
+texture_filter = 4
+position = Vector2(32, -6)
+scale = Vector2(1, 1)
+texture = ExtResource("2_bucbf")
+offset = Vector2(0, -11)
+region_enabled = true
+region_rect = Rect2(862, 1460, 280, 280)
+
+[node name="Sprite2D_thorns" type="Sprite2D" parent="Node2D_visuals"]
+texture_filter = 4
+position = Vector2(34, -0.666666)
+texture = ExtResource("2_bucbf")
+offset = Vector2(-40, 7.33333)
+region_enabled = true
+region_rect = Rect2(1315, 1336, 568, 565)
+
+[node name="Marker2D" type="Marker2D" parent="Node2D_visuals/Sprite2D_thorns"]
+position = Vector2(0, -198)
+
+[node name="Marker2D2" type="Marker2D" parent="Node2D_visuals/Sprite2D_thorns"]
+position = Vector2(192.667, -5.33333)
+
+[node name="Marker2D3" type="Marker2D" parent="Node2D_visuals/Sprite2D_thorns"]
+position = Vector2(-192.667, -5.33333)
+
+[node name="Marker2D4" type="Marker2D" parent="Node2D_visuals/Sprite2D_thorns"]
+position = Vector2(0, 164.667)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true

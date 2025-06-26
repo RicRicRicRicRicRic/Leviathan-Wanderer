@@ -22,24 +22,45 @@ func _ready():
 	cards = [card1, card2, card3]
 	card_buttons = [card1_bttn, card2_bttn, card3_bttn]
 
-	var available_animations = [
+	var all_possible_animations = [
 		"blink_efficiency",
+		"heavy_impact_rounds",
 		"fortitude",
 		"pulse_accelerator",
 		"scatter_shot",
 		"daredevil_agility",
 		"mana_overdrive",
-		"heavy_impact_rounds",
 		"ascendant_leap",
-		"limitless_technique" 
+		"limitless_technique"
 	]
 
-	available_animations.shuffle()
+	var available_for_this_selection = []
+	for anim_name in all_possible_animations:
+		if not GlobalGameState.chosen_arcane_cards.has(anim_name):
+			available_for_this_selection.append(anim_name)
 
-	if available_animations.size() >= 3:
-		card1.play(available_animations.pop_front())
-		card2.play(available_animations.pop_front())
-		card3.play(available_animations.pop_front())
+	available_for_this_selection.shuffle()
+
+	if available_for_this_selection.size() >= 3:
+		card1.play(available_for_this_selection.pop_front())
+		card2.play(available_for_this_selection.pop_front())
+		card3.play(available_for_this_selection.pop_front())
+	elif available_for_this_selection.size() > 0:
+		if available_for_this_selection.size() >= 1:
+			card1.play(available_for_this_selection.pop_front())
+		else:
+			card1.get_parent().visible = false 
+		
+		if available_for_this_selection.size() >= 1:
+			card2.play(available_for_this_selection.pop_front())
+		else:
+			card2.get_parent().visible = false 
+		
+		if available_for_this_selection.size() >= 1:
+			card3.play(available_for_this_selection.pop_front())
+		else:
+			card3.get_parent().visible = false 
+
 
 	for i in range(card_buttons.size()):
 		var card_index = i
@@ -79,9 +100,13 @@ func _on_card_animation_finished(_anim_name: String):
 func _on_card_button_pressed(index: int):
 	for button in card_buttons:
 		button.disabled = true
-		button.get_parent().get_node("AnimatedSprite2D").scale = Vector2(1,1)
+		if button.get_parent() and button.get_parent().has_node("AnimatedSprite2D"):
+			button.get_parent().get_node("AnimatedSprite2D").scale = Vector2(1,1)
 	
 	var chosen_animation_name = cards[index].animation
+
+	if not GlobalGameState.chosen_arcane_cards.has(chosen_animation_name):
+		GlobalGameState.chosen_arcane_cards.append(chosen_animation_name)
 
 	var player_node = get_tree().get_first_node_in_group("player")
 
@@ -103,7 +128,7 @@ func _on_card_button_pressed(index: int):
 				_apply_heavy_impact_rounds_effect()
 			"ascendant_leap": 
 				_apply_ascendant_leap_effect()
-			"limitless_technique": 
+			"limitless_technique":
 				_apply_limitless_technique_effect()
 			_:
 				pass
@@ -137,8 +162,8 @@ func _apply_blink_efficiency_effect() -> void:
 	GlobalGameState.teleport_mana_cost_multiplier = 0.5
 
 func _apply_pulse_accelerator_effect() -> void:
-	GlobalGameState.laser_combo_multiplier = 2
-	GlobalGameState.projectile_combo_multiplier = 2
+	GlobalGameState.laser_combo_multiplier = 2.0 
+	GlobalGameState.projectile_combo_multiplier = 2.0 
 	GlobalGameState.laser_damage_multiplier = 0.75
 
 func _apply_mana_overdrive_effect() -> void:
@@ -149,7 +174,9 @@ func _apply_mana_overdrive_effect() -> void:
 func _apply_heavy_impact_rounds_effect() -> void:
 	GlobalGameState.projectile_fire_rate_multiplier_effect *= 0.5 
 	GlobalGameState.projectile_scale_multiplier *= 1.5 
-	GlobalGameState.projectile_damage_multiplier *= 2.0 
+	GlobalGameState.projectile_damage_multiplier *= 2.5
+	GlobalGameState.projectile_combo_multiplier = 2.5
+	GlobalGameState.projectile_mana_cost_multiplier *= 2.5 
 
 func _apply_ascendant_leap_effect() -> void: 
 	GlobalGameState.can_double_jump = true

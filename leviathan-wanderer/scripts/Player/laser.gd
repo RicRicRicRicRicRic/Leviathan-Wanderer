@@ -46,6 +46,7 @@ func _ready() -> void:
 	laser_anim.play("laser_charge")
 	laser_area.monitoring = false
 	laser_collision_shape.disabled = true
+
 	laser_anim.connect("animation_finished", Callable(self, "_on_laser_anim_finished"))
 	timer_laser.connect("timeout", Callable(self, "_on_timer_timeout"))
 
@@ -53,6 +54,7 @@ func _ready() -> void:
 	laser_area.connect("body_exited", Callable(self, "_on_laser_area_body_exited"))
 
 func _physics_process(delta: float) -> void:
+
 	if _player_laser_marker:
 		global_position = _player_laser_marker.global_position
 	_rotate_slowly_towards_mouse(delta)
@@ -61,13 +63,13 @@ func _physics_process(delta: float) -> void:
 		_continuous_damage_timer += delta
 		if _continuous_damage_timer >= continuous_damage_interval:
 			_continuous_damage_timer = 0.0
-			var player_node = get_tree().get_first_node_in_group("player")  
+			var player_node = get_tree().get_first_node_in_group("player") 
 			if player_node:
 				var damage_modifier: float = GlobalGameState.laser_damage_multiplier
 				var combo_modifier: float = GlobalGameState.laser_combo_multiplier
 				for body in laser_area.get_overlapping_bodies():
-					if body.is_in_group("enemy") and body.has_method("take_damage"):
-						if _enemies_burst_damaged.has(body):  
+					if (body.is_in_group("enemy") or body.is_in_group("enemy_shield")) and body.has_method("take_damage"):
+						if _enemies_burst_damaged.has(body): 
 							body.take_damage(int(base_continuous_damage_amount * damage_modifier))
 							if player_node.has_method("add_combo"):
 								player_node.add_combo(int(base_laser_combo_value * combo_modifier))
@@ -112,7 +114,7 @@ func _on_timer_timeout() -> void:
 
 func _on_laser_area_body_entered(body: Node2D) -> void:
 	if current_state == LaserState.ACTIVE:
-		if body.is_in_group("enemy") and body.has_method("take_damage"):
+		if (body.is_in_group("enemy") or body.is_in_group("enemy_shield")) and body.has_method("take_damage"):
 			var player_node = get_tree().get_first_node_in_group("player")
 			if player_node:
 				var damage_modifier: float = GlobalGameState.laser_damage_multiplier

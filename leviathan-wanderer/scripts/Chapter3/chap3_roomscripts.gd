@@ -36,7 +36,7 @@ var offset_right: float = 3060.0
 var offset_bottom: float = 1870.0
 
 static var defeated_rooms_count: int = 0
-const DEFEATED_ROOMS_THRESHOLD: int = 9
+const DEFEATED_ROOMS_THRESHOLD: int = 1
 
 const THIS_SCRIPT = preload("res://scripts/Chapter3/chap3_roomscripts.gd")
 
