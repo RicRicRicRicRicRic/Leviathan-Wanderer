@@ -9,8 +9,8 @@ extends Node2D
 @onready var laser_collision_shape: CollisionShape2D = $Node2D/Area2D/CollisionShape2D
 
 @export var rotation_speed: float = 7.0
-@export var base_damage_amount: int = 325 
-@export var base_continuous_damage_amount: int = 85 
+@export var base_damage_amount: int = 325
+@export var base_continuous_damage_amount: int = 85
 @export var continuous_damage_interval: float = 0.1
 var base_laser_combo_value: int = 11
 
@@ -26,14 +26,14 @@ enum LaserState {
 var current_state: LaserState
 var _enemies_burst_damaged: Array[Object]
 var _continuous_damage_timer: float = 0.0
-static var is_laser_active: bool = false
+static var is_laser_active: bool = false 
 
 func _ready() -> void:
-	if is_laser_active:
+	if is_laser_active: 
 		queue_free()
 		return
 	add_to_group("laser")
-	is_laser_active = true
+	is_laser_active = true 
 
 	var player_node = get_tree().get_first_node_in_group("player")
 	if player_node:
@@ -62,9 +62,9 @@ func _physics_process(delta: float) -> void:
 		if _continuous_damage_timer >= continuous_damage_interval:
 			_continuous_damage_timer = 0.0
 			var player_node = get_tree().get_first_node_in_group("player")  
-			if player_node: 
-				var damage_modifier: float = player_node.get_meta("laser_damage_modifier", 1.0)
-				var combo_modifier: float = player_node.get_meta("laser_combo_modifier", 1.0)
+			if player_node:
+				var damage_modifier: float = GlobalGameState.laser_damage_multiplier
+				var combo_modifier: float = GlobalGameState.laser_combo_multiplier
 				for body in laser_area.get_overlapping_bodies():
 					if body.is_in_group("enemy") and body.has_method("take_damage"):
 						if _enemies_burst_damaged.has(body):  
@@ -115,8 +115,8 @@ func _on_laser_area_body_entered(body: Node2D) -> void:
 		if body.is_in_group("enemy") and body.has_method("take_damage"):
 			var player_node = get_tree().get_first_node_in_group("player")
 			if player_node:
-				var damage_modifier: float = player_node.get_meta("laser_damage_modifier", 1.0)
-				var combo_modifier: float = player_node.get_meta("laser_combo_modifier", 1.0)
+				var damage_modifier: float = GlobalGameState.laser_damage_multiplier
+				var combo_modifier: float = GlobalGameState.laser_combo_multiplier
 				if not _enemies_burst_damaged.has(body):
 					body.take_damage(int(base_damage_amount * damage_modifier))
 					_enemies_burst_damaged.append(body)

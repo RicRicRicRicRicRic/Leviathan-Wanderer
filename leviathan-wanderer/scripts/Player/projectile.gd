@@ -12,7 +12,7 @@ var spawnPos: Vector2 = Vector2.ZERO
 var spawnRot: float = 0.0
 var hit_count: int = 0
 @export var max_hits: int = 10
-@export var damage: float = 470 
+@export var damage: float = 47 
 
 @onready var delete_timer: Timer = $Timer
 @onready var anisprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -21,8 +21,7 @@ var hit_count: int = 0
 static func shoot(start_pos: Vector2, target: Vector2, projectile_scene: PackedScene, shooter: Node) -> void:
 	var time_now: float = Time.get_ticks_msec() / 1000.0
 	
-	var fire_rate_modifier: float = shooter.get_meta("projectile_fire_rate_modifier", 1.0)
-	var effective_fire_rate = Projectile.BASE_FIRE_RATE / fire_rate_modifier
+	var effective_fire_rate = Projectile.BASE_FIRE_RATE / GlobalGameState.projectile_fire_rate_multiplier_effect
 
 	var last_shot_time: float = shooter.get_meta("last_shot_time", -effective_fire_rate) as float
 
@@ -40,7 +39,7 @@ static func shoot(start_pos: Vector2, target: Vector2, projectile_scene: PackedS
 	var proj: Projectile = projectile_scene.instantiate() as Projectile
 	var angle: float = (target - start_pos).angle()
 
-	var spread_angle_rad: float = shooter.get_meta("projectile_spread_angle", 0.0)
+	var spread_angle_rad: float = GlobalGameState.projectile_spread_angle_rad
 	if spread_angle_rad != 0.0:
 		angle += randf_range(-spread_angle_rad / 2.0, spread_angle_rad / 2.0)
 
@@ -48,6 +47,19 @@ static func shoot(start_pos: Vector2, target: Vector2, projectile_scene: PackedS
 	proj.dir = angle
 	proj.spawnRot = angle
 	proj.rotation = angle
+	
+	if proj.has_node("AnimatedSprite2D"):
+		var sprite: AnimatedSprite2D = proj.get_node("AnimatedSprite2D") as AnimatedSprite2D
+		sprite.scale = Vector2(1,1) * GlobalGameState.projectile_scale_multiplier
+		if proj.has_node("CollisionShape2D"):
+			var shape = proj.get_node("CollisionShape2D").shape as RectangleShape2D 
+			if shape:
+				shape.size = shape.size * GlobalGameState.projectile_scale_multiplier
+	  
+		if proj.has_node("GPUParticles2D"):
+			var particles: GPUParticles2D = proj.get_node("GPUParticles2D") as GPUParticles2D
+			particles.scale = Vector2(1,1) * GlobalGameState.projectile_scale_multiplier
+
 
 	if target.x < start_pos.x and proj.has_node("AnimatedSprite2D"):
 		var sprite: AnimatedSprite2D = proj.get_node("AnimatedSprite2D") as AnimatedSprite2D
@@ -75,11 +87,12 @@ func _ready() -> void:
 
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("enemy") and body.has_method("take_damage"):
-		body.take_damage(damage) 
+		var effective_damage: float = damage * GlobalGameState.projectile_damage_multiplier
+		body.take_damage(effective_damage) 
 		
 		var player_node = get_tree().get_first_node_in_group("player")
 		if player_node and player_node.has_method("add_combo"):
-			var combo_modifier: float = player_node.get_meta("projectile_combo_modifier", 1.0)
+			var combo_modifier: float = GlobalGameState.projectile_combo_multiplier
 			player_node.add_combo(int(Projectile.BASE_COMBO_VALUE * combo_modifier))
 
 

@@ -19,17 +19,16 @@ var combo_lerp_speed: float = 10.0
 var regen_rate := 5.0 
 
 func _ready() -> void:
-	# Connect health bar update timer
 	hp_update_timer.timeout.connect(_on_UpdateTimer_timeout)
 
 	add_to_group("player_conditions")
 
 	if player:
-		var initial_health_percent: float = float(player.current_health) / float(player.max_health) * 100.0
+		var initial_health_percent: float = float(player.current_health) / float(player.effective_max_health) * 100.0
 		health_bar.value = initial_health_percent
 		damage_bar.value = initial_health_percent 
 
-		var initial_mana_percent: float = float(player.current_mana) / float(player.max_mana) * 100.0
+		var initial_mana_percent: float = float(player.current_mana) / float(player.effective_max_mana) * 100.0
 		mana_bar.value = initial_mana_percent
 
 		if player.has_method("get_max_combo_meter"):
@@ -39,7 +38,7 @@ func _ready() -> void:
 		combo_bar.value = player.combo_meter 
 
 func _process(delta: float) -> void:
-	var hp_percent: float = float(player.current_health) / float(player.max_health) * 100.0
+	var hp_percent: float = float(player.current_health) / float(player.effective_max_health) * 100.0
 	if health_bar.value != hp_percent:
 		health_bar.value = hp_percent
 		hp_update_timer.start()
@@ -52,7 +51,7 @@ func _process(delta: float) -> void:
 			depleting = false
 			damage_bar.value = damage_target_value
 
-	var mana_percent: float = float(player.current_mana) / float(player.max_mana) * 100.0
+	var mana_percent: float = float(player.current_mana) / float(player.effective_max_mana) * 100.0
 	if not is_equal_approx(mana_bar.value, mana_percent):
 		mana_bar.value = lerp(mana_bar.value, mana_percent, delta * mana_lerp_speed)
 
@@ -61,7 +60,6 @@ func _process(delta: float) -> void:
 			combo_bar.value = lerp(combo_bar.value, float(player.combo_meter), delta * combo_lerp_speed)
 
 func _on_UpdateTimer_timeout() -> void:
-
 	damage_start_value = damage_bar.value
 	damage_target_value = health_bar.value
 	damage_elapsed = 0.0

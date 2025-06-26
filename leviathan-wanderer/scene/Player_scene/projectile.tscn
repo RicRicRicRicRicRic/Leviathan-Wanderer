@@ -19,7 +19,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ujo14"]
-radius = 14.0
+radius = 12.0
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_u6xv6"]
 lifetime_randomness = 0.5
@@ -39,10 +39,9 @@ script = ExtResource("1_arsow")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 self_modulate = Color(1.65, 1.65, 1.65, 1)
 texture_filter = 2
-position = Vector2(1.43051e-06, -1.43051e-06)
-scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_j6tqu")
 animation = &"Proj_shoot"
+offset = Vector2(0, -2.3)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_ujo14")
@@ -50,7 +49,7 @@ shape = SubResource("CircleShape2D_ujo14")
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 self_modulate = Color(1.75, 1.75, 1.75, 1)
 z_index = -1
-scale = Vector2(0.45, 0.45)
+scale = Vector2(0.6, 0.6)
 speed_scale = 3.0
 process_material = SubResource("ParticleProcessMaterial_u6xv6")
 

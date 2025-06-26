@@ -27,15 +27,15 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="0.3535534"
-     inkscape:cx="1062.0743"
-     inkscape:cy="391.73714"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="1.0606601"
+     inkscape:cy="-21.566756"
      inkscape:window-width="1920"
      inkscape:window-height="991"
      inkscape:window-x="-9"
      inkscape:window-y="-9"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg1"
+     inkscape:current-layer="layer1"
      showguides="true"
      showgrid="true"><inkscape:grid
        type="modular"
@@ -2918,7 +2918,7 @@
        fy="193.98297"
        r="17.659374"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(-0.37028494,-0.33723311,0.33963615,-0.37291922,22.847339,539.14891)" /><linearGradient
+       gradientTransform="matrix(-0.18076778,-0.16463235,0.16580548,-0.1820538,22.054857,470.91848)" /><linearGradient
        id="linearGradient14-1"
        inkscape:collect="always"><stop
          style="stop-color:#00ffff;stop-opacity:1;"
@@ -8998,29 +8998,27 @@
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14.1111px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, @wght=900';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;font-variation-settings:'wght' 900;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.762"
            x="435.03564"
            y="78.523346"
-           id="tspan37">row</tspan></text></g><g
-       id="g789"
-       inkscape:label="Projectile"><text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14.1111px;line-height:1.2;font-family:sans-serif;-inkscape-font-specification:'sans-serif, @wght=900';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;font-variation-settings:'wght' 900;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.762;stroke-dasharray:none;stroke-opacity:1"
+           id="tspan37">row</tspan></text></g><text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14.1111px;line-height:1.2;font-family:sans-serif;-inkscape-font-specification:'sans-serif, @wght=900';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;font-variation-settings:'wght' 900;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.762;stroke-dasharray:none;stroke-opacity:1"
+       x="133.05156"
+       y="409.23645"
+       id="text679-0-1-4"><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14.1111px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, @wght=900';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;font-variation-settings:'wght' 900;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.762"
          x="133.05156"
          y="409.23645"
-         id="text679-0-1-4"><tspan
-           sodipodi:role="line"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14.1111px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, @wght=900';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;font-variation-settings:'wght' 900;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.762"
-           x="133.05156"
-           y="409.23645"
-           id="tspan680-9-6">Projectile</tspan><tspan
-           sodipodi:role="line"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14.1111px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, @wght=900';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;font-variation-settings:'wght' 900;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.762"
-           x="133.05156"
-           y="426.16977"
-           id="tspan35-9" /></text><circle
-         style="fill:url(#radialGradient15-3);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.278423"
-         id="path11-9"
-         cx="21.298956"
-         cy="404.80399"
-         r="6.4524641" /></g><g
+         id="tspan680-9-6">Projectile</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14.1111px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, @wght=900';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;font-variation-settings:'wght' 900;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.762"
+         x="133.05156"
+         y="426.16977"
+         id="tspan35-9" /></text><circle
+       style="fill:url(#radialGradient15-3);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.135922"
+       id="path11-9"
+       cx="21.298956"
+       cy="405.33316"
+       r="3.1500001" /><g
        id="g788"
        inkscape:label="Weapons"><g
          id="g183-9"

@@ -9,15 +9,20 @@ extends Node2D
 @onready var teleport_cooldown_timer: Timer = $TeleportCDTimer 
 
 var _player_ref: CharacterBody2D = null
-@export var _player_max_teleport_range: float = 1000.0
+@export var base_teleport_range: float = 1000.0 
+var effective_teleport_range: float = 0.0 
 var target_position: Vector2 = Vector2.ZERO
 var lerp_speed: float = 20.0
-var teleport_mana_cost: int = 100
+@export var base_teleport_mana_cost: int = 100 
+var effective_teleport_mana_cost: int 
+
+var base_teleport_cooldown_duration: float 
 
 func _ready() -> void:
 	add_to_group("teleport")
 	visible = false
 	set_process(false)
+	base_teleport_cooldown_duration = teleport_cooldown_timer.wait_time 
 
 func set_teleport_data(player_node: CharacterBody2D) -> void:
 	_player_ref = player_node
@@ -26,10 +31,18 @@ func set_teleport_data(player_node: CharacterBody2D) -> void:
 	visible = true
 	set_process(true)
 
+	var cooldown_modifier: float = GlobalGameState.teleport_cooldown_multiplier
+	var range_multiplier: float = GlobalGameState.teleport_range_multiplier
+	var mana_cost_multiplier: float = GlobalGameState.teleport_mana_cost_multiplier
+
+	teleport_cooldown_timer.wait_time = base_teleport_cooldown_duration * cooldown_modifier
+	effective_teleport_range = base_teleport_range * range_multiplier 
+	effective_teleport_mana_cost = int(base_teleport_mana_cost * mana_cost_multiplier) 
+
 func _process(delta: float) -> void:
 	if _player_ref:
 		global_position = global_position.lerp(target_position, lerp_speed * delta)
-		var has_enough_mana: bool = _player_ref.current_mana >= teleport_mana_cost
+		var has_enough_mana: bool = _player_ref.current_mana >= effective_teleport_mana_cost
 		var is_cooldown_stopped = teleport_cooldown_timer.is_stopped()
 		var is_current_position_clear = not _is_current_target_colliding()
 
@@ -60,9 +73,8 @@ func update_position(mouse_pos: Vector2) -> void:
 	if _player_ref:
 		var player_global_pos = _player_ref.global_position
 		var direction_to_mouse = (mouse_pos - player_global_pos)
-
-		if direction_to_mouse.length() > _player_max_teleport_range:
-			target_position = player_global_pos + direction_to_mouse.normalized() * _player_max_teleport_range
+		if direction_to_mouse.length() > effective_teleport_range:
+			target_position = player_global_pos + direction_to_mouse.normalized() * effective_teleport_range
 		else:
 			target_position = mouse_pos
 
@@ -77,7 +89,7 @@ func _is_current_target_colliding() -> bool:
 
 func perform_teleport() -> void:
 	if _player_ref:
-		var has_enough_mana: bool = _player_ref.current_mana >= teleport_mana_cost
+		var has_enough_mana: bool = _player_ref.current_mana >= effective_teleport_mana_cost
 		var can_teleport = teleport_cooldown_timer.is_stopped() \
 							and not _is_current_target_colliding() \
 							and has_enough_mana
@@ -87,12 +99,11 @@ func perform_teleport() -> void:
 			_player_ref.global_position = final_position
 			_player_ref.velocity = Vector2.ZERO
 			teleport_cooldown_timer.start() 
-			_player_ref.current_mana = max(0, _player_ref.current_mana - teleport_mana_cost) 
-			_player_ref.update_mana_bar() 
+			_player_ref.current_mana = max(0, _player_ref.current_mana - effective_teleport_mana_cost) 
 			if _player_ref.has_node("Timer_mana_regen"): 
 				_player_ref.start_mana_regen.start()
 			else:
-				print("Error: Player does not have 'Timer_mana_regen' node.")
+				pass 
 		
 		hide_indicator()
 	else:

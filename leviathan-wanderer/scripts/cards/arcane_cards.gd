@@ -28,6 +28,9 @@ func _ready():
 		"pulse_accelerator",
 		"scatter_shot",
 		"daredevil_agility",
+		"mana_overdrive",
+		"heavy_impact_rounds",
+		"ascendant_leap" 
 	]
 
 	available_animations.shuffle()
@@ -84,44 +87,66 @@ func _on_card_button_pressed(index: int):
 	if player_node:
 		match chosen_animation_name:
 			"daredevil_agility":
-				_apply_daredevil_agility_effect(player_node)
+				_apply_daredevil_agility_effect() 
 			"fortitude":
-				_apply_fortitude_effect(player_node)
+				_apply_fortitude_effect() 
 			"scatter_shot":
-				_apply_scatter_shot_effect(player_node)
+				_apply_scatter_shot_effect()
 			"blink_efficiency":
-				_apply_blink_efficiency_effect(player_node)
+				_apply_blink_efficiency_effect()
 			"pulse_accelerator":
-				_apply_pulse_accelerator_effect(player_node)
+				_apply_pulse_accelerator_effect()
+			"mana_overdrive": 
+				_apply_mana_overdrive_effect()
+			"heavy_impact_rounds": 
+				_apply_heavy_impact_rounds_effect()
+			"ascendant_leap": 
+				_apply_ascendant_leap_effect()
 			_:
 				pass
-	else:
-		pass
+		
+		player_node.update_effective_stats()
+		player_node.current_health = min(player_node.current_health, player_node.effective_max_health)
+		player_node.update_health_bar()
+		player_node.update_mana_bar() 
+		player_node.add_combo(0)
+
 
 	card_chosen.emit()
 	queue_free()
 
-func _apply_daredevil_agility_effect(player_node: Node) -> void:
-	player_node.TOP_SPEED *= 2
-	player_node.max_health -= 250
-	player_node.current_health = min(player_node.current_health, player_node.max_health)
-	player_node.update_health_bar()
+func _apply_daredevil_agility_effect() -> void:
+	GlobalGameState.player_top_speed_multiplier *= 1.35
+	GlobalGameState.base_player_max_health -= 350
+	GlobalGameState.player_jump_velocity_multiplier *= 1.35
 
-func _apply_fortitude_effect(player_node: Node) -> void:
-	player_node.max_health += 500
-	player_node.TOP_SPEED *= 0.85
-	player_node.current_health = min(player_node.current_health, player_node.max_health)
-	player_node.update_health_bar()
+func _apply_fortitude_effect() -> void:
+	GlobalGameState.base_player_max_health += 500
+	GlobalGameState.player_top_speed_multiplier *= 0.85 
 
-func _apply_scatter_shot_effect(player_node: Node) -> void:
-	player_node.set_meta("projectile_fire_rate_modifier", 2.0)
-	player_node.set_meta("projectile_spread_angle", deg_to_rad(30.0))
+func _apply_scatter_shot_effect() -> void:
+	GlobalGameState.projectile_fire_rate_multiplier_effect = 2.0 
+	GlobalGameState.projectile_spread_angle_rad = deg_to_rad(30.0) 
 
-func _apply_blink_efficiency_effect(player_node: Node) -> void:
-	player_node.set_meta("teleport_cooldown_modifier", 0.5)
-	player_node.set_meta("teleport_range_modifier", 0.7)
+func _apply_blink_efficiency_effect() -> void:
+	GlobalGameState.teleport_cooldown_multiplier = 0.5 
+	GlobalGameState.teleport_range_multiplier = 0.5
+	GlobalGameState.teleport_mana_cost_multiplier = 0.5
 
-func _apply_pulse_accelerator_effect(player_node: Node) -> void:
-	player_node.set_meta("laser_combo_modifier", 1.5) 
-	player_node.set_meta("projectile_combo_modifier", 1.5)
-	player_node.set_meta("laser_damage_modifier", 0.75)
+func _apply_pulse_accelerator_effect() -> void:
+	GlobalGameState.laser_combo_multiplier = 1.5 
+	GlobalGameState.projectile_combo_multiplier = 1.5
+	GlobalGameState.laser_damage_multiplier = 0.75
+
+func _apply_mana_overdrive_effect() -> void:
+	GlobalGameState.player_max_mana_multiplier *= 0.4 
+	GlobalGameState.player_mana_regen_value_multiplier *= 2.0 
+	GlobalGameState.player_mana_regen_speed_multiplier *= 0.5 
+
+func _apply_heavy_impact_rounds_effect() -> void:
+	GlobalGameState.projectile_fire_rate_multiplier_effect *= 0.5 
+	GlobalGameState.projectile_scale_multiplier *= 1.5 
+	GlobalGameState.projectile_damage_multiplier *= 2.0 
+
+func _apply_ascendant_leap_effect() -> void: 
+	GlobalGameState.can_double_jump = true
