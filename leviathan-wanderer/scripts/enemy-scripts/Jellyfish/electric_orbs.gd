@@ -19,6 +19,7 @@ func _ready() -> void:
 	max_contacts_reported = 1
 	body_entered.connect(_on_body_entered)
 	slow_timer.timeout.connect(_on_slow_timer_timeout)
+	add_to_group("enemy_proj")
 
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("player") and body.has_method("take_damage"):

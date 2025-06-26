@@ -13,8 +13,7 @@ func _ready() -> void:
 	set_physics_process(true)
 	set_process_mode(Node.PROCESS_MODE_PAUSABLE)
 	set_as_top_level(false)
-	
-
+	add_to_group("enemy_proj")
 	contact_monitor = true
 	max_contacts_reported = 1
 

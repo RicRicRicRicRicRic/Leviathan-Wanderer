@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://blf44bg7k3wlw"]
+
+[ext_resource type="Script" uid="uid://b5onp6pgyestq" path="res://scripts/Player/limitless.gd" id="1_drf8l"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_q7i1y"]
+radius = 386.083
+
+[node name="Limitless" type="Area2D"]
+collision_layer = 255
+collision_mask = 255
+script = ExtResource("1_drf8l")
+
+[node name="Timer_Cooldown" type="Timer" parent="."]
+wait_time = 7.0
+one_shot = true
+
+[node name="Timer_Duration" type="Timer" parent="."]
+wait_time = 4.5
+one_shot = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_q7i1y")

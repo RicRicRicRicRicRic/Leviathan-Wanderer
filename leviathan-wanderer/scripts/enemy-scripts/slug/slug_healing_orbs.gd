@@ -22,7 +22,7 @@ func _ready() -> void:
 	gravity_scale = 0.0
 	contact_monitor = true
 	max_contacts_reported = 1
-
+	add_to_group("enemy_proj")
 	var initial_speed: float = randf_range(min_speed, max_speed)
 	var angle: float = randf() * TAU
 	linear_velocity = Vector2(cos(angle), sin(angle)) * initial_speed

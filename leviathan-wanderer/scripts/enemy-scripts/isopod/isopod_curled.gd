@@ -14,6 +14,7 @@ var is_uncurling: bool = false
 func _ready() -> void:
 	_player_node = get_tree().get_nodes_in_group("player")[0]
 	add_to_group("isopod_curled")
+	add_to_group("enemy_proj")
 	timer_whilecurl.start()
 	timer_whilecurl.timeout.connect(_on_Timer_whilecurl_timeout)
 	damage_area.body_entered.connect(_on_body_entered)

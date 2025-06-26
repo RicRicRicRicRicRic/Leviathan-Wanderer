@@ -25,6 +25,7 @@ func _ready() -> void:
 	contact_monitor = true
 	max_contacts_reported = 1
 	body_entered.connect(_on_body_entered)
+	add_to_group("enemy_proj")
 
 func _physics_process(delta: float) -> void:
 	current_speed = min(current_speed + ACCELERATION_RATE * delta, MAX_SPEED)

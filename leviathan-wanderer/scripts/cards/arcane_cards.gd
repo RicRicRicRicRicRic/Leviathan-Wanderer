@@ -30,7 +30,8 @@ func _ready():
 		"daredevil_agility",
 		"mana_overdrive",
 		"heavy_impact_rounds",
-		"ascendant_leap" 
+		"ascendant_leap",
+		"limitless_technique" 
 	]
 
 	available_animations.shuffle()
@@ -102,6 +103,8 @@ func _on_card_button_pressed(index: int):
 				_apply_heavy_impact_rounds_effect()
 			"ascendant_leap": 
 				_apply_ascendant_leap_effect()
+			"limitless_technique": 
+				_apply_limitless_technique_effect()
 			_:
 				pass
 		
@@ -134,8 +137,8 @@ func _apply_blink_efficiency_effect() -> void:
 	GlobalGameState.teleport_mana_cost_multiplier = 0.5
 
 func _apply_pulse_accelerator_effect() -> void:
-	GlobalGameState.laser_combo_multiplier = 1.5 
-	GlobalGameState.projectile_combo_multiplier = 1.5
+	GlobalGameState.laser_combo_multiplier = 2
+	GlobalGameState.projectile_combo_multiplier = 2
 	GlobalGameState.laser_damage_multiplier = 0.75
 
 func _apply_mana_overdrive_effect() -> void:
@@ -150,3 +153,6 @@ func _apply_heavy_impact_rounds_effect() -> void:
 
 func _apply_ascendant_leap_effect() -> void: 
 	GlobalGameState.can_double_jump = true
+
+func _apply_limitless_technique_effect() -> void:
+	GlobalGameState.limitless_technique_enabled = true

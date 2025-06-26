@@ -14,6 +14,7 @@ extends "res://scripts/Utility/Interpolate.gd"
 @export var projectile_scene: PackedScene = preload("res://scene/Player_scene/projectile.tscn")
 @export var teleport_indicator_scene: PackedScene = preload("res://scene/Player_scene/teleprot.tscn")
 @export var laser_scene: PackedScene = preload("res://scene/Player_scene/laser.tscn")
+@export var limitless_technique_scene: PackedScene = preload("res://scene/Player_scene/limitless.tscn") 
 
 
 @onready var visuals: Node2D = $Node2D
@@ -29,6 +30,7 @@ extends "res://scripts/Utility/Interpolate.gd"
 
 const ACCELERATION: float = 3000.0
 const DECELERATION: float = 3000.0
+const LIMITLESS_TECHNIQUE_RADIUS: float = 500.0 
 
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 var time_to_apex: float
@@ -60,6 +62,8 @@ var effective_mana_regen_value: int
 var effective_mana_regen_speed: float 
 
 var has_double_jumped: bool = false
+var is_limitless_technique_active: bool = false 
+var limitless_technique_instance: Area2D = null 
 
 func _ready() -> void:
 	if GlobalGameState.base_player_max_health == 0:
@@ -92,6 +96,17 @@ func _ready() -> void:
 	update_mana_bar()
 
 	start_mana_regen.connect("timeout", Callable(self, "_on_mana_regen_delay_timeout"))
+
+	if limitless_technique_scene:
+		limitless_technique_instance = limitless_technique_scene.instantiate()
+		add_child(limitless_technique_instance)
+		limitless_technique_instance.monitoring = false 
+		limitless_technique_instance.monitorable = false 
+		limitless_technique_instance.position = Vector2.ZERO
+		
+		if limitless_technique_instance.has_signal("technique_ended"):
+			limitless_technique_instance.technique_ended.connect(_on_limitless_technique_ended)
+
 
 func update_effective_stats() -> void:
 	effective_max_health = int(GlobalGameState.base_player_max_health * GlobalGameState.player_max_health_multiplier)
@@ -284,6 +299,19 @@ func take_damage(amount: int, knockback_force: Vector2 = Vector2.ZERO) -> void:
 			knockback(knockback_force)
 		if current_health <= 0:
 			die()
+		
+		if GlobalGameState.limitless_technique_enabled and limitless_technique_instance and \
+		   limitless_technique_instance.call("can_activate"): 
+			_activate_limitless_technique()
+
+func _activate_limitless_technique() -> void: 
+	is_limitless_technique_active = true
+
+	if limitless_technique_instance:
+		limitless_technique_instance.activate_technique() 
+
+func _on_limitless_technique_ended() -> void: 
+	is_limitless_technique_active = false
 
 func die() -> void:
 	current_health = effective_max_health

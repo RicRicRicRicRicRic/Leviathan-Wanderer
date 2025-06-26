@@ -8,7 +8,7 @@ var contacts_made: int = 0
 
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
-	
+	add_to_group("enemy_proj")
 	contact_monitor = true
 	max_contacts_reported = max_contacts
 
