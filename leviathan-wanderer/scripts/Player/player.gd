@@ -66,14 +66,19 @@ var is_limitless_technique_active: bool = false
 var limitless_technique_instance: Area2D = null 
 
 func _ready() -> void:
-	if GlobalGameState.base_player_max_health == 0:
+	# Initialize GlobalGameState base values if they haven't been set yet (e.g., first run of game)
+	# These base values should only be set once at game start, not reset on death.
+	if GlobalGameState.base_player_max_health == 0: 
 		GlobalGameState.base_player_max_health = default_max_health
 		GlobalGameState.base_player_top_speed = default_top_speed
 		GlobalGameState.base_player_jump_velocity = default_jump_velocity
 		GlobalGameState.base_player_max_mana = default_max_mana 
 
-	update_effective_stats()
+	# Removed: GlobalGameState.player_state_reinitialized.connect(...)
+	# The signal is no longer in GlobalGameState.gd
 
+	# Initial update of effective stats and player health/mana (for game start or first room load)
+	update_effective_stats()
 	current_health = effective_max_health 
 	current_mana = effective_max_mana 
 
@@ -101,11 +106,13 @@ func _ready() -> void:
 		limitless_technique_instance = limitless_technique_scene.instantiate()
 		add_child(limitless_technique_instance)
 		limitless_technique_instance.monitoring = false 
-		limitless_technique_instance.monitorable = false 
+		limitless_technique_instance.set_deferred("monitorable", false) 
 		limitless_technique_instance.position = Vector2.ZERO
 		
 		if limitless_technique_instance.has_signal("technique_ended"):
 			limitless_technique_instance.technique_ended.connect(_on_limitless_technique_ended)
+		if limitless_technique_instance.has_signal("cooldown_finished"):
+			limitless_technique_instance.cooldown_finished.connect(Callable(self, "_on_limitless_cooldown_finished"))
 
 
 func update_effective_stats() -> void:
@@ -298,24 +305,40 @@ func take_damage(amount: int, knockback_force: Vector2 = Vector2.ZERO) -> void:
 		if knockback_force != Vector2.ZERO:
 			knockback(knockback_force)
 		if current_health <= 0:
-			die()
-		
+			die() 
+
 		if GlobalGameState.limitless_technique_enabled and limitless_technique_instance and \
-		   limitless_technique_instance.call("can_activate"): 
+		   limitless_technique_instance.call("can_activate") and not is_limitless_technique_active:
 			_activate_limitless_technique()
+
 
 func _activate_limitless_technique() -> void: 
 	is_limitless_technique_active = true
-
 	if limitless_technique_instance:
 		limitless_technique_instance.activate_technique() 
 
 func _on_limitless_technique_ended() -> void: 
 	is_limitless_technique_active = false
 
+func _on_limitless_cooldown_finished() -> void:
+	pass 
+
 func die() -> void:
+	# 1. Reset ALL GlobalGameState variables (full reset)
+	GlobalGameState.reset_game_state_on_death() # Calling the new full reset function
+	
+	# 2. Re-calculate effective stats based on the freshly reset GlobalGameState
+	update_effective_stats()
+	# 3. Ensure current health and mana are reset to max for the new scene
 	current_health = effective_max_health
-	update_health_bar()
+	current_mana = effective_max_mana
+
+	# 4. Always restart to Chapter 1
+	var restart_path: String = "res://scene/Chapter1/level_1_Start.tscn"
+	
+	# 5. Change scene (deferred to avoid physics callback issues)
+	get_tree().call_deferred("change_scene_to_file", restart_path)
+
 
 func update_health_bar() -> void:
 	var hp_bar_node: Node = get_tree().get_first_node_in_group("player_conditions")

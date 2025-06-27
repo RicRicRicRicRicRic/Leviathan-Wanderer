@@ -66,6 +66,7 @@ func _on_scyphozoa_rex_boss_defeated() -> void:
 
 func _on_boss_room_exit_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
+		
 		get_tree().call_deferred("change_scene_to_file", next_chapter_path)
 		boss_room_exit.set_deferred("monitoring", false)
 		boss_room_exit.set_deferred("monitorable", false)

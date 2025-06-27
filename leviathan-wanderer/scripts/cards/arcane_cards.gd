@@ -36,150 +36,107 @@ func _ready():
 
 	var available_for_this_selection = []
 	for anim_name in all_possible_animations:
+		# Since all cards reset on death, we only filter by what's already chosen in the *current* run
+		# if GlobalGameState.chosen_arcane_cards tracks what's picked in THIS run.
+		# However, for a full reset on death, if GlobalGameState.chosen_arcane_cards is cleared,
+		# all cards effectively become available again.
+		# This means, for a strict full reset, this 'if' condition might not be needed
+		# if the expectation is all cards are always available after death.
+		# Assuming you still want to prevent picking the SAME card multiple times in ONE run.
 		if not GlobalGameState.chosen_arcane_cards.has(anim_name):
 			available_for_this_selection.append(anim_name)
 
 	available_for_this_selection.shuffle()
 
-	if available_for_this_selection.size() >= 3:
-		card1.play(available_for_this_selection.pop_front())
-		card2.play(available_for_this_selection.pop_front())
-		card3.play(available_for_this_selection.pop_front())
-	elif available_for_this_selection.size() > 0:
-		if available_for_this_selection.size() >= 1:
-			card1.play(available_for_this_selection.pop_front())
+	# Assign animations to cards, handling cases where fewer than 3 are available
+	var cards_to_show = min(3, available_for_this_selection.size())
+	for i in range(3):
+		if i < cards_to_show:
+			cards[i].play(available_for_this_selection.pop_front())
+			cards[i].get_parent().visible = true # Ensure card is visible
 		else:
-			card1.get_parent().visible = false 
-		
-		if available_for_this_selection.size() >= 1:
-			card2.play(available_for_this_selection.pop_front())
-		else:
-			card2.get_parent().visible = false 
-		
-		if available_for_this_selection.size() >= 1:
-			card3.play(available_for_this_selection.pop_front())
-		else:
-			card3.get_parent().visible = false 
+			cards[i].get_parent().visible = false # Hide unused cards
+			card_buttons[i].disabled = true # Disable button for hidden card
 
 
 	for i in range(card_buttons.size()):
 		var card_index = i
 		card_buttons[i].mouse_entered.connect(func(): _on_card_button_mouse_entered(card_index))
 		card_buttons[i].mouse_exited.connect(func(): _on_card_button_mouse_exited(card_index))
-		card_buttons[i].pressed.connect(func(): _on_card_button_pressed(card_index))
-		card_buttons[i].disabled = true 
+		# Ensure only visible cards have their buttons connected and enabled after animation
+		if cards[i].get_parent().visible:
+			card_buttons[i].pressed.connect(func(): _on_card_button_pressed(card_index))
+			card_buttons[i].disabled = true # Disable initially until animation finishes
+		else:
+			card_buttons[i].disabled = true # Keep disabled if card is not visible
+
 
 	card_animation.connect("animation_finished", Callable(self, "_on_card_animation_finished"))
 	if card_animation.has_animation("default_card_deal_animation"): 
 		card_animation.play("default_card_deal_animation")
 	else:
+		# If animation is missing, enable buttons for visible cards immediately
 		for i in range(card_buttons.size()):
-			card_buttons[i].disabled = false
+			if cards[i].get_parent().visible:
+				card_buttons[i].disabled = false
 
 
 func _process(delta: float):
 	for i in range(cards.size()):
-		if not card_animation.is_playing():
+		# Only lerp scale if the card is visible and animation is not playing
+		if cards[i].get_parent().visible and not card_animation.is_playing():
 			cards[i].scale = cards[i].scale.lerp(card_target_scales[i], delta * SCALE_LERP_SPEED)
 		else:
-			cards[i].scale = Vector2(1,1)
+			cards[i].scale = Vector2(1,1) # Reset scale if animation is playing or card is hidden
 
 
 func _on_card_button_mouse_entered(index: int):
-	if not card_animation.is_playing():
+	# Only scale if the card is visible and animation is not playing
+	if cards[index].get_parent().visible and not card_animation.is_playing():
 		card_target_scales[index] = Vector2(1.1,1.1)
 
 func _on_card_button_mouse_exited(index: int):
-	if not card_animation.is_playing():
+	# Only scale if the card is visible and animation is not playing
+	if cards[index].get_parent().visible and not card_animation.is_playing():
 		card_target_scales[index] = Vector2(1, 1)
 
 func _on_card_animation_finished(_anim_name: String):
+	# Enable buttons only for visible cards
 	for i in range(card_buttons.size()):
-		card_buttons[i].disabled = false
+		if cards[i].get_parent().visible:
+			card_buttons[i].disabled = false
 
 func _on_card_button_pressed(index: int):
+	# Disable all buttons immediately after one is pressed
 	for button in card_buttons:
 		button.disabled = true
+		# Ensure the AnimatedSprite2D actually exists before trying to access its parent and scale
 		if button.get_parent() and button.get_parent().has_node("AnimatedSprite2D"):
 			button.get_parent().get_node("AnimatedSprite2D").scale = Vector2(1,1)
 	
 	var chosen_animation_name = cards[index].animation
 
+	# Add the chosen card to the GlobalGameState.chosen_arcane_cards
 	if not GlobalGameState.chosen_arcane_cards.has(chosen_animation_name):
 		GlobalGameState.chosen_arcane_cards.append(chosen_animation_name)
+	
+	# Apply the effect of the chosen card via the centralized GlobalGameState function
+	GlobalGameState._apply_arcane_card_effect(chosen_animation_name)
 
 	var player_node = get_tree().get_first_node_in_group("player")
 
 	if player_node:
-		match chosen_animation_name:
-			"daredevil_agility":
-				_apply_daredevil_agility_effect() 
-			"fortitude":
-				_apply_fortitude_effect() 
-			"scatter_shot":
-				_apply_scatter_shot_effect()
-			"blink_efficiency":
-				_apply_blink_efficiency_effect()
-			"pulse_accelerator":
-				_apply_pulse_accelerator_effect()
-			"mana_overdrive": 
-				_apply_mana_overdrive_effect()
-			"heavy_impact_rounds": 
-				_apply_heavy_impact_rounds_effect()
-			"ascendant_leap": 
-				_apply_ascendant_leap_effect()
-			"limitless_technique":
-				_apply_limitless_technique_effect()
-			_:
-				pass
-		
 		player_node.update_effective_stats()
+		# Ensure health doesn't exceed new max health if it was reduced by a card
 		player_node.current_health = min(player_node.current_health, player_node.effective_max_health)
 		player_node.update_health_bar()
 		player_node.update_mana_bar() 
-		player_node.add_combo(0)
+		player_node.add_combo(0) # Not clear what this does here, but maintaining existing logic
 
 
 	card_chosen.emit()
 	queue_free()
 
-func _apply_daredevil_agility_effect() -> void:
-	GlobalGameState.player_top_speed_multiplier *= 1.35
-	GlobalGameState.base_player_max_health -= 350
-	GlobalGameState.player_jump_velocity_multiplier *= 1.35
-
-func _apply_fortitude_effect() -> void:
-	GlobalGameState.base_player_max_health += 500
-	GlobalGameState.player_top_speed_multiplier *= 0.85 
-
-func _apply_scatter_shot_effect() -> void:
-	GlobalGameState.projectile_fire_rate_multiplier_effect = 2.0 
-	GlobalGameState.projectile_spread_angle_rad = deg_to_rad(30.0) 
-
-func _apply_blink_efficiency_effect() -> void:
-	GlobalGameState.teleport_cooldown_multiplier = 0.5 
-	GlobalGameState.teleport_range_multiplier = 0.5
-	GlobalGameState.teleport_mana_cost_multiplier = 0.5
-
-func _apply_pulse_accelerator_effect() -> void:
-	GlobalGameState.laser_combo_multiplier = 2.0 
-	GlobalGameState.projectile_combo_multiplier = 2.0 
-	GlobalGameState.laser_damage_multiplier = 0.75
-
-func _apply_mana_overdrive_effect() -> void:
-	GlobalGameState.player_max_mana_multiplier *= 0.4 
-	GlobalGameState.player_mana_regen_value_multiplier *= 2.0 
-	GlobalGameState.player_mana_regen_speed_multiplier *= 0.5 
-
-func _apply_heavy_impact_rounds_effect() -> void:
-	GlobalGameState.projectile_fire_rate_multiplier_effect *= 0.5 
-	GlobalGameState.projectile_scale_multiplier *= 1.5 
-	GlobalGameState.projectile_damage_multiplier *= 2.5
-	GlobalGameState.projectile_combo_multiplier = 2.5
-	GlobalGameState.projectile_mana_cost_multiplier *= 2.5 
-
-func _apply_ascendant_leap_effect() -> void: 
-	GlobalGameState.can_double_jump = true
-
-func _apply_limitless_technique_effect() -> void:
-	GlobalGameState.limitless_technique_enabled = true
+# Individual _apply_*_effect functions are NOT here. They are handled by GlobalGameState._apply_arcane_card_effect().
+# This is a key part of the current structure where arcane_cards.gd applies effects via GlobalGameState,
+# and GlobalGameState handles the actual modification of player stats based on that.

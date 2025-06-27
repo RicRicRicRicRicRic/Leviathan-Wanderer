@@ -1,9 +1,11 @@
-[gd_scene load_steps=15 format=4 uid="uid://bbdrnedhay018"]
+[gd_scene load_steps=18 format=4 uid="uid://bbdrnedhay018"]
 
 [ext_resource type="PackedScene" uid="uid://2po5m5mgtl38" path="res://scene/Utility/world_environment_gloweffect.tscn" id="1_4lehl"]
+[ext_resource type="Script" uid="uid://cc6s8fm8rtxcl" path="res://scripts/Chapter3/chap_3_final_room.gd" id="1_rku2r"]
 [ext_resource type="Texture2D" uid="uid://cvm1xsprhoww8" path="res://assets/sprites/prototype graphics.svg" id="2_rku2r"]
 [ext_resource type="Texture2D" uid="uid://c17lu264e832b" path="res://icon.svg" id="3_lbon7"]
 [ext_resource type="PackedScene" uid="uid://cfqff4kheixm" path="res://scene/Utility/area_2d_camera_room.tscn" id="4_qm47w"]
+[ext_resource type="Texture2D" uid="uid://bwikyryid1hn8" path="res://assets/sprites/graphics.svg" id="6_lbon7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5hjf1"]
 texture = ExtResource("2_rku2r")
@@ -92,7 +94,11 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rku2r"]
 size = Vector2(214, 39)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qm47w"]
+size = Vector2(136, 170)
+
 [node name="chap3_Final_room" type="Node2D"]
+script = ExtResource("1_rku2r")
 
 [node name="WorldEnvironment_gloweffect" parent="." instance=ExtResource("1_4lehl")]
 
@@ -192,3 +198,18 @@ libraries = {
 &"": SubResource("AnimationLibrary_vn170")
 }
 autoplay = "RESET"
+
+[node name="Area2D_exit" type="Area2D" parent="."]
+position = Vector2(0, 85)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_exit"]
+position = Vector2(0, -34)
+shape = SubResource("RectangleShape2D_qm47w")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(1.5, 1.5, 1.5, 1)
+position = Vector2(2, 68)
+scale = Vector2(0.821256, 0.658228)
+texture = ExtResource("6_lbon7")
+region_enabled = true
+region_rect = Rect2(1350, 329, 207, 316)

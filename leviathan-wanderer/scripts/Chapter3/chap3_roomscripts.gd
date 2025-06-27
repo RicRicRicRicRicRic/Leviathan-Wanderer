@@ -35,8 +35,6 @@ var offset_left: float = -3060.0
 var offset_right: float = 3060.0
 var offset_bottom: float = 1870.0
 
-static var defeated_rooms_count: int = 0
-const DEFEATED_ROOMS_THRESHOLD: int = 1
 
 const THIS_SCRIPT = preload("res://scripts/Chapter3/chap3_roomscripts.gd")
 
@@ -107,13 +105,14 @@ func _on_path_entered(body: Node, exit_direction_from_current_room: String) -> v
 	call_deferred("_do_spawn", packed, exit_direction_from_current_room)
 
 func get_non_repeating_room() -> String:
-	if defeated_rooms_count >= DEFEATED_ROOMS_THRESHOLD:
+	# Use the appropriate GlobalGameState counter and threshold for Chapter 3
+	if GlobalGameState.chapter3_room_completion_count >= GlobalGameState.chapter3_rooms_needed_for_final_room:
 		return final_room_path
 	var current_room_path: String = get_scene_file_path()
 	var available_rooms: Array[String] = room_paths.filter(func(path): return path != current_room_path)
 	if available_rooms.is_empty():
 		push_warning("No available rooms to spawn, falling back to random room")
-		return room_paths[randi() % room_paths.size()]
+		return room_paths[randi() % room_paths.size()] if not room_paths.is_empty() else ""
 	return available_rooms[randi() % available_rooms.size()]
 
 func handle_initial_blockades(direction: String) -> void:
@@ -135,6 +134,10 @@ func handle_initial_blockades(direction: String) -> void:
 			free_blockade("bottom")
 
 func _do_spawn(packed: PackedScene, exit_direction_from_current_room: String) -> void:
+	if not packed: # Add check for packed scene
+		push_error("Packed scene is null. Cannot spawn new room.")
+		return
+
 	var new_room: Node2D = packed.instantiate()
 	add_child(new_room)
 
@@ -149,7 +152,7 @@ func _do_spawn(packed: PackedScene, exit_direction_from_current_room: String) ->
 		"top":
 			entry_direction_for_new_room_relative = "bottom"
 
-	if new_room.get_script() == THIS_SCRIPT:
+	if new_room.get_script() == THIS_SCRIPT: # Check if the new room uses the same script
 		new_room.opened_exit_direction = entry_direction_for_new_room_relative
 		new_room.spawned_from_bottom = (entry_direction_for_new_room_relative == "bottom")
 	
@@ -161,6 +164,7 @@ func _do_spawn(packed: PackedScene, exit_direction_from_current_room: String) ->
 		"bottom":
 			new_room.position = Vector2(0, offset_bottom)
 
+	# Free the exit area that the player just used in the current room
 	match exit_direction_from_current_room:
 		"left":
 			if is_instance_valid(left_path):
@@ -171,7 +175,10 @@ func _do_spawn(packed: PackedScene, exit_direction_from_current_room: String) ->
 		"bottom":
 			if is_instance_valid(bottom_path):
 				bottom_path.queue_free()
+		# No 'top' path to free in current room, as entry is from top to current room (spawned_from_bottom)
+		# and exit is typically through left/right/bottom
 
+	# Free the corresponding entry area in the new room
 	match entry_direction_for_new_room_relative:
 		"left":
 			if new_room.has_node("Area2D_left"):
@@ -186,6 +193,7 @@ func _do_spawn(packed: PackedScene, exit_direction_from_current_room: String) ->
 			if new_room.has_node("Area2D_bottom"):
 				new_room.get_node("Area2D_bottom").queue_free()
 
+	# Special handling for final room: remove the blockade at the entry point
 	if packed.resource_path == final_room_path:
 		match entry_direction_for_new_room_relative:
 			"left":
@@ -252,17 +260,15 @@ func _on_enemy_entered(body: Node) -> void:
 		return
 	has_detected_enemy_once = true
 	enemies_in_area_count += 1
-	enable_blockade("left")
-	enable_blockade("right")
-	enable_blockade("bottom")
-	enable_blockade("top")
+	enable_all_blockades() 
 
 func _on_enemy_exited(body: Node) -> void:
 	if not body.is_in_group("enemy"):
 		return
 	enemies_in_area_count = max(0, enemies_in_area_count - 1)
 	if enemies_in_area_count == 0 and has_detected_enemy_once:
-		defeated_rooms_count += 1
+		# Increment the Chapter 3 completion count from GlobalGameState
+		GlobalGameState.chapter3_room_completion_count += 1 
 		for dir in ["left", "right", "bottom", "top"]:
 			if dir == opened_exit_direction:
 				continue
@@ -281,3 +287,9 @@ func _on_enemy_exited(body: Node) -> void:
 				"top":
 					blockade_top.visible = false
 					collision_top.set_deferred("disabled", true)
+
+func enable_all_blockades() -> void:
+	enable_blockade("left")
+	enable_blockade("right")
+	enable_blockade("bottom")
+	enable_blockade("top")
